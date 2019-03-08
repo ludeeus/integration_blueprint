@@ -1,14 +1,15 @@
 workflow "Trigger: Push to master from admin account" {
   on = "push"
   resolves = [
-    "HA Index"
+    "HA Index",
+    "push"
   ]
 }
 
 workflow "Trigger: Push" {
   on = "push"
   resolves = [
-    "Black Code Formatter"
+    "Black Code Formatter Check"
   ]
 }
 
@@ -32,7 +33,24 @@ action "HA Index" {
   needs = ["branch-filter", "Access control"]
 }
 
-action "Black Code Formatter" {
+action "Black Code Formatter Fix" {
+  uses = "lgeiger/black-action@v1.0.1"
+  args = "$GITHUB_WORKSPACE"
+}
+
+action "Black Code Formatter Check" {
   uses = "lgeiger/black-action@v1.0.1"
   args = "$GITHUB_WORKSPACE --check"
+}
+
+action "push" {
+  uses = "ludeeus/actions/push@master"
+  env = {
+    PUSHMAIL = "ludeeus@gmail.com"
+    PUSHNAME = "ludeeus"
+    PUSHBRANCH = "master"
+    PUSHMESSAGE = "Action commit"
+  }
+  needs = ["Black Code Formatter Fix"]
+  secrets = ["GITHUB_TOKEN"]
 }
