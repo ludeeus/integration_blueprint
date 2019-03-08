@@ -1,0 +1,13 @@
+author:
+  email: ludeeus@gmail.com
+  homepage: https://github.com/ludeeus
+  name: ludeeus
+description: WIP!, will be moved to custom-components when done.
+files:
+- custom_components/blueprint/__init__.py
+- custom_components/blueprint/const.py
+- custom_components/blueprint/sensor.py
+keywords: []
+license: MIT License
+name: blueprint
+type: component
