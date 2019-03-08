@@ -1,16 +1,20 @@
 """
-Component to integrate with blueprint
+Component to integrate with blueprint.
 
 For more details about this component, please refer to
 https://github.com/custom-components/blueprint
 """
 import os
+from datetime import timedelta
 import logging
 import requests
 from homeassistant.helpers import discovery
+from homeassistant.util import Throttle
 from .const import (
     DOMAIN_DATA, DOMAIN, ISSUE_URL, PLATFORMS, REQUIRED_FILES, STARTUP, URL,
     VERSION)
+
+MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -39,7 +43,7 @@ async def async_setup(hass, config):
         )
     return True
 
-
+@Throttle(MIN_TIME_BETWEEN_UPDATES)
 async def update_data(hass):
     """Update data."""
     # This is where the main logic to update platform data goes.

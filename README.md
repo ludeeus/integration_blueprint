@@ -9,6 +9,7 @@ _Component to integrate with [blueprint][blueprint]._
 
 Platform | Description
 -- | --
+`binary_sensor` | Show something `True` or `False`
 `sensor` | Show info from blueprint API.
 
 ![example][exampleimg]
@@ -26,6 +27,7 @@ Using your HA configuration directory (folder) as a starting point you should no
 
 ```text
 custom_components/blueprint/__init__.py
+custom_components/blueprint/binary_sensor.py
 custom_components/blueprint/const.py
 custom_components/blueprint/sensor.py
 ```

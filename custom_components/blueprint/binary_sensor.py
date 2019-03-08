@@ -1,7 +1,8 @@
-"""Sensor platform for blueprint."""
-from homeassistant.helpers.entity import Entity
+"""Binary ensor platform for blueprint."""
+from homeassistant.components.binary_sensor import BinarySensorDevice
 from . import update_data
-from .const import DOMAIN as NAME, DOMAIN_DATA, SENSOR_ICON
+from .const import (
+    BINARY_SENSOR_DEVICE_CLASS, DOMAIN as NAME, DOMAIN_DATA, SENSOR_ICON)
 
 
 async def async_setup_platform(
@@ -11,13 +12,13 @@ async def async_setup_platform(
     async_add_entities([BlueprintSensor(hass)], True)
 
 
-class BlueprintSensor(Entity):
+class BlueprintSensor(BinarySensorDevice):
     """blueprint Sensor class."""
 
     def __init__(self, hass):
         self.hass = hass
         self.attr = {}
-        self._state = None
+        self._status = False
 
     async def async_update(self):
         """Update the sensor."""
@@ -28,14 +29,14 @@ class BlueprintSensor(Entity):
         updated = self.hass.data[DOMAIN_DATA]
 
         # Check the data and update the value.
-        if updated.get("title") is None:
-            self._state = self._status
+        if updated.get("completed") is None:
+            self._status = self._status
         else:
-            self._state = updated.get("title")
+            self._status = updated.get("completed")
 
         # Set/update attributes
         self.attr['user_id'] = updated.get('userId')
-        self.attr['completed'] = updated.get('completed')
+        self.attr['title'] = updated.get('title')
 
     @property
     def name(self):
@@ -43,8 +44,13 @@ class BlueprintSensor(Entity):
         return NAME
 
     @property
-    def state(self):
-        """Return the state of the sensor."""
+    def device_class(self):
+        """Return the class of this sensor."""
+        return BINARY_SENSOR_DEVICE_CLASS
+
+    @property
+    def is_on(self):
+        """Return true if the binary sensor is on."""
         return self._state
 
     @property
