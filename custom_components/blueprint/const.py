@@ -1,11 +1,11 @@
 """Consts"""
-DOMAIN = 'blueprint'
-DOMAIN_DATA = '{}_data'.format(DOMAIN)
-VERSION = '0.0.1'
-URL = 'https://blueprint.com/api'
-REQUIRED_FILES = ['sensor.py', 'const.py']
-ISSUE_URL = 'https://github.com/custom-components/blueprint/issues'
-PLATFORMS = ['sensor']
+DOMAIN = "blueprint"
+DOMAIN_DATA = "{}_data".format(DOMAIN)
+VERSION = "0.0.1"
+URL = "https://blueprint.com/api"
+REQUIRED_FILES = ["sensor.py", "const.py"]
+ISSUE_URL = "https://github.com/custom-components/blueprint/issues"
+PLATFORMS = ["sensor"]
 
 STARTUP = """
 ----------------------------------------------

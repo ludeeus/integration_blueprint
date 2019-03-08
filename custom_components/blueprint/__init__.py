@@ -11,10 +11,11 @@ from homeassistant.helpers import discovery
 
 from .const import *  # pylint: disable=wildcard-import
 
-VERSION = '0.0.1'
+VERSION = "0.0.1"
 _LOGGER = logging.getLogger(__name__)
 
-  # pylint: disable=unused-argument
+# pylint: disable=unused-argument
+
 
 async def async_setup(hass, config):
     """Set up this component."""
@@ -34,7 +35,8 @@ async def async_setup(hass, config):
     # Load platforms
     for platform in PLATFORMS:
         hass.async_create_task(
-            discovery.async_load_platform(hass, platform, DOMAIN, {}, config))
+            discovery.async_load_platform(hass, platform, DOMAIN, {}, config)
+        )
     return True
 
 
