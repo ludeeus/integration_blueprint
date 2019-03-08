@@ -1,5 +1,5 @@
 """
-Component to integrate with https://blueprint.com/api
+Component to integrate with blueprint
 
 For more details about this component, please refer to
 https://github.com/custom-components/blueprint
@@ -8,10 +8,10 @@ import os
 import logging
 import requests
 from homeassistant.helpers import discovery
+from .const import (
+    DOMAIN_DATA, DOMAIN, ISSUE_URL, PLATFORMS, REQUIRED_FILES, STARTUP, URL,
+    VERSION)
 
-from .const import *  # pylint: disable=wildcard-import
-
-VERSION = "0.0.1"
 _LOGGER = logging.getLogger(__name__)
 
 # pylint: disable=unused-argument
@@ -42,6 +42,7 @@ async def async_setup(hass, config):
 
 async def update_data(hass):
     """Update data."""
+    # This is where the main logic to update platform data goes.
     try:
         request = requests.get(URL)
         jsondata = request.json()
@@ -52,6 +53,7 @@ async def update_data(hass):
 
 async def check_files(hass):
     """Retrun bool that idicate that all files are present."""
+    # Verify that the user downloaded all files.
     base = "{}/custom_components/{}/".format(hass.config.path(), DOMAIN)
     missing = []
     for file in REQUIRED_FILES:

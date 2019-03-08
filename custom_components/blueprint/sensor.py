@@ -1,37 +1,47 @@
 """Sensor platform for blueprint"""
 from homeassistant.helpers.entity import Entity
 from . import update_data
-from .const import *  # pylint: disable=wildcard-import, unused-wildcard-import
-
-ICON = "mdi:format-quote-close"
+from .const import DOMAIN as NAME, DOMAIN_DATA, SENSOR_ICON
 
 
 async def async_setup_platform(
-    hass, config, async_add_entities, discovery_info=None
+        hass, config, async_add_entities, discovery_info=None
 ):  # pylint: disable=unused-argument
     """Setup sensor platform."""
-    async_add_entities([blueprintSensor(hass)], True)
+    async_add_entities([BlueprintSensor(hass)], True)
 
 
-class blueprintSensor(Entity):
+class BlueprintSensor(Entity):
     """blueprint Sensor class."""
 
     def __init__(self, hass):
         self.hass = hass
+        self.attr = {}
         self._state = None
 
     async def async_update(self):
         """Update the sensor."""
+        # Send update "signal" to the component
         await update_data(self.hass)
-        updated = self.hass.data[DOMAIN_DATA].get("compliment")
-        if updated is None:
+
+        # Get new data (if any)
+        updated = self.hass.data[DOMAIN_DATA]
+
+        # Check if there is data
+        if updated.get("title") is None:
             updated = self._state
+
+        # Set/update the state, and make sure it looks good by capitalizing it
         self._state = updated.capitalize()
+
+        # Set/update attributes
+        self.attr['user_id'] = updated.get('userId')
+        self.attr['completed'] = updated.get('completed')
 
     @property
     def name(self):
         """Return the name of the sensor."""
-        return DOMAIN
+        return NAME
 
     @property
     def state(self):
@@ -41,4 +51,9 @@ class blueprintSensor(Entity):
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        return ICON
+        return SENSOR_ICON
+
+    @property
+    def device_state_attributes(self):
+        """Return the state attributes."""
+        return self.attr

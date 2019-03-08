@@ -36,7 +36,6 @@ custom_components/blueprint/sensor.py
 blueprint:
 ```
 
-
 ***
 
 [exampleimg]: example.png
