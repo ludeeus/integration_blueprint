@@ -7,7 +7,12 @@ files:
 - custom_components/blueprint/__init__.py
 - custom_components/blueprint/const.py
 - custom_components/blueprint/sensor.py
-keywords: []
+keywords:
+- blueprint
+- homeassistant
+- home-assistant
+- custom-component
+- python
 license: MIT License
 name: blueprint
 type: component
