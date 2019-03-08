@@ -5,6 +5,21 @@
 
 _Component to integrate with [blueprint][blueprint]._
 
+## Notice
+
+The component and platforms in this repository are not meant to be used by a
+user, but as a "blueprint" that custom component developers can build
+upon, to make more awesome stuff.
+
+### Why?
+
+This is simple, buy having custom_components look (README + structure) look the same
+it is easier for developers to help each other and for users to start using it.
+
+If you are a developer and you want to add things to this "blueprint" that you think more 
+developers will have use for, please open a PR to add it :)
+
+
 **This component will set up the following platforms.**
 
 Platform | Description
