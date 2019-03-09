@@ -48,8 +48,3 @@ Use [black](https://github.com/ambv/black) to make sure the code follow the styl
 ## License
 
 By contributing, you agree that your contributions will be licensed under its MIT License.
-
-## References
-
-This document was adapted from the open-source contribution guidelines 
-for [Facebook's Draft](https://github.com/facebook/draft-js/blob/a9316a723f9e918afde44dea68b5f9f39b7d9b00/CONTRIBUTING.md)
