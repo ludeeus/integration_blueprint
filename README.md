@@ -83,6 +83,11 @@ Key | Type | Required | Default | Description
 `enabled` | `boolean` | `False` | `False` | Boolean to enable/disable the platform.
 `name` | `string` | `False` | `blueprint` | Custom name for the entity.
 
+
+## Contributions are welcome!
+
+If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md)
+
 ***
 
 [exampleimg]: example.png
