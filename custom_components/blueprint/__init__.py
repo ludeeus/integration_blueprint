@@ -8,17 +8,42 @@ import os
 from datetime import timedelta
 import logging
 import requests
+import voluptuous as vol
+import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import discovery
 from homeassistant.util import Throttle
 from .const import (
     DOMAIN_DATA, DOMAIN, ISSUE_URL, PLATFORMS, REQUIRED_FILES, STARTUP, URL,
-    VERSION)
+    VERSION, CONF_BINARY_SENSOR, CONF_SENSOR, CONF_SWITCH, CONF_ENABLED,
+    CONF_NAME, DEAFULT_NAME)
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 
 _LOGGER = logging.getLogger(__name__)
 
-# pylint: disable=unused-argument
+BINARY_SENSOR_SCHEMA = vol.Schema({
+    vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+    vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
+})
+
+SENSOR_SCHEMA = vol.Schema({
+    vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+    vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
+})
+
+SWITCH_SCHEMA = vol.Schema({
+    vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+    vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
+})
+
+CONFIG_SCHEMA = vol.Schema({
+    DOMAIN: vol.Schema({
+        vol.Optional(CONF_BINARY_SENSOR): vol.All(
+            cv.ensure_list, [BINARY_SENSOR_SCHEMA]),
+        vol.Optional(CONF_SENSOR): vol.All(cv.ensure_list, [SENSOR_SCHEMA]),
+        vol.Optional(CONF_SWITCH): vol.All(cv.ensure_list, [SWITCH_SCHEMA]),
+    }),
+}, extra=vol.ALLOW_EXTRA)
 
 
 async def async_setup(hass, config):
@@ -38,9 +63,24 @@ async def async_setup(hass, config):
 
     # Load platforms
     for platform in PLATFORMS:
-        hass.async_create_task(
-            discovery.async_load_platform(hass, platform, DOMAIN, {}, config)
-        )
+        # Get platform spesific configuration
+        platform_config = config[DOMAIN].get(platform, {})
+
+        # If platform is not enabled, skip.
+        if not platform_config:
+            continue
+
+        for entry in platform_config:
+            entry_config = platform_config[entry]
+
+            # If entry is not enabled, skip.
+            if not platform_config.get(CONF_ENABLED):
+                continue
+
+            hass.async_create_task(
+                discovery.async_load_platform(
+                    hass, platform, DOMAIN, entry_config, config)
+            )
     return True
 
 @Throttle(MIN_TIME_BETWEEN_UPDATES)

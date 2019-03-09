@@ -2,23 +2,24 @@
 from homeassistant.components.binary_sensor import BinarySensorDevice
 from . import update_data
 from .const import (
-    BINARY_SENSOR_DEVICE_CLASS, DOMAIN as NAME, DOMAIN_DATA, SENSOR_ICON)
+    BINARY_SENSOR_DEVICE_CLASS, DOMAIN_DATA, SENSOR_ICON)
 
 
 async def async_setup_platform(
         hass, config, async_add_entities, discovery_info=None
 ):  # pylint: disable=unused-argument
     """Setup sensor platform."""
-    async_add_entities([BlueprintBinarySensor(hass)], True)
+    async_add_entities([BlueprintBinarySensor(hass, discovery_info)], True)
 
 
 class BlueprintBinarySensor(BinarySensorDevice):
     """blueprint Sensor class."""
 
-    def __init__(self, hass):
+    def __init__(self, hass, config):
         self.hass = hass
         self.attr = {}
         self._status = False
+        self._name = config['name']
 
     async def async_update(self):
         """Update the sensor."""
@@ -41,7 +42,7 @@ class BlueprintBinarySensor(BinarySensorDevice):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return NAME
+        return self._name
 
     @property
     def device_class(self):

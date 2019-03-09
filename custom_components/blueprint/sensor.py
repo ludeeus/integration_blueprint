@@ -1,23 +1,24 @@
 """Sensor platform for blueprint."""
 from homeassistant.helpers.entity import Entity
 from . import update_data
-from .const import DOMAIN as NAME, DOMAIN_DATA, SENSOR_ICON
+from .const import DOMAIN_DATA, SENSOR_ICON
 
 
 async def async_setup_platform(
         hass, config, async_add_entities, discovery_info=None
 ):  # pylint: disable=unused-argument
     """Setup sensor platform."""
-    async_add_entities([BlueprintSensor(hass)], True)
+    async_add_entities([BlueprintSensor(hass, discovery_info)], True)
 
 
 class BlueprintSensor(Entity):
     """blueprint Sensor class."""
 
-    def __init__(self, hass):
+    def __init__(self, hass, config):
         self.hass = hass
         self.attr = {}
         self._state = None
+        self._name = config['name']
 
     async def async_update(self):
         """Update the sensor."""
@@ -40,7 +41,7 @@ class BlueprintSensor(Entity):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return NAME
+        return self._name
 
     @property
     def state(self):
