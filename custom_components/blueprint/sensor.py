@@ -5,7 +5,7 @@ from .const import DOMAIN_DATA, SENSOR_ICON
 
 
 async def async_setup_platform(
-        hass, config, async_add_entities, discovery_info=None
+    hass, config, async_add_entities, discovery_info=None
 ):  # pylint: disable=unused-argument
     """Setup sensor platform."""
     async_add_entities([BlueprintSensor(hass, discovery_info)], True)
@@ -18,7 +18,7 @@ class BlueprintSensor(Entity):
         self.hass = hass
         self.attr = {}
         self._state = None
-        self._name = config['name']
+        self._name = config["name"]
 
     async def async_update(self):
         """Update the sensor."""
@@ -35,8 +35,8 @@ class BlueprintSensor(Entity):
             self._state = updated.get("title")
 
         # Set/update attributes
-        self.attr['user_id'] = updated.get('userId')
-        self.attr['completed'] = updated.get('completed')
+        self.attr["user_id"] = updated.get("userId")
+        self.attr["completed"] = updated.get("completed")
 
     @property
     def name(self):

@@ -13,31 +13,52 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import discovery
 from homeassistant.util import Throttle
 from .const import (
-    DOMAIN_DATA, DOMAIN, ISSUE_URL, PLATFORMS, REQUIRED_FILES, STARTUP, URL,
-    VERSION, CONF_BINARY_SENSOR, CONF_SENSOR, CONF_ENABLED, CONF_NAME,
-    DEAFULT_NAME)
+    DOMAIN_DATA,
+    DOMAIN,
+    ISSUE_URL,
+    PLATFORMS,
+    REQUIRED_FILES,
+    STARTUP,
+    URL,
+    VERSION,
+    CONF_BINARY_SENSOR,
+    CONF_SENSOR,
+    CONF_ENABLED,
+    CONF_NAME,
+    DEAFULT_NAME,
+)
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 
 _LOGGER = logging.getLogger(__name__)
 
-BINARY_SENSOR_SCHEMA = vol.Schema({
-    vol.Optional(CONF_ENABLED, default=False): cv.boolean,
-    vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
-})
+BINARY_SENSOR_SCHEMA = vol.Schema(
+    {
+        vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+        vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
+    }
+)
 
-SENSOR_SCHEMA = vol.Schema({
-    vol.Optional(CONF_ENABLED, default=False): cv.boolean,
-    vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
-})
+SENSOR_SCHEMA = vol.Schema(
+    {
+        vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+        vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
+    }
+)
 
-CONFIG_SCHEMA = vol.Schema({
-    DOMAIN: vol.Schema({
-        vol.Optional(CONF_BINARY_SENSOR): vol.All(
-            cv.ensure_list, [BINARY_SENSOR_SCHEMA]),
-        vol.Optional(CONF_SENSOR): vol.All(cv.ensure_list, [SENSOR_SCHEMA]),
-    }),
-}, extra=vol.ALLOW_EXTRA)
+CONFIG_SCHEMA = vol.Schema(
+    {
+        DOMAIN: vol.Schema(
+            {
+                vol.Optional(CONF_BINARY_SENSOR): vol.All(
+                    cv.ensure_list, [BINARY_SENSOR_SCHEMA]
+                ),
+                vol.Optional(CONF_SENSOR): vol.All(cv.ensure_list, [SENSOR_SCHEMA]),
+            }
+        )
+    },
+    extra=vol.ALLOW_EXTRA,
+)
 
 
 async def async_setup(hass, config):
@@ -73,9 +94,11 @@ async def async_setup(hass, config):
 
             hass.async_create_task(
                 discovery.async_load_platform(
-                    hass, platform, DOMAIN, entry_config, config)
+                    hass, platform, DOMAIN, entry_config, config
+                )
             )
     return True
+
 
 @Throttle(MIN_TIME_BETWEEN_UPDATES)
 async def update_data(hass):

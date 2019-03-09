@@ -1,12 +1,11 @@
 """Binary ensor platform for blueprint."""
 from homeassistant.components.binary_sensor import BinarySensorDevice
 from . import update_data
-from .const import (
-    BINARY_SENSOR_DEVICE_CLASS, DOMAIN_DATA, SENSOR_ICON)
+from .const import BINARY_SENSOR_DEVICE_CLASS, DOMAIN_DATA, SENSOR_ICON
 
 
 async def async_setup_platform(
-        hass, config, async_add_entities, discovery_info=None
+    hass, config, async_add_entities, discovery_info=None
 ):  # pylint: disable=unused-argument
     """Setup sensor platform."""
     async_add_entities([BlueprintBinarySensor(hass, discovery_info)], True)
@@ -19,7 +18,7 @@ class BlueprintBinarySensor(BinarySensorDevice):
         self.hass = hass
         self.attr = {}
         self._status = False
-        self._name = config['name']
+        self._name = config["name"]
 
     async def async_update(self):
         """Update the sensor."""
@@ -36,8 +35,8 @@ class BlueprintBinarySensor(BinarySensorDevice):
             self._status = updated.get("completed")
 
         # Set/update attributes
-        self.attr['user_id'] = updated.get('userId')
-        self.attr['title'] = updated.get('title')
+        self.attr["user_id"] = updated.get("userId")
+        self.attr["title"] = updated.get("title")
 
     @property
     def name(self):
