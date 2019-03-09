@@ -2,7 +2,7 @@ author:
   email: ludeeus@gmail.com
   homepage: https://github.com/ludeeus
   name: ludeeus
-description: WIP!, will be moved to custom-components when done.
+description: Blueprint for custom_component developers.
 files:
 - custom_components/blueprint/__init__.py
 - custom_components/blueprint/binary_sensor.py
