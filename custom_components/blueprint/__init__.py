@@ -14,8 +14,8 @@ from homeassistant.helpers import discovery
 from homeassistant.util import Throttle
 from .const import (
     DOMAIN_DATA, DOMAIN, ISSUE_URL, PLATFORMS, REQUIRED_FILES, STARTUP, URL,
-    VERSION, CONF_BINARY_SENSOR, CONF_SENSOR, CONF_SWITCH, CONF_ENABLED,
-    CONF_NAME, DEAFULT_NAME)
+    VERSION, CONF_BINARY_SENSOR, CONF_SENSOR, CONF_ENABLED, CONF_NAME,
+    DEAFULT_NAME)
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 
@@ -31,17 +31,11 @@ SENSOR_SCHEMA = vol.Schema({
     vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
 })
 
-SWITCH_SCHEMA = vol.Schema({
-    vol.Optional(CONF_ENABLED, default=False): cv.boolean,
-    vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
-})
-
 CONFIG_SCHEMA = vol.Schema({
     DOMAIN: vol.Schema({
         vol.Optional(CONF_BINARY_SENSOR): vol.All(
             cv.ensure_list, [BINARY_SENSOR_SCHEMA]),
         vol.Optional(CONF_SENSOR): vol.All(cv.ensure_list, [SENSOR_SCHEMA]),
-        vol.Optional(CONF_SWITCH): vol.All(cv.ensure_list, [SWITCH_SCHEMA]),
     }),
 }, extra=vol.ALLOW_EXTRA)
 
