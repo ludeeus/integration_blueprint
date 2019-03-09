@@ -1,7 +1,7 @@
 """Binary ensor platform for blueprint."""
 from homeassistant.components.binary_sensor import BinarySensorDevice
 from . import update_data
-from .const import BINARY_SENSOR_DEVICE_CLASS, DOMAIN_DATA, SENSOR_ICON
+from .const import BINARY_SENSOR_DEVICE_CLASS, DOMAIN_DATA
 
 
 async def async_setup_platform(
@@ -52,11 +52,6 @@ class BlueprintBinarySensor(BinarySensorDevice):
     def is_on(self):
         """Return true if the binary sensor is on."""
         return self._status
-
-    @property
-    def icon(self):
-        """Return the icon of the sensor."""
-        return SENSOR_ICON
 
     @property
     def device_state_attributes(self):
