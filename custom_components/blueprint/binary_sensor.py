@@ -51,7 +51,7 @@ class BlueprintBinarySensor(BinarySensorDevice):
     @property
     def is_on(self):
         """Return true if the binary sensor is on."""
-        return self._state
+        return self._status
 
     @property
     def icon(self):

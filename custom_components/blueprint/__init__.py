@@ -86,10 +86,11 @@ async def async_setup(hass, config):
             continue
 
         for entry in platform_config:
-            entry_config = platform_config[entry]
+            entry_config = entry
+            _LOGGER.critical(entry_config)
 
             # If entry is not enabled, skip.
-            if not platform_config.get(CONF_ENABLED):
+            if not entry_config[CONF_ENABLED]:
                 continue
 
             hass.async_create_task(
