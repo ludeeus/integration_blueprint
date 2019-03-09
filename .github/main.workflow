@@ -1,8 +1,11 @@
 workflow "Trigger: Push to master from admin account" {
   on = "push"
-  resolves = [
-    "HA Index"
-  ]
+  resolves = ["HA Index"]
+}
+
+workflow "Trigger: Push" {
+  on = "push"
+  resolves = ["Black Code Formatter"]
 }
 
 action "branch-filter" {
@@ -22,4 +25,9 @@ action "HA Index" {
   uses = "ludeeus/action-haindex@master"
   secrets = ["GITHUB_TOKEN"]
   needs = ["branch-filter", "Access control"]
+}
+
+action "Black Code Formatter" {
+  uses = "lgeiger/black-action@master"
+  args = "$GITHUB_WORKSPACE --check --diff"
 }
