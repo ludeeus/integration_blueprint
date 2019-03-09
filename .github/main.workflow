@@ -11,7 +11,7 @@ action "branch-filter" {
 }
 
 action "Access control" {
-  uses = "ludeeus/actions/accesscontrol@master"
+  uses = "ludeeus/action-accesscontrol@master"
   env = {
     ACTION_LEVEL = "admin"
   }
@@ -19,7 +19,7 @@ action "Access control" {
 }
 
 action "HA Index" {
-  uses = "ludeeus/actions/haindex@master"
+  uses = "ludeeus/action-haindex@master"
   secrets = ["GITHUB_TOKEN"]
   needs = ["branch-filter", "Access control"]
 }
