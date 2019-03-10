@@ -1,18 +1,18 @@
-"""Binary sensor platform for blueprint."""
-from homeassistant.components.binary_sensor import BinarySensorDevice
+"""Switch platform for blueprint."""
+from homeassistant.components.switch import SwitchDevice
 from . import update_data
-from .const import BINARY_SENSOR_DEVICE_CLASS, DOMAIN_DATA
+from .const import ICON, DOMAIN_DATA
 
 
 async def async_setup_platform(
     hass, config, async_add_entities, discovery_info=None
 ):  # pylint: disable=unused-argument
-    """Setup binary_sensor platform."""
-    async_add_entities([BlueprintBinarySensor(hass, discovery_info)], True)
+    """Setup switch platform."""
+    async_add_entities([BlueprintBinarySwitch(hass, discovery_info)], True)
 
 
-class BlueprintBinarySensor(BinarySensorDevice):
-    """blueprint binary_sensor class."""
+class BlueprintBinarySwitch(SwitchDevice):
+    """blueprint switch class."""
 
     def __init__(self, hass, config):
         self.hass = hass
@@ -21,7 +21,7 @@ class BlueprintBinarySensor(BinarySensorDevice):
         self._name = config["name"]
 
     async def async_update(self):
-        """Update the binary_sensor."""
+        """Update the switch."""
         # Send update "signal" to the component
         await update_data(self.hass)
 
@@ -38,19 +38,27 @@ class BlueprintBinarySensor(BinarySensorDevice):
         self.attr["user_id"] = updated.get("userId")
         self.attr["title"] = updated.get("title")
 
+    async def async_turn_on(self, **kwargs):  # pylint: disable=unused-argument
+        """Turn on the switch."""
+        self._status = True
+
+    async def async_turn_off(self, **kwargs):  # pylint: disable=unused-argument
+        """Turn off the switch."""
+        self._status = False
+
     @property
     def name(self):
-        """Return the name of the binary_sensor."""
+        """Return the name of the switch."""
         return self._name
 
     @property
-    def device_class(self):
-        """Return the class of this binary_sensor."""
-        return BINARY_SENSOR_DEVICE_CLASS
+    def icon(self):
+        """Return the icon of this switch."""
+        return ICON
 
     @property
     def is_on(self):
-        """Return true if the binary_sensor is on."""
+        """Return true if the switch is on."""
         return self._status
 
     @property

@@ -1,7 +1,7 @@
 """Sensor platform for blueprint."""
 from homeassistant.helpers.entity import Entity
 from . import update_data
-from .const import DOMAIN_DATA, SENSOR_ICON
+from .const import DOMAIN_DATA, ICON
 
 
 async def async_setup_platform(
@@ -51,7 +51,7 @@ class BlueprintSensor(Entity):
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        return SENSOR_ICON
+        return ICON
 
     @property
     def device_state_attributes(self):

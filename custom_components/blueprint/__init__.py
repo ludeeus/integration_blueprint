@@ -23,6 +23,7 @@ from .const import (
     VERSION,
     CONF_BINARY_SENSOR,
     CONF_SENSOR,
+    CONF_SWITCH,
     CONF_ENABLED,
     CONF_NAME,
     DEAFULT_NAME,
@@ -46,6 +47,13 @@ SENSOR_SCHEMA = vol.Schema(
     }
 )
 
+SWITCH_SCHEMA = vol.Schema(
+    {
+        vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+        vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
+    }
+)
+
 CONFIG_SCHEMA = vol.Schema(
     {
         DOMAIN: vol.Schema(
@@ -54,6 +62,7 @@ CONFIG_SCHEMA = vol.Schema(
                     cv.ensure_list, [BINARY_SENSOR_SCHEMA]
                 ),
                 vol.Optional(CONF_SENSOR): vol.All(cv.ensure_list, [SENSOR_SCHEMA]),
+                vol.Optional(CONF_SWITCH): vol.All(cv.ensure_list, [SWITCH_SCHEMA]),
             }
         )
     },

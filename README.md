@@ -27,8 +27,9 @@ _Component to integrate with [blueprint][blueprint]._
 
 Platform | Description
 -- | --
-`binary_sensor` | Show something `True` or `False`
+`binary_sensor` | Show something `True` or `False`.
 `sensor` | Show info from blueprint API.
+`switch` | Switch something `True` or `False`.
 
 ![example][exampleimg]
 
@@ -48,6 +49,7 @@ custom_components/blueprint/__init__.py
 custom_components/blueprint/binary_sensor.py
 custom_components/blueprint/const.py
 custom_components/blueprint/sensor.py
+custom_components/blueprint/switch.py
 ```
 
 ## Example configuration.yaml
@@ -58,6 +60,9 @@ blueprint:
     - enabled: true
       name: My custom name
   sensor:
+    - enabled: true
+      name: My custom name
+  switch:
     - enabled: true
       name: My custom name
 ```
@@ -83,6 +88,13 @@ Key | Type | Required | Default | Description
 `enabled` | `boolean` | `False` | `False` | Boolean to enable/disable the platform.
 `name` | `string` | `False` | `blueprint` | Custom name for the entity.
 
+
+### Configuration options for `switch` list
+
+Key | Type | Required | Default | Description
+-- | -- | -- | -- | --
+`enabled` | `boolean` | `False` | `False` | Boolean to enable/disable the platform.
+`name` | `string` | `False` | `blueprint` | Custom name for the entity.
 
 ## Contributions are welcome!
 
