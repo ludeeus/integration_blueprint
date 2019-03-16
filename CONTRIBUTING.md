@@ -7,7 +7,7 @@ Contributing to this project should be as easy and transparent as possible, whet
 - Submitting a fix
 - Proposing new features
 
-## Github are used for everything
+## Github is used for everything
 
 Github is used to host code, to track issues and feature requests, as well as accept pull requests.
 
@@ -43,7 +43,7 @@ People *love* thorough bug reports. I'm not even kidding.
 
 ## Use a Consistent Coding Style
 
-Use [black](https://github.com/ambv/black) to make sure the code follow the style.
+Use [black](https://github.com/ambv/black) to make sure the code follows the style.
 
 ## License
 
