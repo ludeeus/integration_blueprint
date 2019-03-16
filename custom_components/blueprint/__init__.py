@@ -35,21 +35,21 @@ _LOGGER = logging.getLogger(__name__)
 
 BINARY_SENSOR_SCHEMA = vol.Schema(
     {
-        vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+        vol.Optional(CONF_ENABLED, default=True): cv.boolean,
         vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
     }
 )
 
 SENSOR_SCHEMA = vol.Schema(
     {
-        vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+        vol.Optional(CONF_ENABLED, default=True): cv.boolean,
         vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
     }
 )
 
 SWITCH_SCHEMA = vol.Schema(
     {
-        vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+        vol.Optional(CONF_ENABLED, default=True): cv.boolean,
         vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
     }
 )
@@ -87,7 +87,7 @@ async def async_setup(hass, config):
 
     # Load platforms
     for platform in PLATFORMS:
-        # Get platform spesific configuration
+        # Get platform specific configuration
         platform_config = config[DOMAIN].get(platform, {})
 
         # If platform is not enabled, skip.
@@ -123,7 +123,7 @@ async def update_data(hass):
 
 
 async def check_files(hass):
-    """Retrun bool that idicate that all files are present."""
+    """Return bool that indicates if all files are present."""
     # Verify that the user downloaded all files.
     base = "{}/custom_components/{}/".format(hass.config.path(), DOMAIN)
     missing = []
