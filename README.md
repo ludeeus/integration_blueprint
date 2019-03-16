@@ -78,14 +78,14 @@ Key | Type | Required | Description
 
 Key | Type | Required | Default | Description
 -- | -- | -- | -- | --
-`enabled` | `boolean` | `False` | `False` | Boolean to enable/disable the platform.
+`enabled` | `boolean` | `False` | `True` | Boolean to enable/disable the platform.
 `name` | `string` | `False` | `blueprint` | Custom name for the entity.
 
 ### Configuration options for `sensor` list
 
 Key | Type | Required | Default | Description
 -- | -- | -- | -- | --
-`enabled` | `boolean` | `False` | `False` | Boolean to enable/disable the platform.
+`enabled` | `boolean` | `False` | `True` | Boolean to enable/disable the platform.
 `name` | `string` | `False` | `blueprint` | Custom name for the entity.
 
 
@@ -93,7 +93,7 @@ Key | Type | Required | Default | Description
 
 Key | Type | Required | Default | Description
 -- | -- | -- | -- | --
-`enabled` | `boolean` | `False` | `False` | Boolean to enable/disable the platform.
+`enabled` | `boolean` | `False` | `True` | Boolean to enable/disable the platform.
 `name` | `string` | `False` | `blueprint` | Custom name for the entity.
 
 ## Contributions are welcome!
