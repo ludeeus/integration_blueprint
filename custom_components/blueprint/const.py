@@ -1,4 +1,4 @@
-"""Conststants for blueprint."""
+"""Constants for blueprint."""
 # Base component constants
 DOMAIN = "blueprint"
 DOMAIN_DATA = "{}_data".format(DOMAIN)
