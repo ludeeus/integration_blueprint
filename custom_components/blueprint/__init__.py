@@ -35,21 +35,21 @@ _LOGGER = logging.getLogger(__name__)
 
 BINARY_SENSOR_SCHEMA = vol.Schema(
     {
-        vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+        vol.Optional(CONF_ENABLED, default=True): cv.boolean,
         vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
     }
 )
 
 SENSOR_SCHEMA = vol.Schema(
     {
-        vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+        vol.Optional(CONF_ENABLED, default=True): cv.boolean,
         vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
     }
 )
 
 SWITCH_SCHEMA = vol.Schema(
     {
-        vol.Optional(CONF_ENABLED, default=False): cv.boolean,
+        vol.Optional(CONF_ENABLED, default=True): cv.boolean,
         vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
     }
 )
