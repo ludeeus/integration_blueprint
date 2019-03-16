@@ -6,8 +6,8 @@ upon, to make more awesome stuff.
 
 ## Why?
 
-This is simple, buy having custom_components look (README + structure) look the same
-it is easier for developers to help each other and for users to start using it.
+This is simple, by having custom_components look (README + structure) the same
+it is easier for developers to help each other and for users to start using them.
 
 If you are a developer and you want to add things to this "blueprint" that you think more 
 developers will have use for, please open a PR to add it :)
@@ -35,7 +35,7 @@ Platform | Description
 
 ## Installation
 
-1. Using you tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
+1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
 2. If you do not have a `custom_components` directory (folder) there, you need to create it.
 3. In the `custom_components` directory (folder) create a new folder called `blueprint`.
 4. Download _all_ the files from the `custom_components/blueprint/` directory (folder) in this repository.
