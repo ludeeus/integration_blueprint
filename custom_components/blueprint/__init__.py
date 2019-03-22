@@ -26,7 +26,7 @@ from .const import (
     CONF_SWITCH,
     CONF_ENABLED,
     CONF_NAME,
-    DEAFULT_NAME,
+    DEFAULT_NAME,
 )
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
@@ -36,21 +36,21 @@ _LOGGER = logging.getLogger(__name__)
 BINARY_SENSOR_SCHEMA = vol.Schema(
     {
         vol.Optional(CONF_ENABLED, default=True): cv.boolean,
-        vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
+        vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
     }
 )
 
 SENSOR_SCHEMA = vol.Schema(
     {
         vol.Optional(CONF_ENABLED, default=True): cv.boolean,
-        vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
+        vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
     }
 )
 
 SWITCH_SCHEMA = vol.Schema(
     {
         vol.Optional(CONF_ENABLED, default=True): cv.boolean,
-        vol.Optional(CONF_NAME, default=DEAFULT_NAME): cv.string,
+        vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
     }
 )
 

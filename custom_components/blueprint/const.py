@@ -34,4 +34,4 @@ CONF_ENABLED = "enabled"
 CONF_NAME = "name"
 
 # Defaults
-DEAFULT_NAME = DOMAIN
+DEFAULT_NAME = DOMAIN
