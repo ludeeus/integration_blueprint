@@ -1,0 +1,7 @@
+[
+  "https://raw.githubusercontent.com/custom-components/blueprint/master/custom_components/blueprint/binary_sensor.py",
+  "https://raw.githubusercontent.com/custom-components/blueprint/master/custom_components/blueprint/const.py",
+  "https://raw.githubusercontent.com/custom-components/blueprint/master/custom_components/blueprint/sensor.py",
+  "https://raw.githubusercontent.com/custom-components/blueprint/master/custom_components/blueprint/switch.py",
+  "https://raw.githubusercontent.com/custom-components/blueprint/master/custom_components/blueprint/manifest.json"
+]
