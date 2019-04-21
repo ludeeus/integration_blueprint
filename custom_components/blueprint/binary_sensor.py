@@ -1,7 +1,6 @@
 """Binary sensor platform for blueprint."""
 from homeassistant.components.binary_sensor import BinarySensorDevice
-from . import update_data
-from .const import BINARY_SENSOR_DEVICE_CLASS, DOMAIN_DATA
+from .const import ATTRIBUTION, BINARY_SENSOR_DEVICE_CLASS, DEFAULT_NAME, DOMAIN_DATA
 
 
 async def async_setup_platform(
@@ -18,25 +17,26 @@ class BlueprintBinarySensor(BinarySensorDevice):
         self.hass = hass
         self.attr = {}
         self._status = False
-        self._name = config["name"]
+        self._name = config.get("name", DEFAULT_NAME)
 
     async def async_update(self):
         """Update the binary_sensor."""
         # Send update "signal" to the component
-        await update_data(self.hass)
+        await self.hass.data[DOMAIN_DATA]["client"].update_data()
 
         # Get new data (if any)
-        updated = self.hass.data[DOMAIN_DATA]
+        updated = self.hass.data[DOMAIN_DATA]["data"].get("data", {})
 
         # Check the data and update the value.
-        if updated.get("completed") is None:
+        if updated.get("bool_on") is None:
             self._status = self._status
         else:
-            self._status = updated.get("completed")
+            self._status = updated.get("bool_on")
 
         # Set/update attributes
-        self.attr["user_id"] = updated.get("userId")
-        self.attr["title"] = updated.get("title")
+        self.attr["attribution"] = ATTRIBUTION
+        self.attr["time"] = str(updated.get("time"))
+        self.attr["static"] = updated.get("static")
 
     @property
     def name(self):

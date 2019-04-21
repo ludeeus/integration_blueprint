@@ -1,7 +1,6 @@
 """Switch platform for blueprint."""
 from homeassistant.components.switch import SwitchDevice
-from . import update_data
-from .const import ICON, DOMAIN_DATA
+from .const import ATTRIBUTION, DEFAULT_NAME, DOMAIN_DATA, ICON
 
 
 async def async_setup_platform(
@@ -18,33 +17,31 @@ class BlueprintBinarySwitch(SwitchDevice):
         self.hass = hass
         self.attr = {}
         self._status = False
-        self._name = config["name"]
+        self._name = config.get("name", DEFAULT_NAME)
 
     async def async_update(self):
         """Update the switch."""
         # Send update "signal" to the component
-        await update_data(self.hass)
+        await self.hass.data[DOMAIN_DATA]["client"].update_data()
 
         # Get new data (if any)
-        updated = self.hass.data[DOMAIN_DATA]
+        updated = self.hass.data[DOMAIN_DATA]["data"].get("data", {})
 
         # Check the data and update the value.
-        if updated.get("completed") is None:
-            self._status = self._status
-        else:
-            self._status = updated.get("completed")
+        self._status = self.hass.data[DOMAIN_DATA]["client"].client.something
 
         # Set/update attributes
-        self.attr["user_id"] = updated.get("userId")
-        self.attr["title"] = updated.get("title")
+        self.attr["attribution"] = ATTRIBUTION
+        self.attr["time"] = str(updated.get("time"))
+        self.attr["static"] = updated.get("static")
 
     async def async_turn_on(self, **kwargs):  # pylint: disable=unused-argument
         """Turn on the switch."""
-        self._status = True
+        await self.hass.data[DOMAIN_DATA]["client"].client.change_something(True)
 
     async def async_turn_off(self, **kwargs):  # pylint: disable=unused-argument
         """Turn off the switch."""
-        self._status = False
+        await self.hass.data[DOMAIN_DATA]["client"].client.change_something(False)
 
     @property
     def name(self):

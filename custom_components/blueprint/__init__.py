@@ -7,26 +7,26 @@ https://github.com/custom-components/blueprint
 import os
 from datetime import timedelta
 import logging
-import requests
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import discovery
 from homeassistant.util import Throttle
 from .const import (
+    CONF_BINARY_SENSOR,
+    CONF_ENABLED,
+    CONF_NAME,
+    CONF_PASSWORD,
+    CONF_SENSOR,
+    CONF_SWITCH,
+    CONF_USERNAME,
+    DEFAULT_NAME,
     DOMAIN_DATA,
     DOMAIN,
     ISSUE_URL,
     PLATFORMS,
     REQUIRED_FILES,
     STARTUP,
-    URL,
     VERSION,
-    CONF_BINARY_SENSOR,
-    CONF_SENSOR,
-    CONF_SWITCH,
-    CONF_ENABLED,
-    CONF_NAME,
-    DEFAULT_NAME,
 )
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
@@ -58,6 +58,8 @@ CONFIG_SCHEMA = vol.Schema(
     {
         DOMAIN: vol.Schema(
             {
+                vol.Optional(CONF_USERNAME): cv.string,
+                vol.Optional(CONF_PASSWORD): cv.string,
                 vol.Optional(CONF_BINARY_SENSOR): vol.All(
                     cv.ensure_list, [BINARY_SENSOR_SCHEMA]
                 ),
@@ -72,6 +74,8 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(hass, config):
     """Set up this component."""
+    # Import client from a external python package hosted on PyPi
+    from sampleclient.client import Client
 
     # Print startup message
     startup = STARTUP.format(name=DOMAIN, version=VERSION, issueurl=ISSUE_URL)
@@ -84,6 +88,14 @@ async def async_setup(hass, config):
 
     # Create DATA dict
     hass.data[DOMAIN_DATA] = {}
+
+    # Get "global" configuration.
+    username = config[DOMAIN].get(CONF_USERNAME)
+    password = config[DOMAIN].get(CONF_PASSWORD)
+
+    # Configure the client.
+    client = Client(username, password)
+    hass.data[DOMAIN_DATA]["client"] = BlueprintData(hass, client)
 
     # Load platforms
     for platform in PLATFORMS:
@@ -110,16 +122,23 @@ async def async_setup(hass, config):
     return True
 
 
-@Throttle(MIN_TIME_BETWEEN_UPDATES)
-async def update_data(hass):
-    """Update data."""
-    # This is where the main logic to update platform data goes.
-    try:
-        request = requests.get(URL)
-        jsondata = request.json()
-        hass.data[DOMAIN_DATA] = jsondata
-    except Exception as error:  # pylint: disable=broad-except
-        _LOGGER.error("Could not update data - %s", error)
+class BlueprintData:
+    """This class handle communication and stores the data."""
+
+    def __init__(self, hass, client):
+        """Initialize the class."""
+        self.hass = hass
+        self.client = client
+
+    @Throttle(MIN_TIME_BETWEEN_UPDATES)
+    async def update_data(self):
+        """Update data."""
+        # This is where the main logic to update platform data goes.
+        try:
+            data = self.client.get_data()
+            self.hass.data[DOMAIN_DATA]["data"] = data
+        except Exception as error:  # pylint: disable=broad-except
+            _LOGGER.error("Could not update data - %s", error)
 
 
 async def check_files(hass):

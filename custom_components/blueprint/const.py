@@ -4,9 +4,15 @@ DOMAIN = "blueprint"
 DOMAIN_DATA = "{}_data".format(DOMAIN)
 VERSION = "0.0.1"
 PLATFORMS = ["binary_sensor", "sensor", "switch"]
-REQUIRED_FILES = ["binary_sensor.py", "const.py", "sensor.py", "switch.py"]
+REQUIRED_FILES = [
+    "binary_sensor.py",
+    "const.py",
+    "manifest.json",
+    "sensor.py",
+    "switch.py",
+]
 ISSUE_URL = "https://github.com/custom-components/blueprint/issues"
-
+ATTRIBUTION = "Data from this is provided by blueprint."
 STARTUP = """
 -------------------------------------------------------------------
 {name}
@@ -16,9 +22,6 @@ If you have any issues with this you need to open an issue here:
 {issueurl}
 -------------------------------------------------------------------
 """
-
-# Operational
-URL = "https://jsonplaceholder.typicode.com/todos/1"
 
 # Icons
 ICON = "mdi:format-quote-close"
@@ -32,6 +35,8 @@ CONF_SENSOR = "sensor"
 CONF_SWITCH = "switch"
 CONF_ENABLED = "enabled"
 CONF_NAME = "name"
+CONF_USERNAME = "username"
+CONF_PASSWORD = "password"
 
 # Defaults
 DEFAULT_NAME = DOMAIN

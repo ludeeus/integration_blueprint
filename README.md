@@ -4,6 +4,10 @@ The component and platforms in this repository are not meant to be used by a
 user, but as a "blueprint" that custom component developers can build
 upon, to make more awesome stuff.
 
+This blueprint uses ['sampleclient'](https://github.com/ludeeus/sampleclient) to simulate what you actually might use in your integration.
+
+HAVE FUN! 😎
+
 ## Why?
 
 This is simple, by having custom_components look (README + structure) the same
@@ -11,6 +15,29 @@ it is easier for developers to help each other and for users to start using them
 
 If you are a developer and you want to add things to this "blueprint" that you think more 
 developers will have use for, please open a PR to add it :)
+
+## What?
+
+This repository contains multiple files, here is a overview:
+
+File | Purpose
+-- | --
+`.github/ISSUE_TEMPLATE/feature_request.md` | Template for Feature Requests
+`.github/ISSUE_TEMPLATE/issue.md` | Template for issues
+`.github/main.workflow` | Workflow file for GitHub Actions
+`.github/settings.yml` | Probot settings to control the repository settings.
+`.github/stale.yml` | Probot settings for the stale bot.
+`custom_components/blueprint/__init__.py` | The component file for the integration.
+`custom_components/blueprint/binary_sensor.py` | Binary sensor platform for the integration.
+`custom_components/blueprint/const.py` | A file to hold shared variables/constants for the entire integration.
+`custom_components/blueprint/manifest.json` | A [manifest file](https://developers.home-assistant.io/docs/en/creating_integration_manifest.html) for Home Assistant.
+`custom_components/blueprint/sensor.py` | Sensor platform for the integration.
+`custom_components/blueprint/switch.py` | Switch sensor platform for the integration.
+`CONTRIBUTING.md` | Guidelines on how to contribute.
+`example.png` | Screenshot that demonstrate how it might look in the UI.
+`LICENSE` | The license file for the project.
+`README.md` | The file you are reading now, should contain info about the integration, installation and configuration instructions.
+`resources.json` | A special file that ['custom_updater'][customupdater] needs to download all required files.
 
 ***
 README content if this was a published component:
@@ -56,6 +83,7 @@ Using your HA configuration directory (folder) as a starting point you should no
 custom_components/blueprint/__init__.py
 custom_components/blueprint/binary_sensor.py
 custom_components/blueprint/const.py
+custom_components/blueprint/manifest.json
 custom_components/blueprint/sensor.py
 custom_components/blueprint/switch.py
 ```
@@ -64,6 +92,8 @@ custom_components/blueprint/switch.py
 
 ```yaml
 blueprint:
+  username: my_username
+  password: my_password
   binary_sensor:
     - enabled: true
       name: My custom name
@@ -79,8 +109,11 @@ blueprint:
 
 Key | Type | Required | Description
 -- | -- | -- | --
+`username` | `string` | `False` | Username for the client.
+`password` | `string` | `False` | Password for the client.
 `binary_sensor` | `list` | `False` | Configuration for the `binary_sensor` platform.
 `sensor` | `list` | `False` | Configuration for the `sensor` platform.
+`switch` | `list` | `False` | Configuration for the `switch` platform.
 
 ### Configuration options for `binary_sensor` list
 

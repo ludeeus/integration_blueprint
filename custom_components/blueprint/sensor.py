@@ -1,7 +1,6 @@
 """Sensor platform for blueprint."""
 from homeassistant.helpers.entity import Entity
-from . import update_data
-from .const import DOMAIN_DATA, ICON
+from .const import ATTRIBUTION, DEFAULT_NAME, DOMAIN_DATA, ICON
 
 
 async def async_setup_platform(
@@ -18,25 +17,26 @@ class BlueprintSensor(Entity):
         self.hass = hass
         self.attr = {}
         self._state = None
-        self._name = config["name"]
+        self._name = config.get("name", DEFAULT_NAME)
 
     async def async_update(self):
         """Update the sensor."""
         # Send update "signal" to the component
-        await update_data(self.hass)
+        await self.hass.data[DOMAIN_DATA]["client"].update_data()
 
         # Get new data (if any)
-        updated = self.hass.data[DOMAIN_DATA]
+        updated = self.hass.data[DOMAIN_DATA]["data"].get("data", {})
 
         # Check the data and update the value.
-        if updated.get("title") is None:
+        if updated.get("static") is None:
             self._state = self._status
         else:
-            self._state = updated.get("title")
+            self._state = updated.get("static")
 
         # Set/update attributes
-        self.attr["user_id"] = updated.get("userId")
-        self.attr["completed"] = updated.get("completed")
+        self.attr["attribution"] = ATTRIBUTION
+        self.attr["time"] = str(updated.get("time"))
+        self.attr["none"] = updated.get("none")
 
     @property
     def name(self):
