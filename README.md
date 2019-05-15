@@ -26,7 +26,6 @@ File | Purpose
 `.github/ISSUE_TEMPLATE/issue.md` | Template for issues
 `.github/main.workflow` | Workflow file for GitHub Actions
 `.github/settings.yml` | Probot settings to control the repository settings.
-`.github/stale.yml` | Probot settings for the stale bot.
 `custom_components/blueprint/__init__.py` | The component file for the integration.
 `custom_components/blueprint/binary_sensor.py` | Binary sensor platform for the integration.
 `custom_components/blueprint/const.py` | A file to hold shared variables/constants for the entire integration.
@@ -35,9 +34,9 @@ File | Purpose
 `custom_components/blueprint/switch.py` | Switch sensor platform for the integration.
 `CONTRIBUTING.md` | Guidelines on how to contribute.
 `example.png` | Screenshot that demonstrate how it might look in the UI.
+`example.yaml` | An example on how it might look in the users configuration.yaml file.
 `LICENSE` | The license file for the project.
 `README.md` | The file you are reading now, should contain info about the integration, installation and configuration instructions.
-`resources.json` | A special file that ['custom_updater'][customupdater] needs to download all required files.
 
 ***
 README content if this was a published component:
