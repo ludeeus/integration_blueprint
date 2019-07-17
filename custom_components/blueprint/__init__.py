@@ -108,7 +108,6 @@ async def async_setup(hass, config):
 
         for entry in platform_config:
             entry_config = entry
-            _LOGGER.critical(entry_config)
 
             # If entry is not enabled, skip.
             if not entry_config[CONF_ENABLED]:

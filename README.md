@@ -13,7 +13,7 @@ HAVE FUN! 😎
 This is simple, by having custom_components look (README + structure) the same
 it is easier for developers to help each other and for users to start using them.
 
-If you are a developer and you want to add things to this "blueprint" that you think more 
+If you are a developer and you want to add things to this "blueprint" that you think more
 developers will have use for, please open a PR to add it :)
 
 ## What?
@@ -24,7 +24,6 @@ File | Purpose
 -- | --
 `.github/ISSUE_TEMPLATE/feature_request.md` | Template for Feature Requests
 `.github/ISSUE_TEMPLATE/issue.md` | Template for issues
-`.github/main.workflow` | Workflow file for GitHub Actions
 `.github/settings.yml` | Probot settings to control the repository settings.
 `custom_components/blueprint/__init__.py` | The component file for the integration.
 `custom_components/blueprint/binary_sensor.py` | Binary sensor platform for the integration.
@@ -34,7 +33,7 @@ File | Purpose
 `custom_components/blueprint/switch.py` | Switch sensor platform for the integration.
 `CONTRIBUTING.md` | Guidelines on how to contribute.
 `example.png` | Screenshot that demonstrate how it might look in the UI.
-`example.yaml` | An example on how it might look in the users configuration.yaml file.
+`info.md` | An example on a info file (used by [hacs][hacs]).
 `LICENSE` | The license file for the project.
 `README.md` | The file you are reading now, should contain info about the integration, installation and configuration instructions.
 
@@ -46,9 +45,9 @@ README content if this was a published component:
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
-[![custom_updater][customupdaterbadge]][customupdater]
 [![License][license-shield]](LICENSE.md)
 
+[![hacs][hacsbadge]](hacs)
 ![Project Maintenance][maintenance-shield]
 [![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
@@ -147,8 +146,8 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
 [commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/blueprint.svg?style=for-the-badge
 [commits]: https://github.com/custom-components/blueprint/commits/master
-[customupdater]: https://github.com/custom-components/custom_updater
-[customupdaterbadge]: https://img.shields.io/badge/custom__updater-true-success.svg?style=for-the-badge
+[hacs]: https://github.com/custom-components/hacs
+[hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
 [discord]: https://discord.gg/Qa5fW2R
 [discord-shield]: https://img.shields.io/discord/330944238910963714.svg?style=for-the-badge
 [exampleimg]: example.png
