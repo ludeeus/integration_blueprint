@@ -22,9 +22,11 @@ This repository contains multiple files, here is a overview:
 
 File | Purpose
 -- | --
+`.devcontainer/*` | Used for development/testing with VSCODE, more info in the readme file in that dir.
 `.github/ISSUE_TEMPLATE/feature_request.md` | Template for Feature Requests
 `.github/ISSUE_TEMPLATE/issue.md` | Template for issues
 `.github/settings.yml` | Probot settings to control the repository settings.
+`.vscode/taks.json` | Tasks for the devcontainer.
 `custom_components/blueprint/__init__.py` | The component file for the integration.
 `custom_components/blueprint/binary_sensor.py` | Binary sensor platform for the integration.
 `custom_components/blueprint/const.py` | A file to hold shared variables/constants for the entire integration.
