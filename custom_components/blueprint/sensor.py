@@ -29,7 +29,7 @@ class BlueprintSensor(Entity):
 
         # Check the data and update the value.
         if updated.get("static") is None:
-            self._state = self._status
+            self._state = self._state
         else:
             self._state = updated.get("static")
 
