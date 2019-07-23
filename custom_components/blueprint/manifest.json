@@ -4,5 +4,5 @@
   "documentation": "https://github.com/custom-components/blueprint",
   "dependencies": [],
   "codeowners": ["@ludeeus"],
-  "requirements": ["sampleclient==0.0.1"]
+  "requirements": ["sampleclient", "integrationhelper"]
 }

@@ -11,6 +11,10 @@ import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import discovery
 from homeassistant.util import Throttle
+
+from sampleclient.client import Client
+from integrationhelper.const import CC_STARTUP_VERSION
+
 from .const import (
     CONF_BINARY_SENSOR,
     CONF_ENABLED,
@@ -25,7 +29,6 @@ from .const import (
     ISSUE_URL,
     PLATFORMS,
     REQUIRED_FILES,
-    STARTUP,
     VERSION,
 )
 
@@ -74,12 +77,8 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(hass, config):
     """Set up this component."""
-    # Import client from a external python package hosted on PyPi
-    from sampleclient.client import Client
-
     # Print startup message
-    startup = STARTUP.format(name=DOMAIN, version=VERSION, issueurl=ISSUE_URL)
-    _LOGGER.info(startup)
+    _LOGGER.info(CC_STARTUP_VERSION.format(name=DOMAIN, version=VERSION, issue_link=ISSUE_URL))
 
     # Check that all required files are present
     file_check = await check_files(hass)
@@ -143,7 +142,7 @@ class BlueprintData:
 async def check_files(hass):
     """Return bool that indicates if all files are present."""
     # Verify that the user downloaded all files.
-    base = "{}/custom_components/{}/".format(hass.config.path(), DOMAIN)
+    base = f"{hass.config.path()}/custom_components/{DOMAIN}/"
     missing = []
     for file in REQUIRED_FILES:
         fullpath = "{}{}".format(base, file)

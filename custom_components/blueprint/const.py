@@ -1,7 +1,7 @@
 """Constants for blueprint."""
 # Base component constants
 DOMAIN = "blueprint"
-DOMAIN_DATA = "{}_data".format(DOMAIN)
+DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
 PLATFORMS = ["binary_sensor", "sensor", "switch"]
 REQUIRED_FILES = [
@@ -13,15 +13,6 @@ REQUIRED_FILES = [
 ]
 ISSUE_URL = "https://github.com/custom-components/blueprint/issues"
 ATTRIBUTION = "Data from this is provided by blueprint."
-STARTUP = """
--------------------------------------------------------------------
-{name}
-Version: {version}
-This is a custom component
-If you have any issues with this you need to open an issue here:
-{issueurl}
--------------------------------------------------------------------
-"""
 
 # Icons
 ICON = "mdi:format-quote-close"
