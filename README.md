@@ -39,6 +39,7 @@ File | Purpose
 `info.md` | An example on a info file (used by [hacs][hacs]).
 `LICENSE` | The license file for the project.
 `README.md` | The file you are reading now, should contain info about the integration, installation and configuration instructions.
+`requirements.txt` | Python packages used by this integration.
 
 ***
 README content if this was a published component:
