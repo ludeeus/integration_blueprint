@@ -27,9 +27,10 @@ File | Purpose
 `.github/ISSUE_TEMPLATE/issue.md` | Template for issues
 `.github/settings.yml` | Probot settings to control the repository settings.
 `.vscode/taks.json` | Tasks for the devcontainer.
-`custom_components/blueprint/.translations/sensor.nb.json` | [Translation files.](https://developers.home-assistant.io/docs/en/next/internationalization_custom_component_localization.html#translation-strings)
+`custom_components/blueprint/.translations/*` | [Translation files.](https://developers.home-assistant.io/docs/en/next/internationalization_custom_component_localization.html#translation-strings)
 `custom_components/blueprint/__init__.py` | The component file for the integration.
 `custom_components/blueprint/binary_sensor.py` | Binary sensor platform for the integration.
+`custom_components/blueprint/config_flow.py` | Config flow file, this adds the UI configuration possibilities.
 `custom_components/blueprint/const.py` | A file to hold shared variables/constants for the entire integration.
 `custom_components/blueprint/manifest.json` | A [manifest file](https://developers.home-assistant.io/docs/en/creating_integration_manifest.html) for Home Assistant.
 `custom_components/blueprint/sensor.py` | Sensor platform for the integration.
@@ -77,13 +78,20 @@ Platform | Description
 3. In the `custom_components` directory (folder) create a new folder called `blueprint`.
 4. Download _all_ the files from the `custom_components/blueprint/` directory (folder) in this repository.
 5. Place the files you downloaded in the new directory (folder) you created.
-6. Add `blueprint:` to your HA configuration.
+6. Restart Home Assistant
+7. Choose:
+   - Add `blueprint:` to your HA configuration.
+   - In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Blueprint"
 
 Using your HA configuration directory (folder) as a starting point you should now also have this:
 
 ```text
+custom_components/blueprint/.translations/en.json
+custom_components/blueprint/.translations/nb.json
+custom_components/blueprint/.translations/sensor.nb.json
 custom_components/blueprint/__init__.py
 custom_components/blueprint/binary_sensor.py
+custom_components/blueprint/config_flow.py
 custom_components/blueprint/const.py
 custom_components/blueprint/manifest.json
 custom_components/blueprint/sensor.py
