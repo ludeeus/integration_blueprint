@@ -1,6 +1,6 @@
 """Switch platform for blueprint."""
 from homeassistant.components.switch import SwitchDevice
-from .const import ATTRIBUTION, DEFAULT_NAME, DOMAIN_DATA, ICON
+from .const import ATTRIBUTION, DEFAULT_NAME, DOMAIN_DATA, ICON, DOMAIN
 
 
 async def async_setup_platform(
@@ -8,6 +8,11 @@ async def async_setup_platform(
 ):  # pylint: disable=unused-argument
     """Setup switch platform."""
     async_add_entities([BlueprintBinarySwitch(hass, discovery_info)], True)
+
+
+async def async_setup_entry(hass, config_entry, async_add_devices):
+    """Setup sensor platform."""
+    async_add_devices([BlueprintBinarySwitch(hass, {})], True)
 
 
 class BlueprintBinarySwitch(SwitchDevice):
@@ -42,6 +47,21 @@ class BlueprintBinarySwitch(SwitchDevice):
     async def async_turn_off(self, **kwargs):  # pylint: disable=unused-argument
         """Turn off the switch."""
         await self.hass.data[DOMAIN_DATA]["client"].client.change_something(False)
+
+    @property
+    def unique_id(self):
+        """Return a unique ID to use for this switch."""
+        return (
+            "0818a0cd-745c-48fd"
+        )  # Don't had code this, use something from the device/service.
+
+    @property
+    def device_info(self):
+        return {
+            "identifiers": {(DOMAIN, self.unique_id)},
+            "name": self.name,
+            "manufacturer": "Blueprint",
+        }
 
     @property
     def name(self):

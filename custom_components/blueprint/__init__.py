@@ -8,6 +8,7 @@ import os
 from datetime import timedelta
 import logging
 import voluptuous as vol
+from homeassistant import config_entries
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import discovery
 from homeassistant.util import Throttle
@@ -76,9 +77,15 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 async def async_setup(hass, config):
-    """Set up this component."""
+    """Set up this component using YAML."""
+    if config.get(DOMAIN) is None:
+        # We get her if the integration is set up using config flow
+        return True
+
     # Print startup message
-    _LOGGER.info(CC_STARTUP_VERSION.format(name=DOMAIN, version=VERSION, issue_link=ISSUE_URL))
+    _LOGGER.info(
+        CC_STARTUP_VERSION.format(name=DOMAIN, version=VERSION, issue_link=ISSUE_URL)
+    )
 
     # Check that all required files are present
     file_check = await check_files(hass)
@@ -117,6 +124,60 @@ async def async_setup(hass, config):
                     hass, platform, DOMAIN, entry_config, config
                 )
             )
+    hass.async_create_task(
+        hass.config_entries.flow.async_init(
+            DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data={}
+        )
+    )
+    return True
+
+
+async def async_setup_entry(hass, config_entry):
+    """Set up this integration using UI."""
+    conf = hass.data.get(DOMAIN_DATA)
+    if config_entry.source == config_entries.SOURCE_IMPORT:
+        if conf is None:
+            hass.async_create_task(
+                hass.config_entries.async_remove(config_entry.entry_id)
+            )
+        return False
+
+    # Print startup message
+    _LOGGER.info(
+        CC_STARTUP_VERSION.format(name=DOMAIN, version=VERSION, issue_link=ISSUE_URL)
+    )
+
+    # Check that all required files are present
+    file_check = await check_files(hass)
+    if not file_check:
+        return False
+
+    # Create DATA dict
+    hass.data[DOMAIN_DATA] = {}
+
+    # Get "global" configuration.
+    username = config_entry.data.get(CONF_USERNAME)
+    password = config_entry.data.get(CONF_PASSWORD)
+
+    # Configure the client.
+    client = Client(username, password)
+    hass.data[DOMAIN_DATA]["client"] = BlueprintData(hass, client)
+
+    # Add binary_sensor
+    hass.async_add_job(
+        hass.config_entries.async_forward_entry_setup(config_entry, "binary_sensor")
+    )
+
+    # Add sensor
+    hass.async_add_job(
+        hass.config_entries.async_forward_entry_setup(config_entry, "sensor")
+    )
+
+    # Add switch
+    hass.async_add_job(
+        hass.config_entries.async_forward_entry_setup(config_entry, "switch")
+    )
+
     return True
 
 
@@ -156,3 +217,28 @@ async def check_files(hass):
         returnvalue = True
 
     return returnvalue
+
+
+async def async_remove_entry(hass, config_entry):
+    """Handle removal of an entry."""
+    try:
+        await hass.config_entries.async_forward_entry_unload(
+            config_entry, "binary_sensor"
+        )
+        _LOGGER.info(
+            "Successfully removed binary_sensor from the blueprint integration"
+        )
+    except ValueError:
+        pass
+
+    try:
+        await hass.config_entries.async_forward_entry_unload(config_entry, "sensor")
+        _LOGGER.info("Successfully removed sensor from the blueprint integration")
+    except ValueError:
+        pass
+
+    try:
+        await hass.config_entries.async_forward_entry_unload(config_entry, "switch")
+        _LOGGER.info("Successfully removed switch from the blueprint integration")
+    except ValueError:
+        pass

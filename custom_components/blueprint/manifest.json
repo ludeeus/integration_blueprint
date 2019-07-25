@@ -3,6 +3,13 @@
   "name": "Blueprint",
   "documentation": "https://github.com/custom-components/blueprint",
   "dependencies": [],
-  "codeowners": ["@ludeeus"],
-  "requirements": ["sampleclient", "integrationhelper"]
+  "config_flow": true,
+  "codeowners": [
+    "@ludeeus"
+  ],
+  "requirements": [
+    "sampleclient",
+    "integrationhelper"
+  ],
+  "homeassistant": "0.96.0"
 }

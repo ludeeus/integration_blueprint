@@ -1,6 +1,12 @@
 """Binary sensor platform for blueprint."""
 from homeassistant.components.binary_sensor import BinarySensorDevice
-from .const import ATTRIBUTION, BINARY_SENSOR_DEVICE_CLASS, DEFAULT_NAME, DOMAIN_DATA
+from .const import (
+    ATTRIBUTION,
+    BINARY_SENSOR_DEVICE_CLASS,
+    DEFAULT_NAME,
+    DOMAIN_DATA,
+    DOMAIN,
+)
 
 
 async def async_setup_platform(
@@ -8,6 +14,11 @@ async def async_setup_platform(
 ):  # pylint: disable=unused-argument
     """Setup binary_sensor platform."""
     async_add_entities([BlueprintBinarySensor(hass, discovery_info)], True)
+
+
+async def async_setup_entry(hass, config_entry, async_add_devices):
+    """Setup sensor platform."""
+    async_add_devices([BlueprintBinarySensor(hass, {})], True)
 
 
 class BlueprintBinarySensor(BinarySensorDevice):
@@ -37,6 +48,21 @@ class BlueprintBinarySensor(BinarySensorDevice):
         self.attr["attribution"] = ATTRIBUTION
         self.attr["time"] = str(updated.get("time"))
         self.attr["static"] = updated.get("static")
+
+    @property
+    def unique_id(self):
+        """Return a unique ID to use for this binary_sensor."""
+        return (
+            "0919a0cd-745c-48fd"
+        )  # Don't had code this, use something from the device/service.
+
+    @property
+    def device_info(self):
+        return {
+            "identifiers": {(DOMAIN, self.unique_id)},
+            "name": self.name,
+            "manufacturer": "Blueprint",
+        }
 
     @property
     def name(self):

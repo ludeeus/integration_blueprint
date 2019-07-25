@@ -1,6 +1,6 @@
 """Sensor platform for blueprint."""
 from homeassistant.helpers.entity import Entity
-from .const import ATTRIBUTION, DEFAULT_NAME, DOMAIN_DATA, ICON
+from .const import ATTRIBUTION, DEFAULT_NAME, DOMAIN_DATA, ICON, DOMAIN
 
 
 async def async_setup_platform(
@@ -8,6 +8,11 @@ async def async_setup_platform(
 ):  # pylint: disable=unused-argument
     """Setup sensor platform."""
     async_add_entities([BlueprintSensor(hass, discovery_info)], True)
+
+
+async def async_setup_entry(hass, config_entry, async_add_devices):
+    """Setup sensor platform."""
+    async_add_devices([BlueprintSensor(hass, {})], True)
 
 
 class BlueprintSensor(Entity):
@@ -37,6 +42,21 @@ class BlueprintSensor(Entity):
         self.attr["attribution"] = ATTRIBUTION
         self.attr["time"] = str(updated.get("time"))
         self.attr["none"] = updated.get("none")
+
+    @property
+    def unique_id(self):
+        """Return a unique ID to use for this sensor."""
+        return (
+            "0717a0cd-745c-48fd"
+        )  # Don't had code this, use something from the device/service.
+
+    @property
+    def device_info(self):
+        return {
+            "identifiers": {(DOMAIN, self.unique_id)},
+            "name": self.name,
+            "manufacturer": "Blueprint",
+        }
 
     @property
     def name(self):
