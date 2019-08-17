@@ -13,7 +13,7 @@ function StartHomeAssistant {
 }
 
 function UpdgradeHomeAssistantDev {
-  python -m pip install --upgrade git+git://github.com/home-assistant/home-assistant.git@dev
+  python -m pip install --upgrade git+https://github.com/home-assistant/home-assistant@dev
 }
 
 function SetHomeAssistantVersion {

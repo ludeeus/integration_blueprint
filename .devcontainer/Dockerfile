@@ -7,7 +7,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN python -m pip install --upgrade colorlog black pylint
-RUN python -m pip install --upgrade git+git://github.com/home-assistant/home-assistant.git@dev
+RUN python -m pip install --upgrade git+https://github.com/home-assistant/home-assistant@dev
 RUN cd && mkdir -p /config/custom_components
 
 
