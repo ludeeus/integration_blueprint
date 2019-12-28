@@ -53,7 +53,7 @@ class BlueprintBinarySwitch(SwitchDevice):
         """Return a unique ID to use for this switch."""
         return (
             "0818a0cd-745c-48fd"
-        )  # Don't had code this, use something from the device/service.
+        )  # Don't hard code this, use something from the device/service.
 
     @property
     def device_info(self):
