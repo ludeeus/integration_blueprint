@@ -48,7 +48,7 @@ class BlueprintSensor(Entity):
         """Return a unique ID to use for this sensor."""
         return (
             "0717a0cd-745c-48fd"
-        )  # Don't had code this, use something from the device/service.
+        )  # Don't hard code this, use something from the device/service.
 
     @property
     def device_info(self):

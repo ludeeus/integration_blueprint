@@ -79,7 +79,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup(hass, config):
     """Set up this component using YAML."""
     if config.get(DOMAIN) is None:
-        # We get her if the integration is set up using config flow
+        # We get here if the integration is set up using config flow
         return True
 
     # Print startup message
