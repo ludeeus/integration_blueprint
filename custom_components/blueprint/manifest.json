@@ -10,6 +10,5 @@
   "requirements": [
     "sampleclient",
     "integrationhelper"
-  ],
-  "homeassistant": "0.96.0"
+  ]
 }
