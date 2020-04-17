@@ -8,7 +8,6 @@
     "@ludeeus"
   ],
   "requirements": [
-    "sampleclient",
-    "integrationhelper"
+    "sampleclient"
   ]
 }

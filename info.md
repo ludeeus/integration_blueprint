@@ -25,58 +25,14 @@ Platform | Description
 ## Installation
 
 1. Click install.
-1. Add `blueprint:` to your HA configuration.
+1. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Blueprint".
 
 {% endif %}
-## Example configuration.yaml
-
-```yaml
-blueprint:
-  username: my_username
-  password: my_password
-  binary_sensor:
-    - enabled: true
-      name: My custom name
-  sensor:
-    - enabled: true
-      name: My custom name
-  switch:
-    - enabled: true
-      name: My custom name
-```
-
-## Configuration options
-
-Key | Type | Required | Description
--- | -- | -- | --
-`username` | `string` | `False` | Username for the client.
-`password` | `string` | `False` | Password for the client.
-`binary_sensor` | `list` | `False` | Configuration for the `binary_sensor` platform.
-`sensor` | `list` | `False` | Configuration for the `sensor` platform.
-`switch` | `list` | `False` | Configuration for the `switch` platform.
-
-### Configuration options for `binary_sensor` list
-
-Key | Type | Required | Default | Description
--- | -- | -- | -- | --
-`enabled` | `boolean` | `False` | `True` | Boolean to enable/disable the platform.
-`name` | `string` | `False` | `blueprint` | Custom name for the entity.
-
-### Configuration options for `sensor` list
-
-Key | Type | Required | Default | Description
--- | -- | -- | -- | --
-`enabled` | `boolean` | `False` | `True` | Boolean to enable/disable the platform.
-`name` | `string` | `False` | `blueprint` | Custom name for the entity.
 
 
-### Configuration options for `switch` list
+## Configuration is done in the UI
 
-Key | Type | Required | Default | Description
--- | -- | -- | -- | --
-`enabled` | `boolean` | `False` | `True` | Boolean to enable/disable the platform.
-`name` | `string` | `False` | `blueprint` | Custom name for the entity.
-
+<!---->
 
 ***
 
