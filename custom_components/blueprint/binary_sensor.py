@@ -2,6 +2,7 @@
 from homeassistant.components.binary_sensor import BinarySensorDevice
 
 from custom_components.blueprint.const import (
+    BINARY_SENSOR,
     BINARY_SENSOR_DEVICE_CLASS,
     DEFAULT_NAME,
     DOMAIN,
@@ -9,10 +10,10 @@ from custom_components.blueprint.const import (
 from custom_components.blueprint.entity import BlueprintEntity
 
 
-async def async_setup_entry(hass, config_entry, async_add_devices):
+async def async_setup_entry(hass, entry, async_add_devices):
     """Setup binary_sensor platform."""
-    coordinator = hass.data[DOMAIN][config_entry.entry_id]
-    async_add_devices([BlueprintBinarySensor(coordinator, config_entry)])
+    coordinator = hass.data[DOMAIN][entry.entry_id]
+    async_add_devices([BlueprintBinarySensor(coordinator, entry)])
 
 
 class BlueprintBinarySensor(BlueprintEntity, BinarySensorDevice):
@@ -21,7 +22,7 @@ class BlueprintBinarySensor(BlueprintEntity, BinarySensorDevice):
     @property
     def name(self):
         """Return the name of the binary_sensor."""
-        return DEFAULT_NAME
+        return f"{DEFAULT_NAME}_{BINARY_SENSOR}"
 
     @property
     def device_class(self):

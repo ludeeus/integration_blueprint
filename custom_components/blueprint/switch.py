@@ -1,15 +1,15 @@
 """Switch platform for blueprint."""
 from homeassistant.components.switch import SwitchDevice
 
-from custom_components.blueprint.const import DEFAULT_NAME, DOMAIN, ICON
+from custom_components.blueprint.const import DEFAULT_NAME, DOMAIN, ICON, SWITCH
 
 from custom_components.blueprint.entity import BlueprintEntity
 
 
-async def async_setup_entry(hass, config_entry, async_add_devices):
+async def async_setup_entry(hass, entry, async_add_devices):
     """Setup sensor platform."""
-    coordinator = hass.data[DOMAIN][config_entry.entry_id]
-    async_add_devices([BlueprintBinarySwitch(coordinator, config_entry)])
+    coordinator = hass.data[DOMAIN][entry.entry_id]
+    async_add_devices([BlueprintBinarySwitch(coordinator, entry)])
 
 
 class BlueprintBinarySwitch(BlueprintEntity, SwitchDevice):
@@ -17,20 +17,18 @@ class BlueprintBinarySwitch(BlueprintEntity, SwitchDevice):
 
     async def async_turn_on(self, **kwargs):  # pylint: disable=unused-argument
         """Turn on the switch."""
-        # await self.coordinator.api.change_something(True)
-        self.coordinator.api.change_something(True)
+        await self.coordinator.api.async_change_something(True)
         await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **kwargs):  # pylint: disable=unused-argument
         """Turn off the switch."""
-        # await self.coordinator.api.change_something(False)
-        self.coordinator.api.change_something(False)
+        await self.coordinator.api.async_change_something(False)
         await self.coordinator.async_request_refresh()
 
     @property
     def name(self):
         """Return the name of the switch."""
-        return DEFAULT_NAME
+        return f"{DEFAULT_NAME}_{SWITCH}"
 
     @property
     def icon(self):

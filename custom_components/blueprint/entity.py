@@ -1,7 +1,7 @@
 """BlueprintEntity class"""
 from homeassistant.helpers import entity
 
-from custom_components.blueprint.const import DOMAIN, VERSION
+from custom_components.blueprint.const import DOMAIN, VERSION, NAME
 
 
 class BlueprintEntity(entity.Entity):
@@ -28,9 +28,9 @@ class BlueprintEntity(entity.Entity):
     def device_info(self):
         return {
             "identifiers": {(DOMAIN, self.unique_id)},
-            "name": self.name,
+            "name": NAME,
             "model": VERSION,
-            "manufacturer": "Blueprint",
+            "manufacturer": NAME,
         }
 
     @property
