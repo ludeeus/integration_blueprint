@@ -1,0 +1,26 @@
+name: Push actions
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+
+jobs:
+  hassfest:
+    runs-on: "ubuntu-latest"
+    name: Validate with hassfest
+    steps:
+        - uses: "actions/checkout@v2"
+        - uses: "home-assistant/actions/hassfest@master"
+
+  style:
+    runs-on: "ubuntu-latest"
+    name: Check style formatting
+    steps:
+        - uses: "actions/checkout@v2"
+        - uses: "actions/setup-python@v1"
+          with:
+            python-version: "3.x"
+        - run: python3 -m pip install black
+        - run: black .

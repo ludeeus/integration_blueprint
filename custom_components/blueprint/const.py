@@ -1,20 +1,11 @@
 """Constants for blueprint."""
 # Base component constants
+NAME = "Blueprint"
 DOMAIN = "blueprint"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
-PLATFORMS = ["binary_sensor", "sensor", "switch"]
-REQUIRED_FILES = [
-    ".translations/en.json",
-    "binary_sensor.py",
-    "const.py",
-    "config_flow.py",
-    "manifest.json",
-    "sensor.py",
-    "switch.py",
-]
+
 ISSUE_URL = "https://github.com/custom-components/blueprint/issues"
-ATTRIBUTION = "Data from this is provided by blueprint."
 
 # Icons
 ICON = "mdi:format-quote-close"
@@ -22,14 +13,28 @@ ICON = "mdi:format-quote-close"
 # Device classes
 BINARY_SENSOR_DEVICE_CLASS = "connectivity"
 
-# Configuration
-CONF_BINARY_SENSOR = "binary_sensor"
-CONF_SENSOR = "sensor"
-CONF_SWITCH = "switch"
+# Platforms
+BINARY_SENSOR = "binary_sensor"
+SENSOR = "sensor"
+SWITCH = "switch"
+PLATFORMS = [BINARY_SENSOR, SENSOR, SWITCH]
+
+
+# Configuration and options
 CONF_ENABLED = "enabled"
-CONF_NAME = "name"
 CONF_USERNAME = "username"
 CONF_PASSWORD = "password"
 
 # Defaults
 DEFAULT_NAME = DOMAIN
+
+
+STARTUP_MESSAGE = f"""
+-------------------------------------------------------------------
+{NAME}
+Version: {VERSION}
+This is a custom integration!
+If you have any issues with this you need to open an issue here:
+{ISSUE_URL}
+-------------------------------------------------------------------
+"""

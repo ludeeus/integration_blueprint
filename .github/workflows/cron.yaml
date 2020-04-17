@@ -1,14 +1,13 @@
-name: Validate with hassfest
+name: Cron actions
 
 on:
-  push:
-  pull_request:
   schedule:
     - cron:  '0 0 * * *'
 
 jobs:
-  validate:
+  hassfest:
     runs-on: "ubuntu-latest"
+    name: Validate with hassfest
     steps:
         - uses: "actions/checkout@v2"
-        - uses: home-assistant/actions/hassfest@master
+        - uses: "home-assistant/actions/hassfest@master"
