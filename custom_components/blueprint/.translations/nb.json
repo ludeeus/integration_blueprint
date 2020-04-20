@@ -13,6 +13,9 @@
         },
         "error": {
             "auth": "Brukernavn/Passord er feil."
+        },
+        "abort": {
+            "single_instance_allowed": "Du kan konfigurere Blueprint kun en gang."
         }
     },
     "options": {

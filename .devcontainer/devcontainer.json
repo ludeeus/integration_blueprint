@@ -5,7 +5,7 @@
 	"appPort": [
 		"9123:8123"
 	],
-	"postCreateCommand": "dc install",
+	"postCreateCommand": "cc install",
 	"runArgs": [
 		"-v",
 		"${env:HOME}${env:USERPROFILE}/.ssh:/tmp/.ssh"

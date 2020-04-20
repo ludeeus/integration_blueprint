@@ -13,6 +13,9 @@
         },
         "error": {
             "auth": "Username/Password is wrong."
+        },
+        "abort": {
+            "single_instance_allowed": "Only a single configuration of Blueprint is allowed."
         }
     },
     "options": {

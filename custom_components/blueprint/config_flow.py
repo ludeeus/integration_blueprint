@@ -1,15 +1,14 @@
 """Adds config flow for Blueprint."""
-from collections import OrderedDict
-
 import voluptuous as vol
-from sampleclient.client import Client
 from homeassistant import config_entries
 from homeassistant.core import callback
 
-from custom_components.blueprint.const import (
-    DOMAIN,
+from sampleclient.client import Client
+
+from custom_components.blueprint.const import (  # pylint: disable=unused-import
     CONF_PASSWORD,
     CONF_USERNAME,
+    DOMAIN,
     PLATFORMS,
 )
 
@@ -25,10 +24,15 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         self._errors = {}
 
     async def async_step_user(
-        self, user_input={}
-    ):  # pylint: disable=dangerous-default-value
+        self, user_input=None  # pylint: disable=bad-continuation
+    ):
         """Handle a flow initialized by the user."""
         self._errors = {}
+
+        # Uncomment the next 2 lines if only a single instance of the integration is allowed:
+        # if self._async_current_entries():
+        #     return self.async_abort(reason="single_instance_allowed")
+
         if user_input is not None:
             valid = await self._test_credentials(
                 user_input[CONF_USERNAME], user_input[CONF_PASSWORD]
@@ -49,7 +53,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     def async_get_options_flow(config_entry):
         return BlueprintOptionsFlowHandler(config_entry)
 
-    async def _show_config_form(self, user_input):
+    async def _show_config_form(self, user_input):  # pylint: disable=unused-argument
         """Show the configuration form to edit location data."""
         return self.async_show_form(
             step_id="user",
@@ -78,7 +82,7 @@ class BlueprintOptionsFlowHandler(config_entries.OptionsFlow):
         self.config_entry = config_entry
         self.options = dict(config_entry.options)
 
-    async def async_step_init(self, user_input=None):
+    async def async_step_init(self, user_input=None):  # pylint: disable=unused-argument
         """Manage the options."""
         return await self.async_step_user()
 
