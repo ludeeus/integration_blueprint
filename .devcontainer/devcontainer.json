@@ -5,7 +5,7 @@
 	"appPort": [
 		"9123:8123"
 	],
-	"postCreateCommand": "cc install",
+	"postCreateCommand": "container install",
 	"runArgs": [
 		"-v",
 		"${env:HOME}${env:USERPROFILE}/.ssh:/tmp/.ssh"
