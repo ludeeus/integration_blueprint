@@ -1,7 +1,6 @@
 """BlueprintEntity class"""
+from custom_components.blueprint.const import DOMAIN, NAME, VERSION
 from homeassistant.helpers import entity
-
-from custom_components.blueprint.const import DOMAIN, VERSION, NAME
 
 
 class BlueprintEntity(entity.Entity):
