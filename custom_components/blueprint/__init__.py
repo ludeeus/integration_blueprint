@@ -14,7 +14,13 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from sampleclient.client import Client
 
-from .const import CONF_PASSWORD, CONF_USERNAME, DOMAIN, PLATFORMS, STARTUP_MESSAGE
+from custom_components.blueprint.const import (
+    CONF_PASSWORD,
+    CONF_USERNAME,
+    DOMAIN,
+    PLATFORMS,
+    STARTUP_MESSAGE,
+)
 
 SCAN_INTERVAL = timedelta(seconds=30)
 
