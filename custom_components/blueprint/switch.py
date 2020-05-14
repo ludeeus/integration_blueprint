@@ -1,7 +1,8 @@
 """Switch platform for blueprint."""
+from homeassistant.components.switch import SwitchDevice
+
 from custom_components.blueprint.const import DEFAULT_NAME, DOMAIN, ICON, SWITCH
 from custom_components.blueprint.entity import BlueprintEntity
-from homeassistant.components.switch import SwitchDevice
 
 
 async def async_setup_entry(hass, entry, async_add_devices):

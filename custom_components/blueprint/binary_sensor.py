@@ -1,4 +1,6 @@
 """Binary sensor platform for blueprint."""
+from homeassistant.components.binary_sensor import BinarySensorDevice
+
 from custom_components.blueprint.const import (
     BINARY_SENSOR,
     BINARY_SENSOR_DEVICE_CLASS,
@@ -6,7 +8,6 @@ from custom_components.blueprint.const import (
     DOMAIN,
 )
 from custom_components.blueprint.entity import BlueprintEntity
-from homeassistant.components.binary_sensor import BinarySensorDevice
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
