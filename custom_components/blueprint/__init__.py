@@ -5,8 +5,8 @@ For more details about this integration, please refer to
 https://github.com/custom-components/blueprint
 """
 import asyncio
-import logging
 from datetime import timedelta
+import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import Config, HomeAssistant
@@ -14,7 +14,7 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from sampleclient.client import Client
 
-from .const import (
+from custom_components.blueprint.const import (
     CONF_PASSWORD,
     CONF_USERNAME,
     DOMAIN,
@@ -70,9 +70,7 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
         self.api = Client(username, password)
         self.platforms = []
 
-        super().__init__(
-            hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL,
-        )
+        super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
 
     async def _async_update_data(self):
         """Update data via library."""

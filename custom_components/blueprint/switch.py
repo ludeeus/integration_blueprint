@@ -2,7 +2,6 @@
 from homeassistant.components.switch import SwitchDevice
 
 from custom_components.blueprint.const import DEFAULT_NAME, DOMAIN, ICON, SWITCH
-
 from custom_components.blueprint.entity import BlueprintEntity
 
 

@@ -1,9 +1,8 @@
 """Adds config flow for Blueprint."""
-import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
-
 from sampleclient.client import Client
+import voluptuous as vol
 
 from custom_components.blueprint.const import (  # pylint: disable=unused-import
     CONF_PASSWORD,
@@ -58,7 +57,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
-                {vol.Required(CONF_USERNAME): str, vol.Required(CONF_PASSWORD): str,}
+                {vol.Required(CONF_USERNAME): str, vol.Required(CONF_PASSWORD): str}
             ),
             errors=self._errors,
         )
