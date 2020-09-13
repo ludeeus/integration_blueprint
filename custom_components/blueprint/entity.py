@@ -1,23 +1,13 @@
 """BlueprintEntity class"""
-from homeassistant.helpers import entity
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from custom_components.blueprint.const import DOMAIN, NAME, VERSION
 
 
-class BlueprintEntity(entity.Entity):
+class BlueprintEntity(CoordinatorEntity):
     def __init__(self, coordinator, config_entry):
-        self.coordinator = coordinator
+        super().__init__(coordinator)
         self.config_entry = config_entry
-
-    @property
-    def should_poll(self):
-        """No need to poll. Coordinator notifies entity of updates."""
-        return False
-
-    @property
-    def available(self):
-        """Return if entity is available."""
-        return self.coordinator.last_update_success
 
     @property
     def unique_id(self):
@@ -40,13 +30,3 @@ class BlueprintEntity(entity.Entity):
             "time": str(self.coordinator.data.get("time")),
             "static": self.coordinator.data.get("static"),
         }
-
-    async def async_added_to_hass(self):
-        """Connect to dispatcher listening for entity data notifications."""
-        self.async_on_remove(
-            self.coordinator.async_add_listener(self.async_write_ha_state)
-        )
-
-    async def async_update(self):
-        """Update Brother entity."""
-        await self.coordinator.async_request_refresh()
