@@ -44,7 +44,7 @@ File | Purpose
 
 ## How?
 
-If you want to use all the potential and features of this blueprint tempalte you
+If you want to use all the potential and features of this blueprint template you
 should use Visual Studio Code to develop in a container. In this container you
 will have all the tools to ease your python development and a dedicated Home
 Assistant core instance to run your integration. See `.devcontainer/README.md` for more information.

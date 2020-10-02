@@ -2,7 +2,7 @@
 
 The easiest way to get started with custom integration development is to use Visual Studio Code with devcontainers. This approach will create a preconfigured development environment with all the tools you need.
 
-In the container you will have a dedicated Home Assistant core instance running with your custom compnent code. You can configure this instance by updating the `./devcontainer/configuration.yaml` file.
+In the container you will have a dedicated Home Assistant core instance running with your custom component code. You can configure this instance by updating the `./devcontainer/configuration.yaml` file.
 
 **Prerequisites**
 
@@ -29,7 +29,7 @@ _If you don't see this notification, open the command palette and select `Remote
 
 ### Tasks
 
-The devcontainter comes with some useful tasks to help you with development, you can start these tasks by opening the command palette and select `Tasks: Run Task` then select the task you want to run.
+The devcontainer comes with some useful tasks to help you with development, you can start these tasks by opening the command palette and select `Tasks: Run Task` then select the task you want to run.
 
 When a task is currently running (like `Run Home Assistant on port 9123` for the docs), it can be restarted by opening the command palette and selecting `Tasks: Restart Running Task`, then select the task you want to restart.
 
@@ -37,7 +37,7 @@ The available tasks are:
 
 Task | Description
 -- | --
-Run Home Assistant on port 9123 | Launch Home assistant with your custom compnent code and the configuration defined in `.devcontainer/configuration.yaml`.
+Run Home Assistant on port 9123 | Launch Home Assistant with your custom component code and the configuration defined in `.devcontainer/configuration.yaml`.
 Run Home Assistant configuration against /config | Check the configuration.
-Upgrade Home Assistant to latest dev | Upgrade the Home Assitant core version in the container to the latest version of the `dev` branch.
-Install a spesific version of Home Assistant | Install a specific version of Home Assistant core in the container.
+Upgrade Home Assistant to latest dev | Upgrade the Home Assistant core version in the container to the latest version of the `dev` branch.
+Install a specific version of Home Assistant | Install a specific version of Home Assistant core in the container.
