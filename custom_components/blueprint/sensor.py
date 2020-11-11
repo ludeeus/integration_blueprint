@@ -20,7 +20,8 @@ class BlueprintSensor(BlueprintEntity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self.coordinator.data.get("static")
+        # slugify the state to allow translation
+        return slugify(self.coordinator.data.get("static"))
 
     @property
     def icon(self):

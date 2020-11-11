@@ -1,5 +1,7 @@
 {
     "state": {
-        "Some sample static text.": "Eksempel tekst."
+        "_": {
+            "some_sample_static_text": "Eksempel tekst."
+        }
     }
 }

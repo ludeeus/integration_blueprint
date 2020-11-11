@@ -1,6 +1,6 @@
 {
+    "title": "Blueprint",
     "config": {
-        "title": "Blueprint",
         "step": {
             "user": {
                 "title": "Blueprint",
@@ -15,7 +15,7 @@
             "auth": "Brukernavn/Passord er feil."
         },
         "abort": {
-            "single_instance_allowed": "Du kan konfigurere Blueprint kun en gang."
+            "single_instance_allowed": "Du kan bare konfigurere denne integrasjonen en gang."
         }
     },
     "options": {
