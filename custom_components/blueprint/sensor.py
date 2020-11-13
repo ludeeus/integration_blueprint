@@ -1,4 +1,4 @@
-"""Sensor platform for blueprint."""
+"""Sensor platform for Blueprint."""
 from custom_components.blueprint.const import DEFAULT_NAME, DOMAIN, ICON, SENSOR
 from custom_components.blueprint.entity import BlueprintEntity
 
@@ -29,3 +29,8 @@ class BlueprintSensor(BlueprintEntity):
     def icon(self):
         """Return the icon of the sensor."""
         return ICON
+
+    @property
+    def device_class(self):
+        """Return de device class of the sensor."""
+        return "blueprint__custom_device_class"

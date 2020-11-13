@@ -1,6 +1,6 @@
 {
     "state": {
-        "_": {
+        "blueprint__custom_device_class": {
             "some_sample_static_text": "Eksempel tekst."
         }
     }
