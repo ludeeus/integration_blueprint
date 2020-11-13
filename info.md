@@ -50,7 +50,7 @@ Platform | Description
 [forum]: https://community.home-assistant.io/
 [license]: https://github.com/custom-components/blueprint/blob/main/LICENSE
 [license-shield]: https://img.shields.io/github/license/custom-components/blueprint.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-%40custom-components-blue.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-Joakim%20Sørensen%20%40ludeeus-blue.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/custom-components/blueprint.svg?style=for-the-badge
 [releases]: https://github.com/custom-components/blueprint/releases
 [user_profile]: https://github.com/ludeeus
