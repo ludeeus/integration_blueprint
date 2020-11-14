@@ -4,7 +4,7 @@
         "step": {
             "user": {
                 "title": "Blueprint",
-                "description": "Hvis du trenger hjep til konfigurasjon ta en titt her: https://github.com/custom-components/blueprint",
+                "description": "Hvis du trenger hjep til konfigurasjon ta en titt her: https://github.com/custom-components/integration_blueprint",
                 "data": {
                     "username": "Brukernavn",
                     "password": "Passord"

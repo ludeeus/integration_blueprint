@@ -14,7 +14,7 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 HEADERS = {"Content-type": "application/json; charset=UTF-8"}
 
 
-class BlueprintApiClient:
+class IntegrationBlueprintApiClient:
     def __init__(
         self, username: str, password: str, session: aiohttp.ClientSession
     ) -> None:
