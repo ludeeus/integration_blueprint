@@ -15,7 +15,7 @@
             "auth": "Brukernavn/Passord er feil."
         },
         "abort": {
-            "single_instance_allowed": "Du kan bare konfigurere denne integrasjonen en gang."
+            "single_instance_allowed": "Denne integrasjonen kan kun konfigureres en gang."
         }
     },
     "options": {
