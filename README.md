@@ -4,8 +4,6 @@ The component and platforms in this repository are not meant to be used by a
 user, but as a "blueprint" that custom component developers can build
 upon, to make more awesome stuff.
 
-This blueprint uses ['sampleclient'](https://github.com/ludeeus/sampleclient) to simulate what you actually might use in your integration.
-
 HAVE FUN! 😎
 
 ## Why?
@@ -29,6 +27,7 @@ File | Purpose
 `.vscode/tasks.json` | Tasks for the devcontainer.
 `custom_components/blueprint/translations/*` | [Translation files.](https://developers.home-assistant.io/docs/internationalization/custom_integration)
 `custom_components/blueprint/__init__.py` | The component file for the integration.
+`custom_components/blueprint/api.py` | This is a sample API client.
 `custom_components/blueprint/binary_sensor.py` | Binary sensor platform for the integration.
 `custom_components/blueprint/config_flow.py` | Config flow file, this adds the UI configuration possibilities.
 `custom_components/blueprint/const.py` | A file to hold shared variables/constants for the entire integration.
@@ -104,10 +103,11 @@ Platform | Description
 Using your HA configuration directory (folder) as a starting point you should now also have this:
 
 ```text
-custom_components/blueprint/.translations/en.json
-custom_components/blueprint/.translations/nb.json
-custom_components/blueprint/.translations/sensor.nb.json
+custom_components/blueprint/translations/en.json
+custom_components/blueprint/translations/nb.json
+custom_components/blueprint/translations/sensor.nb.json
 custom_components/blueprint/__init__.py
+custom_components/blueprint/api.py
 custom_components/blueprint/binary_sensor.py
 custom_components/blueprint/config_flow.py
 custom_components/blueprint/const.py

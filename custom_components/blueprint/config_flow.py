@@ -1,10 +1,11 @@
 """Adds config flow for Blueprint."""
 from homeassistant import config_entries
 from homeassistant.core import callback
-from sampleclient.client import Client
+from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import voluptuous as vol
 
-from custom_components.blueprint.const import (  # pylint: disable=unused-import
+from .api import BlueprintApiClient
+from .const import (
     CONF_PASSWORD,
     CONF_USERNAME,
     DOMAIN,
@@ -22,9 +23,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Initialize."""
         self._errors = {}
 
-    async def async_step_user(
-        self, user_input=None  # pylint: disable=bad-continuation
-    ):
+    async def async_step_user(self, user_input=None):
         """Handle a flow initialized by the user."""
         self._errors = {}
 
@@ -65,7 +64,8 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def _test_credentials(self, username, password):
         """Return true if credentials is valid."""
         try:
-            client = Client(username, password)
+            session = async_create_clientsession(self.hass)
+            client = BlueprintApiClient(username, password, session)
             await client.async_get_data()
             return True
         except Exception:  # pylint: disable=broad-except
