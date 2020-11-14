@@ -11,10 +11,12 @@ import logging
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from sampleclient.client import Client
 
-from custom_components.blueprint.const import (
+from .api import BlueprintApiClient
+
+from .const import (
     CONF_PASSWORD,
     CONF_USERNAME,
     DOMAIN,
@@ -24,7 +26,7 @@ from custom_components.blueprint.const import (
 
 SCAN_INTERVAL = timedelta(seconds=30)
 
-_LOGGER = logging.getLogger(__name__)
+_LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 async def async_setup(hass: HomeAssistant, config: Config):
@@ -41,9 +43,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     username = entry.data.get(CONF_USERNAME)
     password = entry.data.get(CONF_PASSWORD)
 
-    coordinator = BlueprintDataUpdateCoordinator(
-        hass, username=username, password=password
-    )
+    session = async_get_clientsession(hass)
+    client = BlueprintApiClient(username, password, session)
+
+    coordinator = BlueprintDataUpdateCoordinator(hass, client=client)
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:
@@ -65,9 +68,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
-    def __init__(self, hass, username, password):
+    def __init__(self, hass: HomeAssistant, client: BlueprintApiClient) -> None:
         """Initialize."""
-        self.api = Client(username, password)
+        self.api: BlueprintApiClient = client
         self.platforms = []
 
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
@@ -75,13 +78,12 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Update data via library."""
         try:
-            data = await self.api.async_get_data()
-            return data.get("data", {})
+            return await self.api.async_get_data()
         except Exception as exception:
-            raise UpdateFailed(exception)
+            raise UpdateFailed() from exception
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
     unloaded = all(
@@ -99,7 +101,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     return unloaded
 
 
-async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry):
+async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
     await async_unload_entry(hass, entry)
     await async_setup_entry(hass, entry)

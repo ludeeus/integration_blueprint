@@ -1,13 +1,13 @@
 """Binary sensor platform for blueprint."""
 from homeassistant.components.binary_sensor import BinarySensorDevice
 
-from custom_components.blueprint.const import (
+from .const import (
     BINARY_SENSOR,
     BINARY_SENSOR_DEVICE_CLASS,
     DEFAULT_NAME,
     DOMAIN,
 )
-from custom_components.blueprint.entity import BlueprintEntity
+from .entity import BlueprintEntity
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
@@ -32,4 +32,4 @@ class BlueprintBinarySensor(BlueprintEntity, BinarySensorDevice):
     @property
     def is_on(self):
         """Return true if the binary_sensor is on."""
-        return self.coordinator.data.get("bool_on", False)
+        return self.coordinator.data.get("title", "") == "foo"

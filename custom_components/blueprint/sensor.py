@@ -1,6 +1,6 @@
 """Sensor platform for blueprint."""
-from custom_components.blueprint.const import DEFAULT_NAME, DOMAIN, ICON, SENSOR
-from custom_components.blueprint.entity import BlueprintEntity
+from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR
+from .entity import BlueprintEntity
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
@@ -20,7 +20,7 @@ class BlueprintSensor(BlueprintEntity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self.coordinator.data.get("static")
+        return self.coordinator.data.get("body")
 
     @property
     def icon(self):
