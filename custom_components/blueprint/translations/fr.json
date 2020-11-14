@@ -15,7 +15,7 @@
             "auth": "Identifiant ou mot de passe erroné."
         },
         "abort": {
-            "single_instance_allowed": "Une seule configuration de cette intégration est permise."
+            "single_instance_allowed": "Une seule instance est autorisée."
         }
     },
     "options": {
