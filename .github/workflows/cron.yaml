@@ -12,10 +12,10 @@ jobs:
         - uses: "actions/checkout@v2"
 
         - name: HACS validation
-          uses: "hacs/integration/action@master"
+          uses: "hacs/action@main"
           with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            CATEGORY: "integration"
+            category: "integration"
+            ignore: brands
 
         - name: Hassfest validation
           uses: "home-assistant/actions/hassfest@master"
