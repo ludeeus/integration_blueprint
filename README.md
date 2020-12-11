@@ -34,6 +34,12 @@ File | Purpose
 `custom_components/integration_blueprint/manifest.json` | A [manifest file](https://developers.home-assistant.io/docs/en/creating_integration_manifest.html) for Home Assistant.
 `custom_components/integration_blueprint/sensor.py` | Sensor platform for the integration.
 `custom_components/integration_blueprint/switch.py` | Switch sensor platform for the integration.
+`tests/__init__.py` | Makes the `tests` folder a module.
+`tests/conftest.py` | Global [fixtures](https://docs.pytest.org/en/stable/fixture.html) used in tests to [patch](https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch) functions.
+`tests/test_api.py` | Tests for `custom_components/integration_blueprint/api.py`.
+`tests/test_config_flow.py` | Tests for `custom_components/integration_blueprint/config_flow.py`.
+`tests/test_init.py` | Tests for `custom_components/integration_blueprint/__init__.py`.
+`tests/test_switch.py` | Tests for `custom_components/integration_blueprint/switch.py`.
 `CONTRIBUTING.md` | Guidelines on how to contribute.
 `example.png` | Screenshot that demonstrate how it might look in the UI.
 `info.md` | An example on a info file (used by [hacs][hacs]).
