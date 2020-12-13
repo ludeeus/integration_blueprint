@@ -51,7 +51,7 @@ You need to modify the `configuration.yaml` file in `.devcontainer` folder
 by uncommenting the line:
 
 ```yaml
-# debugpy
+# debugpy:
 ```
 
 Then launch the task `Run Home Assistant on port 9123`, and launch the debbuger
