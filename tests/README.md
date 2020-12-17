@@ -11,7 +11,7 @@ source venv/bin/activate
 ```
 
 You can then install the dependencies that will allow you to run tests:
-`pip3 install -r requirements_txt.`
+`pip3 install -r requirements_test.txt.`
 
 This will install `homeassistant`, `pytest`, and `pytest-homeassistant-custom-component`, a plugin which allows you to leverage helpers that are available in Home Assistant for core integration tests.
 
