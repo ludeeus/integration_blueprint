@@ -1,4 +1,6 @@
 """Test integration_blueprint config flow."""
+from unittest.mock import patch
+
 from homeassistant import config_entries, data_entry_flow
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
@@ -21,10 +23,10 @@ from .const import MOCK_CONFIG
 def bypass_setup_fixture():
     """Prevent setup."""
     with patch(
-        "custom_components.{{cookiecutter.domain_name}}.async_setup",
+        "custom_components.integration_blueprint.async_setup",
         return_value=True,
     ), patch(
-        "custom_components.{{cookiecutter.domain_name}}.async_setup_entry",
+        "custom_components.integration_blueprint.async_setup_entry",
         return_value=True,
     ):
         yield
