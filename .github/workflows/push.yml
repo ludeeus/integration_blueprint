@@ -39,6 +39,10 @@ jobs:
     steps:
       - name: Check out code from GitHub
         uses: "actions/checkout@v2"
+      - name: Setup Python
+        uses: "actions/setup-python@v1"
+        with:
+          python-version: "3.8"
       - name: Install requirements
         run: python3 -m pip install -r requirements_test.txt
       - name: Run tests
