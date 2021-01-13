@@ -14,6 +14,11 @@ from custom_components.integration_blueprint.const import DOMAIN
 from .const import MOCK_CONFIG
 
 
+# We can pass fixtures as defined in conftest.py to tell pytest to use the fixture
+# for a given test. We can also leverage fixtures and mocks that are available in
+# Home Assistant using the pytest_homeassistant_custom_component plugin.
+# Assertions allow you to verify that the return value of whatever is on the left
+# side of the assertion matches with the right side.
 async def test_setup_unload_and_reload_entry(hass, bypass_get_data):
     """Test entry setup and unload."""
     # Create a mock entry so we don't have to go through config flow

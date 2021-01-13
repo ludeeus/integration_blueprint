@@ -10,20 +10,30 @@ from custom_components.integration_blueprint.api import IntegrationBlueprintApiC
 async def test_api(hass, aioclient_mock, caplog):
     """Test API calls."""
 
-    # Create new API instance
+    # To test the api submodule, we first create an instance of our API client
     api = IntegrationBlueprintApiClient("test", "test", async_get_clientsession(hass))
 
     # Use aioclient_mock which is provided by `pytest_homeassistant_custom_components`
     # to mock responses to aiohttp requests. In this case we are telling the mock to
-    # return {"test": "test"} when a `GET` call is made to the specified URL
+    # return {"test": "test"} when a `GET` call is made to the specified URL. We then
+    # call `async_get_data` which will make that `GET` request.
     aioclient_mock.get(
         "https://jsonplaceholder.typicode.com/posts/1", json={"test": "test"}
     )
     assert await api.async_get_data() == {"test": "test"}
 
+    # We do the same for `async_set_title`. Note the difference in the mock call
+    # between the previous step and this one. We use `patch` here instead of `get`
+    # because we know that `async_set_title` calls `api_wrapper` with `patch` as the
+    # first parameter
     aioclient_mock.patch("https://jsonplaceholder.typicode.com/posts/1")
     assert await api.async_set_title("test") is None
 
+    # In order to get 100% coverage, we need to test `api_wrapper` to test the code
+    # that isn't already called by `async_get_data` and `async_set_title`. Because the
+    # only logic that lives inside `api_wrapper` that is not being handled by a third
+    # party library (aiohttp) is the exception handling, we also want to simulate
+    # raising the exceptions to ensure that the function handles them as expected.
     # The caplog fixture allows access to log messages in tests. This is particularly
     # useful during exception handling testing since often the only action as part of
     # exception handling is a logging statement
