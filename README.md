@@ -34,12 +34,20 @@ File | Purpose
 `custom_components/integration_blueprint/manifest.json` | A [manifest file](https://developers.home-assistant.io/docs/en/creating_integration_manifest.html) for Home Assistant.
 `custom_components/integration_blueprint/sensor.py` | Sensor platform for the integration.
 `custom_components/integration_blueprint/switch.py` | Switch sensor platform for the integration.
+`tests/__init__.py` | Makes the `tests` folder a module.
+`tests/conftest.py` | Global [fixtures](https://docs.pytest.org/en/stable/fixture.html) used in tests to [patch](https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch) functions.
+`tests/test_api.py` | Tests for `custom_components/integration_blueprint/api.py`.
+`tests/test_config_flow.py` | Tests for `custom_components/integration_blueprint/config_flow.py`.
+`tests/test_init.py` | Tests for `custom_components/integration_blueprint/__init__.py`.
+`tests/test_switch.py` | Tests for `custom_components/integration_blueprint/switch.py`.
 `CONTRIBUTING.md` | Guidelines on how to contribute.
 `example.png` | Screenshot that demonstrate how it might look in the UI.
 `info.md` | An example on a info file (used by [hacs][hacs]).
 `LICENSE` | The license file for the project.
 `README.md` | The file you are reading now, should contain info about the integration, installation and configuration instructions.
 `requirements.txt` | Python packages used by this integration.
+`requirements_dev.txt` | Python packages used to provide [IntelliSense](https://code.visualstudio.com/docs/editor/intellisense)/code hints during development of this integration, typically includes packages in `requirements.txt` but may include additional packages
+`requirements_text.txt` | Python packages required to run the tests for this integration, typically includes packages in `requirements_dev.txt` but may include additional packages
 
 ## How?
 

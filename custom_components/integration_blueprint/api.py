@@ -72,4 +72,4 @@ class IntegrationBlueprintApiClient:
                 exception,
             )
         except Exception as exception:  # pylint: disable=broad-except
-            _LOGGER.error("Something really wrong happend! - %s", exception)
+            _LOGGER.error("Something really wrong happened! - %s", exception)
