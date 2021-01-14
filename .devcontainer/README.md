@@ -41,3 +41,20 @@ Run Home Assistant on port 9123 | Launch Home Assistant with your custom compone
 Run Home Assistant configuration against /config | Check the configuration.
 Upgrade Home Assistant to latest dev | Upgrade the Home Assistant core version in the container to the latest version of the `dev` branch.
 Install a specific version of Home Assistant | Install a specific version of Home Assistant core in the container.
+
+### Step by Step debugging
+
+With the development container,
+you can test your custom component in Home Assistant with step by step debugging.
+
+You need to modify the `configuration.yaml` file in `.devcontainer` folder
+by uncommenting the line:
+
+```yaml
+# debugpy:
+```
+
+Then launch the task `Run Home Assistant on port 9123`, and launch the debbuger
+with the existing debugging configuration `Python: Attach Local`.
+
+For more information, look at [the Remote Python Debugger integration documentation](https://www.home-assistant.io/integrations/debugpy/).
