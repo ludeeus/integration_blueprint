@@ -20,7 +20,7 @@ class IntegrationBlueprintApiClient:
     ) -> None:
         """Sample API Client."""
         self._username = username
-        self._passeword = password
+        self._password = password
         self._session = session
 
     async def async_get_data(self) -> dict:
