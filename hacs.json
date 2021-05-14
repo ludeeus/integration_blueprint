@@ -6,6 +6,5 @@
         "sensor",
         "switch"
     ],
-    "iot_class": "Cloud Polling",
     "homeassistant": "0.118.0"
 }
