@@ -54,7 +54,7 @@ by uncommenting the line:
 # debugpy:
 ```
 
-Then launch the task `Run Home Assistant on port 9123`, and launch the debbuger
+Then launch the task `Run Home Assistant on port 9123`, and launch the debugger
 with the existing debugging configuration `Python: Attach Local`.
 
 For more information, look at [the Remote Python Debugger integration documentation](https://www.home-assistant.io/integrations/debugpy/).
