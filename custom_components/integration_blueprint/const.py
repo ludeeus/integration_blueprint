@@ -1,4 +1,7 @@
 """Constants for integration_blueprint."""
+from datetime import timedelta
+from logging import Logger, getLogger
+
 # Base component constants
 NAME = "Integration blueprint"
 DOMAIN = "integration_blueprint"
@@ -6,6 +9,8 @@ DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
 ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
 ISSUE_URL = "https://github.com/custom-components/integration_blueprint/issues"
+DATA_COORDINATOR_UPDATE_INTERVAL = timedelta(seconds=30)
+LOGGER: Logger = getLogger(__package__)
 
 # Icons
 ICON = "mdi:format-quote-close"

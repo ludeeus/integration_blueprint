@@ -1,30 +1,38 @@
 """BlueprintEntity class"""
+from __future__ import annotations
+
+from typing import Any
+
+from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, NAME, VERSION, ATTRIBUTION
+from .coordinator import BlueprintDataUpdateCoordinator
+from .const import ATTRIBUTION, DOMAIN, NAME, VERSION
 
 
 class IntegrationBlueprintEntity(CoordinatorEntity):
-    def __init__(self, coordinator, config_entry):
-        super().__init__(coordinator)
-        self.config_entry = config_entry
+    """Base IntegrationBlueprint entity."""
+
+    coordinator: BlueprintDataUpdateCoordinator
 
     @property
-    def unique_id(self):
+    def unique_id(self) -> str | None:
         """Return a unique ID to use for this entity."""
-        return self.config_entry.entry_id
+        if not self.coordinator.config_entry:
+            return None
+        return self.coordinator.config_entry.entry_id
 
     @property
-    def device_info(self):
-        return {
-            "identifiers": {(DOMAIN, self.unique_id)},
-            "name": NAME,
-            "model": VERSION,
-            "manufacturer": NAME,
-        }
+    def device_info(self) -> DeviceInfo:
+        return DeviceInfo(
+            identifiers={(DOMAIN, self.unique_id)},
+            name=NAME,
+            model=VERSION,
+            manufacturer=NAME,
+        )
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes."""
         return {
             "attribution": ATTRIBUTION,

@@ -30,7 +30,7 @@ async def test_switch_services(hass):
             blocking=True,
         )
         assert title_func.called
-        assert title_func.call_args == call("foo")
+        assert title_func.call_args == call("bar")
 
         title_func.reset_mock()
 
@@ -41,4 +41,4 @@ async def test_switch_services(hass):
             blocking=True,
         )
         assert title_func.called
-        assert title_func.call_args == call("bar")
+        assert title_func.call_args == call("foo")

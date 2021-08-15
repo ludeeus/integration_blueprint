@@ -1,29 +1,33 @@
 """Sample API Client."""
-import logging
+from __future__ import annotations
+
 import asyncio
 import socket
-from typing import Optional
+from typing import Any
+
 import aiohttp
 import async_timeout
 
-TIMEOUT = 10
+API_HEADERS = {aiohttp.hdrs.CONTENT_TYPE: "application/json; charset=UTF-8"}
 
 
-_LOGGER: logging.Logger = logging.getLogger(__package__)
-
-HEADERS = {"Content-type": "application/json; charset=UTF-8"}
+class ApiClientException(Exception):
+    """Api Client Exception."""
 
 
 class IntegrationBlueprintApiClient:
     def __init__(
-        self, username: str, password: str, session: aiohttp.ClientSession
+        self,
+        username: str,
+        password: str,
+        session: aiohttp.ClientSession,
     ) -> None:
         """Sample API Client."""
         self._username = username
         self._password = password
         self._session = session
 
-    async def async_get_data(self) -> dict:
+    async def async_get_data(self) -> dict[str, Any]:
         """Get data from the API."""
         url = "https://jsonplaceholder.typicode.com/posts/1"
         return await self.api_wrapper("get", url)
@@ -31,45 +35,38 @@ class IntegrationBlueprintApiClient:
     async def async_set_title(self, value: str) -> None:
         """Get data from the API."""
         url = "https://jsonplaceholder.typicode.com/posts/1"
-        await self.api_wrapper("patch", url, data={"title": value}, headers=HEADERS)
+        await self.api_wrapper("patch", url, data={"title": value}, headers=API_HEADERS)
 
     async def api_wrapper(
-        self, method: str, url: str, data: dict = {}, headers: dict = {}
-    ) -> dict:
+        self,
+        method: str,
+        url: str,
+        data: dict[str, Any] = {},
+        headers: dict = {},
+    ) -> dict[str, Any] | None:
         """Get information from the API."""
         try:
-            async with async_timeout.timeout(TIMEOUT, loop=asyncio.get_event_loop()):
+            async with async_timeout.timeout(10, loop=asyncio.get_event_loop()):
+                response = await self._session.request(
+                    method=method, url=url, headers=headers, json=data
+                )
                 if method == "get":
-                    response = await self._session.get(url, headers=headers)
                     return await response.json()
 
-                elif method == "put":
-                    await self._session.put(url, headers=headers, json=data)
-
-                elif method == "patch":
-                    await self._session.patch(url, headers=headers, json=data)
-
-                elif method == "post":
-                    await self._session.post(url, headers=headers, json=data)
-
         except asyncio.TimeoutError as exception:
-            _LOGGER.error(
-                "Timeout error fetching information from %s - %s",
-                url,
-                exception,
-            )
+            raise ApiClientException(
+                f"Timeout error fetching information from {url}"
+            ) from exception
 
         except (KeyError, TypeError) as exception:
-            _LOGGER.error(
-                "Error parsing information from %s - %s",
-                url,
-                exception,
-            )
+            raise ApiClientException(
+                f"Error parsing information from {url} - {exception}"
+            ) from exception
+
         except (aiohttp.ClientError, socket.gaierror) as exception:
-            _LOGGER.error(
-                "Error fetching information from %s - %s",
-                url,
-                exception,
-            )
+            raise ApiClientException(
+                f"Error fetching information from {url} - {exception}"
+            ) from exception
+
         except Exception as exception:  # pylint: disable=broad-except
-            _LOGGER.error("Something really wrong happened! - %s", exception)
+            raise ApiClientException(exception) from exception
