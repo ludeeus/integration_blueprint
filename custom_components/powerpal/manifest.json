@@ -1,0 +1,13 @@
+{
+  "domain": "powerpal",
+  "name": "Powerpal",
+  "documentation": "https://github.com/mindmelting/hass-poweral",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/mindmelting/hass-poweral/issues",
+  "version": "0.1.0",
+  "config_flow": true,
+  "codeowners": [
+    "@mindmelting"
+  ],
+  "requirements": ["powerpal==0.2.0"]
+}

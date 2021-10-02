@@ -1,8 +1,8 @@
 """
-Custom integration to integrate integration_blueprint with Home Assistant.
+Custom integration to integrate powerpal with Home Assistant.
 
 For more details about this integration, please refer to
-https://github.com/custom-components/integration_blueprint
+https://github.com/mindmelting/hass-powerpal
 """
 import asyncio
 from datetime import timedelta
@@ -14,17 +14,17 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .api import IntegrationBlueprintApiClient
+from powerpal import Powerpal
 
 from .const import (
-    CONF_PASSWORD,
-    CONF_USERNAME,
+    CONF_AUTH_KEY,
+    CONF_DEVICE_ID,
     DOMAIN,
     PLATFORMS,
     STARTUP_MESSAGE,
 )
 
-SCAN_INTERVAL = timedelta(seconds=30)
+SCAN_INTERVAL = timedelta(seconds=60)
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -40,13 +40,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         hass.data.setdefault(DOMAIN, {})
         _LOGGER.info(STARTUP_MESSAGE)
 
-    username = entry.data.get(CONF_USERNAME)
-    password = entry.data.get(CONF_PASSWORD)
+    auth_key = entry.data.get(CONF_AUTH_KEY)
+    device_id = entry.data.get(CONF_DEVICE_ID)
 
     session = async_get_clientsession(hass)
-    client = IntegrationBlueprintApiClient(username, password, session)
+    client = Powerpal(session, auth_key, device_id)
 
-    coordinator = BlueprintDataUpdateCoordinator(hass, client=client)
+    coordinator = PowerpalDataUpdateCoordinator(hass, client=client)
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:
@@ -65,12 +65,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     return True
 
 
-class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
+class PowerpalDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
-    def __init__(
-        self, hass: HomeAssistant, client: IntegrationBlueprintApiClient
-    ) -> None:
+    def __init__(self, hass: HomeAssistant, client: Powerpal) -> None:
         """Initialize."""
         self.api = client
         self.platforms = []
@@ -80,7 +78,7 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Update data via library."""
         try:
-            return await self.api.async_get_data()
+            return await self.api.get_data()
         except Exception as exception:
             raise UpdateFailed() from exception
 

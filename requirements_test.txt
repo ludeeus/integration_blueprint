@@ -1,1 +1,2 @@
 pytest-homeassistant-custom-component==0.4.0
+powerpal==0.2.0

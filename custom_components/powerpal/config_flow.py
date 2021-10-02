@@ -4,10 +4,11 @@ from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import voluptuous as vol
 
-from .api import IntegrationBlueprintApiClient
+from powerpal import Powerpal
+
 from .const import (
-    CONF_PASSWORD,
-    CONF_USERNAME,
+    CONF_DEVICE_ID,
+    CONF_AUTH_KEY,
     DOMAIN,
     PLATFORMS,
 )
@@ -33,11 +34,11 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             valid = await self._test_credentials(
-                user_input[CONF_USERNAME], user_input[CONF_PASSWORD]
+                user_input[CONF_AUTH_KEY], user_input[CONF_DEVICE_ID]
             )
             if valid:
                 return self.async_create_entry(
-                    title=user_input[CONF_USERNAME], data=user_input
+                    title=f"Powerpal {user_input[CONF_DEVICE_ID]}", data=user_input
                 )
             else:
                 self._errors["base"] = "auth"
@@ -46,8 +47,8 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         user_input = {}
         # Provide defaults for form
-        user_input[CONF_USERNAME] = ""
-        user_input[CONF_PASSWORD] = ""
+        user_input[CONF_AUTH_KEY] = ""
+        user_input[CONF_DEVICE_ID] = ""
 
         return await self._show_config_form(user_input)
 
@@ -57,24 +58,26 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         return BlueprintOptionsFlowHandler(config_entry)
 
     async def _show_config_form(self, user_input):  # pylint: disable=unused-argument
-        """Show the configuration form to edit location data."""
+        """Show the configuration form to edit auth data."""
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required(CONF_USERNAME, default=user_input[CONF_USERNAME]): str,
-                    vol.Required(CONF_PASSWORD, default=user_input[CONF_PASSWORD]): str,
+                    vol.Required(CONF_AUTH_KEY, default=user_input[CONF_AUTH_KEY]): str,
+                    vol.Required(
+                        CONF_DEVICE_ID, default=user_input[CONF_DEVICE_ID]
+                    ): str,
                 }
             ),
             errors=self._errors,
         )
 
-    async def _test_credentials(self, username, password):
+    async def _test_credentials(self, authKey, deviceId):
         """Return true if credentials is valid."""
         try:
             session = async_create_clientsession(self.hass)
-            client = IntegrationBlueprintApiClient(username, password, session)
-            await client.async_get_data()
+            client = Powerpal(session, authKey, deviceId)
+            await client.get_data()
             return True
         except Exception:  # pylint: disable=broad-except
             pass
@@ -112,5 +115,6 @@ class BlueprintOptionsFlowHandler(config_entries.OptionsFlow):
     async def _update_options(self):
         """Update config entry options."""
         return self.async_create_entry(
-            title=self.config_entry.data.get(CONF_USERNAME), data=self.options
+            title=f"Powerpal {self.config_entry.data.get(CONF_DEVICE_ID)}",
+            data=self.options,
         )
