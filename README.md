@@ -105,7 +105,7 @@ Platform | Description
 4. Download _all_ the files from the `custom_components/integration_blueprint/` directory (folder) in this repository.
 5. Place the files you downloaded in the new directory (folder) you created.
 6. Restart Home Assistant
-7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Blueprint"
+7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Integration blueprint"
 
 Using your HA configuration directory (folder) as a starting point you should now also have this:
 
