@@ -1,4 +1,6 @@
 """Sensor platform for integration_blueprint."""
+from homeassistant.components.sensor import SensorEntity
+
 from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR
 from .entity import IntegrationBlueprintEntity
 
@@ -9,7 +11,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     async_add_devices([IntegrationBlueprintSensor(coordinator, entry)])
 
 
-class IntegrationBlueprintSensor(IntegrationBlueprintEntity):
+class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
     """integration_blueprint Sensor class."""
 
     @property
