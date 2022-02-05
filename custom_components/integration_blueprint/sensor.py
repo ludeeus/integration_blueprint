@@ -20,8 +20,8 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
         return f"{DEFAULT_NAME}_{SENSOR}"
 
     @property
-    def state(self):
-        """Return the state of the sensor."""
+    def native_value(self):
+        """Return the native value of the sensor."""
         return self.coordinator.data.get("body")
 
     @property
