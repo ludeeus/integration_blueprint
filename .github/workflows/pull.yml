@@ -39,7 +39,7 @@ jobs:
       - name: Setup Python
         uses: "actions/setup-python@v1"
         with:
-          python-version: "3.8"
+          python-version: "3.9"
       - name: Install requirements
         run: python3 -m pip install -r requirements_test.txt
       - name: Run tests
