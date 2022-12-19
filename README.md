@@ -24,21 +24,21 @@ File | Purpose
 `.github/ISSUE_TEMPLATE/feature_request.md` | Template for Feature Requests
 `.github/ISSUE_TEMPLATE/issue.md` | Template for issues
 `.vscode/tasks.json` | Tasks for the devcontainer.
-`custom_components/integration_blueprint/translations/*` | [Translation files.](https://developers.home-assistant.io/docs/internationalization/custom_integration)
-`custom_components/integration_blueprint/__init__.py` | The component file for the integration.
-`custom_components/integration_blueprint/api.py` | This is a sample API client.
-`custom_components/integration_blueprint/binary_sensor.py` | Binary sensor platform for the integration.
-`custom_components/integration_blueprint/config_flow.py` | Config flow file, this adds the UI configuration possibilities.
-`custom_components/integration_blueprint/const.py` | A file to hold shared variables/constants for the entire integration.
-`custom_components/integration_blueprint/manifest.json` | A [manifest file](https://developers.home-assistant.io/docs/en/creating_integration_manifest.html) for Home Assistant.
-`custom_components/integration_blueprint/sensor.py` | Sensor platform for the integration.
-`custom_components/integration_blueprint/switch.py` | Switch sensor platform for the integration.
+`custom_components/jellyfish-lighting/translations/*` | [Translation files.](https://developers.home-assistant.io/docs/internationalization/custom_integration)
+`custom_components/jellyfish-lighting/__init__.py` | The component file for the integration.
+`custom_components/jellyfish-lighting/api.py` | This is a sample API client.
+`custom_components/jellyfish-lighting/binary_sensor.py` | Binary sensor platform for the integration.
+`custom_components/jellyfish-lighting/config_flow.py` | Config flow file, this adds the UI configuration possibilities.
+`custom_components/jellyfish-lighting/const.py` | A file to hold shared variables/constants for the entire integration.
+`custom_components/jellyfish-lighting/manifest.json` | A [manifest file](https://developers.home-assistant.io/docs/en/creating_integration_manifest.html) for Home Assistant.
+`custom_components/jellyfish-lighting/sensor.py` | Sensor platform for the integration.
+`custom_components/jellyfish-lighting/switch.py` | Switch sensor platform for the integration.
 `tests/__init__.py` | Makes the `tests` folder a module.
 `tests/conftest.py` | Global [fixtures](https://docs.pytest.org/en/stable/fixture.html) used in tests to [patch](https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch) functions.
-`tests/test_api.py` | Tests for `custom_components/integration_blueprint/api.py`.
-`tests/test_config_flow.py` | Tests for `custom_components/integration_blueprint/config_flow.py`.
-`tests/test_init.py` | Tests for `custom_components/integration_blueprint/__init__.py`.
-`tests/test_switch.py` | Tests for `custom_components/integration_blueprint/switch.py`.
+`tests/test_api.py` | Tests for `custom_components/jellyfish-lighting/api.py`.
+`tests/test_config_flow.py` | Tests for `custom_components/jellyfish-lighting/config_flow.py`.
+`tests/test_init.py` | Tests for `custom_components/jellyfish-lighting/__init__.py`.
+`tests/test_switch.py` | Tests for `custom_components/jellyfish-lighting/switch.py`.
 `CONTRIBUTING.md` | Guidelines on how to contribute.
 `example.png` | Screenshot that demonstrate how it might look in the UI.
 `info.md` | An example on a info file (used by [hacs][hacs]).
@@ -72,7 +72,7 @@ to ensure Home Assistant update the code of the python library. (example `"requi
 README content if this was a published component:
 ***
 
-# integration_blueprint
+# jellyfish-lighting
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
@@ -85,7 +85,7 @@ README content if this was a published component:
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
-_Component to integrate with [integration_blueprint][integration_blueprint]._
+_Component to integrate with [jellyfish-lighting][jellyfish-lighting]._
 
 **This component will set up the following platforms.**
 
@@ -101,8 +101,8 @@ Platform | Description
 
 1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
 2. If you do not have a `custom_components` directory (folder) there, you need to create it.
-3. In the `custom_components` directory (folder) create a new folder called `integration_blueprint`.
-4. Download _all_ the files from the `custom_components/integration_blueprint/` directory (folder) in this repository.
+3. In the `custom_components` directory (folder) create a new folder called `jellyfish-lighting`.
+4. Download _all_ the files from the `custom_components/jellyfish-lighting/` directory (folder) in this repository.
 5. Place the files you downloaded in the new directory (folder) you created.
 6. Restart Home Assistant
 7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Integration blueprint"
@@ -110,17 +110,17 @@ Platform | Description
 Using your HA configuration directory (folder) as a starting point you should now also have this:
 
 ```text
-custom_components/integration_blueprint/translations/en.json
-custom_components/integration_blueprint/translations/nb.json
-custom_components/integration_blueprint/translations/sensor.nb.json
-custom_components/integration_blueprint/__init__.py
-custom_components/integration_blueprint/api.py
-custom_components/integration_blueprint/binary_sensor.py
-custom_components/integration_blueprint/config_flow.py
-custom_components/integration_blueprint/const.py
-custom_components/integration_blueprint/manifest.json
-custom_components/integration_blueprint/sensor.py
-custom_components/integration_blueprint/switch.py
+custom_components/jellyfish-lighting/translations/en.json
+custom_components/jellyfish-lighting/translations/nb.json
+custom_components/jellyfish-lighting/translations/sensor.nb.json
+custom_components/jellyfish-lighting/__init__.py
+custom_components/jellyfish-lighting/api.py
+custom_components/jellyfish-lighting/binary_sensor.py
+custom_components/jellyfish-lighting/config_flow.py
+custom_components/jellyfish-lighting/const.py
+custom_components/jellyfish-lighting/manifest.json
+custom_components/jellyfish-lighting/sensor.py
+custom_components/jellyfish-lighting/switch.py
 ```
 
 ## Configuration is done in the UI
@@ -133,11 +133,11 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 
 ***
 
-[integration_blueprint]: https://github.com/custom-components/integration_blueprint
+[jellyfish-lighting]: https://github.com/bdunn44/hass-jellyfish-lighting
 [buymecoffee]: https://www.buymeacoffee.com/ludeeus
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
 [commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/blueprint.svg?style=for-the-badge
-[commits]: https://github.com/custom-components/integration_blueprint/commits/master
+[commits]: https://github.com/bdunn44/hass-jellyfish-lighting/commits/master
 [hacs]: https://github.com/custom-components/hacs
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
 [discord]: https://discord.gg/Qa5fW2R
@@ -148,4 +148,4 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [license-shield]: https://img.shields.io/github/license/custom-components/blueprint.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-Joakim%20Sørensen%20%40ludeeus-blue.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/custom-components/blueprint.svg?style=for-the-badge
-[releases]: https://github.com/custom-components/integration_blueprint/releases
+[releases]: https://github.com/bdunn44/hass-jellyfish-lighting/releases

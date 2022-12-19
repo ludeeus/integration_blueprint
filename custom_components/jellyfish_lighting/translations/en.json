@@ -2,8 +2,8 @@
     "config": {
         "step": {
             "user": {
-                "title": "Blueprint",
-                "description": "If you need help with the configuration have a look here: https://github.com/custom-components/integration_blueprint",
+                "title": "Jellyfish Lighting",
+                "description": "If you need help with the configuration have a look here: https://github.com/bdunn44/hass-jellyfish-lighting",
                 "data": {
                     "username": "Username",
                     "password": "Password"

@@ -1,4 +1,4 @@
-"""Binary sensor platform for integration_blueprint."""
+"""Binary sensor platform for jellyfish-lighting."""
 from homeassistant.components.binary_sensor import BinarySensorEntity
 
 from .const import (
@@ -7,17 +7,17 @@ from .const import (
     DEFAULT_NAME,
     DOMAIN,
 )
-from .entity import IntegrationBlueprintEntity
+from .entity import JellyfishLightingEntity
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
     """Setup binary_sensor platform."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([IntegrationBlueprintBinarySensor(coordinator, entry)])
+    async_add_devices([JellyfishLightingBinarySensor(coordinator, entry)])
 
 
-class IntegrationBlueprintBinarySensor(IntegrationBlueprintEntity, BinarySensorEntity):
-    """integration_blueprint binary_sensor class."""
+class JellyfishLightingBinarySensor(JellyfishLightingEntity, BinarySensorEntity):
+    """jellyfish-lighting binary_sensor class."""
 
     @property
     def name(self):

@@ -1,0 +1,12 @@
+{
+  "domain": "jellyfish_lighting",
+  "name": "Jellyfish Lighting",
+  "documentation": "https://github.com/bdunn44/hass-jellyfish-lighting",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/bdunn44/hass-jellyfish-lighting/issues",
+  "version": "0.0.0",
+  "config_flow": true,
+  "codeowners": [
+    "@bdunn44"
+  ]
+}
