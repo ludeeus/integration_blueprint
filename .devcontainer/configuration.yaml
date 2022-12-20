@@ -1,7 +1,7 @@
 default_config:
 
 logger:
-  default: debug
+  default: info
   logs:
     custom_components.jellyfish-lighting: debug
 

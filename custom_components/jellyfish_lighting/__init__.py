@@ -29,12 +29,14 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 async def async_setup(hass: HomeAssistant, config: Config):
     """Set up this integration using YAML is not supported."""
+    _LOGGER.debug("in async_setup")
     hass.states.set("jellyfish_lighting.hello", "world")
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up this integration using UI."""
+    _LOGGER.debug("in async_setup_entry")
     if hass.data.get(DOMAIN) is None:
         hass.data.setdefault(DOMAIN, {})
         _LOGGER.info(STARTUP_MESSAGE)
@@ -70,6 +72,7 @@ class JellyfishLightingDataUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(self, hass: HomeAssistant, client: JellyfishLightingApiClient) -> None:
         """Initialize."""
+        _LOGGER.debug("in data coordinator __init__")
         self.api = client
         self.platforms = []
 
@@ -85,6 +88,7 @@ class JellyfishLightingDataUpdateCoordinator(DataUpdateCoordinator):
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
+    _LOGGER.debug("in async_unload_entry")
     coordinator = hass.data[DOMAIN][entry.entry_id]
     unloaded = all(
         await asyncio.gather(
@@ -102,5 +106,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
+    _LOGGER.debug("in async_reload_entry")
     await async_unload_entry(hass, entry)
     await async_setup_entry(hass, entry)
