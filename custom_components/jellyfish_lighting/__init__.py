@@ -14,6 +14,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .api import JellyfishLightingApiClient
 
 from .const import (
+    CONF_HOST,
     CONF_PASSWORD,
     CONF_USERNAME,
     DOMAIN,
@@ -21,13 +22,14 @@ from .const import (
     STARTUP_MESSAGE,
 )
 
-SCAN_INTERVAL = timedelta(seconds=30)
+SCAN_INTERVAL = timedelta(seconds=15)
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 async def async_setup(hass: HomeAssistant, config: Config):
     """Set up this integration using YAML is not supported."""
+    hass.states.set("jellyfish_lighting.hello", "world")
     return True
 
 
@@ -37,6 +39,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         hass.data.setdefault(DOMAIN, {})
         _LOGGER.info(STARTUP_MESSAGE)
 
+    host = entry.data.get(CONF_HOST)
     username = entry.data.get(CONF_USERNAME)
     password = entry.data.get(CONF_PASSWORD)
 
@@ -65,9 +68,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 class JellyfishLightingDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
-    def __init__(
-        self, hass: HomeAssistant, client: JellyfishLightingApiClient
-    ) -> None:
+    def __init__(self, hass: HomeAssistant, client: JellyfishLightingApiClient) -> None:
         """Initialize."""
         self.api = client
         self.platforms = []
@@ -96,7 +97,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
     if unloaded:
         hass.data[DOMAIN].pop(entry.entry_id)
-
     return unloaded
 
 

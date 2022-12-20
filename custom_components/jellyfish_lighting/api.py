@@ -15,6 +15,8 @@ HEADERS = {"Content-type": "application/json; charset=UTF-8"}
 
 
 class JellyfishLightingApiClient:
+    """API Client for Jellyfish Lighting"""
+
     def __init__(
         self, username: str, password: str, session: aiohttp.ClientSession
     ) -> None:

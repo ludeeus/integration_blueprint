@@ -1,33 +1,33 @@
 """Switch platform for jellyfish-lighting."""
-from homeassistant.components.switch import SwitchEntity
+from homeassistant.components.light import LightEntity
 
-from .const import DEFAULT_NAME, DOMAIN, ICON, SWITCH
+from .const import DEFAULT_NAME, DOMAIN, ICON, LIGHT
 from .entity import JellyfishLightingEntity
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
-    """Setup sensor platform."""
+    """Setup light platform"""
     coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([JellyfishLightingBinarySwitch(coordinator, entry)])
+    async_add_devices([JellyfishLightingLight(coordinator, entry)])
 
 
-class JellyfishLightingBinarySwitch(JellyfishLightingEntity, SwitchEntity):
-    """jellyfish-lighting switch class."""
+class JellyfishLightingLight(JellyfishLightingEntity, LightEntity):
+    """jellyfish-lighting light class."""
 
     async def async_turn_on(self, **kwargs):  # pylint: disable=unused-argument
-        """Turn on the switch."""
-        await self.coordinator.api.async_set_title("bar")
+        """Turn on the light."""
+        await self.coordinator.api.async_set_title("on")
         await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **kwargs):  # pylint: disable=unused-argument
-        """Turn off the switch."""
-        await self.coordinator.api.async_set_title("foo")
+        """Turn off the light."""
+        await self.coordinator.api.async_set_title("off")
         await self.coordinator.async_request_refresh()
 
     @property
     def name(self):
         """Return the name of the switch."""
-        return f"{DEFAULT_NAME}_{SWITCH}"
+        return f"{DEFAULT_NAME}_{LIGHT}"
 
     @property
     def icon(self):
@@ -37,4 +37,4 @@ class JellyfishLightingBinarySwitch(JellyfishLightingEntity, SwitchEntity):
     @property
     def is_on(self):
         """Return true if the switch is on."""
-        return self.coordinator.data.get("title", "") == "foo"
+        return self.coordinator.data.get("title", "") == "on"

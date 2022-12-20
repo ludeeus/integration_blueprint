@@ -1,27 +1,24 @@
 """Constants for jellyfish-lighting."""
 # Base component constants
 NAME = "Jellyfish Lighting"
-DOMAIN = "jellyfish-lighting"
+DOMAIN = "jellyfish_lighting"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
 ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
 ISSUE_URL = "https://github.com/bdunn44/hass-jellyfish-lighting/issues"
 
 # Icons
-ICON = "mdi:format-quote-close"
+ICON = "mdi:home-lightbulb-outline"
 
 # Device classes
 BINARY_SENSOR_DEVICE_CLASS = "connectivity"
 
 # Platforms
-BINARY_SENSOR = "binary_sensor"
-SENSOR = "sensor"
-SWITCH = "switch"
-PLATFORMS = [BINARY_SENSOR, SENSOR, SWITCH]
-
+LIGHT = "light"
+PLATFORMS = [LIGHT]
 
 # Configuration and options
-CONF_ENABLED = "enabled"
+CONF_HOST = "host"
 CONF_USERNAME = "username"
 CONF_PASSWORD = "password"
 
