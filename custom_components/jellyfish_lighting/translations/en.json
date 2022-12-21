@@ -5,6 +5,7 @@
                 "title": "Jellyfish Lighting",
                 "description": "If you need help with the configuration have a look here: https://github.com/bdunn44/hass-jellyfish-lighting",
                 "data": {
+                    "host": "Controller Host/IP",
                     "username": "Username",
                     "password": "Password"
                 }
@@ -21,9 +22,7 @@
         "step": {
             "user": {
                 "data": {
-                    "binary_sensor": "Binary sensor enabled",
-                    "sensor": "Sensor enabled",
-                    "switch": "Switch enabled"
+                    "light": "Light enabled"
                 }
             }
         }

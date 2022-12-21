@@ -4,7 +4,8 @@ NAME = "Jellyfish Lighting"
 DOMAIN = "jellyfish_lighting"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
-ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
+ATTRIBUTION = "Leverages the Jellyfish Lighting Python API \
+    created by @vinenoobjelly https://github.com/vinenoobjelly/jellyfishlights-py"
 ISSUE_URL = "https://github.com/bdunn44/hass-jellyfish-lighting/issues"
 
 # Icons
@@ -19,12 +20,6 @@ PLATFORMS = [LIGHT]
 
 # Configuration and options
 CONF_HOST = "host"
-CONF_USERNAME = "username"
-CONF_PASSWORD = "password"
-
-# Defaults
-DEFAULT_NAME = DOMAIN
-
 
 STARTUP_MESSAGE = f"""
 -------------------------------------------------------------------
