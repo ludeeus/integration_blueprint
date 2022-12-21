@@ -5,5 +5,7 @@ logger:
   logs:
     custom_components.jellyfish-lighting: debug
 
-# If you need to debug uncomment the line below (doc: https://www.home-assistant.io/integrations/debugpy/)
+# If you need to debug uncomment the lines below (doc: https://www.home-assistant.io/integrations/debugpy/)
 debugpy:
+  start: true
+  wait: true
