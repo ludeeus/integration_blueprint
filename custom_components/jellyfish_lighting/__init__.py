@@ -1,22 +1,22 @@
 """
 Custom integration to integrate Jellyfish Lighting with Home Assistant.
 """
-import asyncio
 from datetime import timedelta
 import logging
-
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.helpers import device_registry as dr
 
 from .api import JellyfishLightingApiClient
 
 from .const import (
     CONF_HOST,
     DOMAIN,
-    PLATFORMS,
+    NAME,
+    LIGHT,
     STARTUP_MESSAGE,
 )
 
@@ -25,16 +25,25 @@ SCAN_INTERVAL = timedelta(seconds=15)
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
-async def async_setup(hass: HomeAssistant, config: Config):
-    """Set up this integration using YAML is not supported."""
-    _LOGGER.info("in async_setup")
-    hass.states.async_set("jellyfish_lighting.hello", "world")
+async def async_setup(
+    hass: HomeAssistant, config: Config
+):  # pylint: disable=unused-argument
+    """Setting up this integration using YAML is not supported."""
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up this integration using UI."""
-    _LOGGER.info("in async_setup_entry")
+    _LOGGER.debug(
+        "async_setup_entry config entry is: %s",
+        {
+            "entry_id": entry.entry_id,
+            "unique_id": entry.unique_id,
+            "domain": entry.domain,
+            "title": entry.title,
+            "data": entry.data,
+        },
+    )
     if hass.data.get(DOMAIN) is None:
         hass.data.setdefault(DOMAIN, {})
         _LOGGER.info(STARTUP_MESSAGE)
@@ -50,14 +59,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-    hass.data[DOMAIN][entry.entry_id] = coordinator
+    device_registry = dr.async_get(hass)
+    # mac = get_mac_address(hostname=host, network_request=True)
+    device_registry.async_get_or_create(
+        config_entry_id=entry.entry_id,
+        # connections={(dr.CONNECTION_NETWORK_MAC, mac)},
+        identifiers={(DOMAIN, host)},
+        manufacturer=NAME,
+        name="Controller at " + host,
+    )
 
-    for platform in PLATFORMS:
-        if entry.options.get(platform, True):
-            coordinator.platforms.append(platform)
-            hass.async_add_job(
-                hass.config_entries.async_forward_entry_setup(entry, platform)
-            )
+    hass.data[DOMAIN][entry.entry_id] = coordinator
+    hass.async_add_job(hass.config_entries.async_forward_entry_setup(entry, LIGHT))
 
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
     return True
@@ -87,16 +100,8 @@ class JellyfishLightingDataUpdateCoordinator(DataUpdateCoordinator):
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
     _LOGGER.info("in async_unload_entry")
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    unloaded = all(
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-                if platform in coordinator.platforms
-            ]
-        )
-    )
+    # coordinator = hass.data[DOMAIN][entry.entry_id]
+    unloaded = await hass.config_entries.async_forward_entry_unload(entry, LIGHT)
     if unloaded:
         hass.data[DOMAIN].pop(entry.entry_id)
     return unloaded
