@@ -16,7 +16,6 @@ BINARY_SENSOR_DEVICE_CLASS = "connectivity"
 
 # Platforms
 LIGHT = "light"
-PLATFORMS = [LIGHT]
 
 # Configuration and options
 CONF_HOST = "host"
