@@ -1,7 +1,7 @@
 """JellyfishLightingEntity class"""
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, NAME, VERSION, ATTRIBUTION
+from .const import DOMAIN, CONF_HOST, ATTRIBUTION
 
 
 class JellyfishLightingEntity(CoordinatorEntity):
@@ -18,18 +18,13 @@ class JellyfishLightingEntity(CoordinatorEntity):
 
     @property
     def device_info(self):
-        return {
-            "identifiers": {(DOMAIN, self.unique_id)},
-            "name": NAME,
-            "model": VERSION,
-            "manufacturer": NAME,
-        }
+        return {"identifiers": {(DOMAIN, self.config_entry.data.get(CONF_HOST))}}
 
     @property
     def extra_state_attributes(self):
         """Return the state attributes."""
         return {
             "attribution": ATTRIBUTION,
-            # "id": str(self.coordinator.data.get("id")), # TODO: Fix?
+            # "id": str(self.coordinator.data.get("id")),
             "integration": DOMAIN,
         }
