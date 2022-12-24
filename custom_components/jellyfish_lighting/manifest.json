@@ -9,5 +9,8 @@
   "config_flow": true,
   "codeowners": [
     "@bdunn44"
+  ],
+  "requirements": [
+    "jellyfishlights-py==0.9.0"
   ]
 }
