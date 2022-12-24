@@ -11,6 +11,6 @@
     "@bdunn44"
   ],
   "requirements": [
-    "jellyfishlights-py==0.9.0"
+    "jellyfishlights-py==0.2.3"
   ]
 }
