@@ -26,13 +26,17 @@ class JellyfishLightingApiClient:
     async def async_get_data(self):
         """Get data from the API."""
         try:
+            _LOGGER.debug("In apy.py async_get_data")
             # TODO: extend JF library to retrieve zone states
             self._controller.connectAndGetData()
             self.zones = self._controller.zones
-            self.patterns = [p.toFolderAndName() for p in self._controller.patternFiles]
+            self.patterns = list(
+                set([p.toFolderAndName() for p in self._controller.patternFiles])
+            )
             self.patterns.sort()
             _LOGGER.debug("Zones:\n%s", " ".join(self.zones))
             _LOGGER.debug("Patterns:\n%s", " ".join(self.patterns))
+            # TODO: Add/remove entities if zones have changed?
         except BaseException as ex:  # pylint: disable=broad-except
             _LOGGER.exception(
                 "Failed to connect to Jellyfish Lighting controller at %s", self.host
