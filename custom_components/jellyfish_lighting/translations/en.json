@@ -12,7 +12,7 @@
             }
         },
         "error": {
-            "auth": "Username/Password is wrong."
+            "auth": "Could not connect to controller at specified host/IP."
         },
         "abort": {
             "single_instance_allowed": "Only a single instance is allowed."

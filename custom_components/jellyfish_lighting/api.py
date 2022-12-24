@@ -19,7 +19,7 @@ class JellyfishLightingApiClient:
         self.host = host
         self._session = session
         self._hass = hass
-        self._controller = jf.JellyFishController(host, False)
+        self._controller = jf.JellyFishController(host, True)
         self.zones = None
         self.patterns = None
 
@@ -28,7 +28,8 @@ class JellyfishLightingApiClient:
         try:
             _LOGGER.debug("In apy.py async_get_data")
             # TODO: extend JF library to retrieve zone states
-            self._controller.connectAndGetData()
+            self._hass.loop.set_debug(True)
+            await self._hass.async_add_executor_job(self._controller.connectAndGetData)
             self.zones = self._controller.zones
             self.patterns = list(
                 set([p.toFolderAndName() for p in self._controller.patternFiles])
@@ -38,41 +39,33 @@ class JellyfishLightingApiClient:
             _LOGGER.debug("Patterns:\n%s", " ".join(self.patterns))
             # TODO: Add/remove entities if zones have changed?
         except BaseException as ex:  # pylint: disable=broad-except
-            _LOGGER.exception(
-                "Failed to connect to Jellyfish Lighting controller at %s", self.host
-            )
-            raise ex
+            msg = f"Failed to connect and get data from Jellyfish Lighting controller at {self.host}"
+            _LOGGER.exception(msg)
+            raise Exception(msg) from ex
 
     async def async_turn_on(self, zones: List[str] = None):
         """Turn one or more zones on. Affects all zones if zone list is None"""
         try:
             self._controller.turnOn(zones)
         except BaseException as ex:  # pylint: disable=broad-except
-            _LOGGER.exception(
-                "Failed to connect to turn on Jellyfish Lighting zone(s) '%s'",
-                zones or "[all zones]",
-            )
-            raise ex
+            msg = f"Failed to connect to turn on Jellyfish Lighting zone(s) '{zones or '[all zones]'}'"
+            _LOGGER.exception(msg)
+            raise Exception(msg) from ex
 
     async def async_turn_off(self, zones: List[str] = None):
         """Turn one or more zones off. Affects all zones if zone list is None"""
         try:
             self._controller.turnOff(zones)
         except BaseException as ex:  # pylint: disable=broad-except
-            _LOGGER.exception(
-                "Failed to connect to turn of Jellyfish Lighting zone(s) '%s'",
-                zones or "[all zones]",
-            )
-            raise ex
+            msg = f"Failed to connect to turn off Jellyfish Lighting zone(s) '{zones or '[all zones]'}'"
+            _LOGGER.exception(msg)
+            raise Exception(msg) from ex
 
     async def async_play_pattern(self, pattern: str, zones: List[str] = None):
         """Turn one or more zones off. Affects all zones if zone list is None"""
         try:
             self._controller.playPattern(pattern, zones)
         except BaseException as ex:  # pylint: disable=broad-except
-            _LOGGER.exception(
-                "Failed to play pattern '%s' on Jellyfish Lighting zone(s) '%s'",
-                pattern,
-                zones or "[all zones]",
-            )
-            raise ex
+            msg = f"Failed to play pattern '{pattern}' on Jellyfish Lighting zone(s) '{zones or '[all zones]'}'"
+            _LOGGER.exception(msg)
+            raise Exception(msg) from ex

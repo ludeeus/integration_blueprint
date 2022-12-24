@@ -26,6 +26,10 @@ class JellyfishLightingFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle a flow initialized by the user."""
         self._errors = {}
 
+        # Only a single instance of the integration is allowed
+        if self._async_current_entries():
+            return self.async_abort(reason="single_instance_allowed")
+
         if user_input is not None:
             valid = await self._test_connection(user_input[CONF_HOST])
             if valid:
@@ -33,8 +37,10 @@ class JellyfishLightingFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     title=user_input[CONF_HOST], data=user_input
                 )
             else:
-                # TODO: The UI just hangs if there's an error... why?
-                self._errors["base"] = "auth"
+                # TODO: use translations
+                self._errors[
+                    "base"
+                ] = "Could not connect to controller at specified host/IP."
 
             return await self._show_config_form(user_input)
 
@@ -68,5 +74,4 @@ class JellyfishLightingFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             )
             return True
         except Exception:  # pylint: disable=broad-except
-            pass
-        return False
+            return False
