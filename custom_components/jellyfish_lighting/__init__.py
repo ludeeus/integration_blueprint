@@ -66,7 +66,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         # connections={(dr.CONNECTION_NETWORK_MAC, mac)},
         identifiers={(DOMAIN, host)},
         manufacturer=NAME,
-        name="Controller at " + host,
+        name=NAME,
     )
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
