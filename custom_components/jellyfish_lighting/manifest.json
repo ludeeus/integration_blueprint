@@ -11,6 +11,6 @@
     "@bdunn44"
   ],
   "requirements": [
-    "jellyfishlights-py==0.2.3"
+    "git+https://github.com/bdunn44/jellyfishlights-py@master#devp==0.0.1beta1"
   ]
 }
