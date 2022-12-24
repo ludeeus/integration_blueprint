@@ -81,7 +81,7 @@ class JellyfishLightingDataUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(self, hass: HomeAssistant, client: JellyfishLightingApiClient) -> None:
         """Initialize."""
-        _LOGGER.info("in data coordinator __init__")
+        _LOGGER.debug("in data coordinator __init__")
         self.api = client
         self.platforms = []
 
@@ -89,7 +89,7 @@ class JellyfishLightingDataUpdateCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         """Update data via library."""
-        _LOGGER.info("in data coordinator async_update_data")
+        _LOGGER.debug("in data coordinator async_update_data")
         try:
             # TODO: This blocks the UI when running. Create background task?
             return await self.api.async_get_data()
@@ -99,7 +99,7 @@ class JellyfishLightingDataUpdateCoordinator(DataUpdateCoordinator):
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
-    _LOGGER.info("in async_unload_entry")
+    _LOGGER.debug("in async_unload_entry")
     # coordinator = hass.data[DOMAIN][entry.entry_id]
     unloaded = await hass.config_entries.async_forward_entry_unload(entry, LIGHT)
     if unloaded:
@@ -109,6 +109,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
-    _LOGGER.info("in async_reload_entry")
+    _LOGGER.debug("in async_reload_entry")
     await async_unload_entry(hass, entry)
     await async_setup_entry(hass, entry)
