@@ -6,7 +6,6 @@ import logging
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.helpers import device_registry as dr
 
@@ -34,6 +33,7 @@ async def async_setup(
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up this integration using UI."""
+    _LOGGER.info("Setting up Jellyfish Lighting integration")
     _LOGGER.debug(
         "async_setup_entry config entry is: %s",
         {
@@ -49,10 +49,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         _LOGGER.info(STARTUP_MESSAGE)
 
     host = entry.data.get(CONF_HOST)
-
-    session = async_get_clientsession(hass)
-    client = JellyfishLightingApiClient(host, session, hass)
-
+    client = JellyfishLightingApiClient(host, entry, hass)
     coordinator = JellyfishLightingDataUpdateCoordinator(hass, client=client)
     await coordinator.async_refresh()
 
@@ -60,10 +57,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         raise ConfigEntryNotReady
 
     device_registry = dr.async_get(hass)
-    # mac = get_mac_address(hostname=host, network_request=True)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
-        # connections={(dr.CONNECTION_NETWORK_MAC, mac)},
         identifiers={(DOMAIN, host)},
         manufacturer=NAME,
         name=NAME,
@@ -84,14 +79,12 @@ class JellyfishLightingDataUpdateCoordinator(DataUpdateCoordinator):
         _LOGGER.debug("in data coordinator __init__")
         self.api = client
         self.platforms = []
-
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
 
     async def _async_update_data(self):
         """Update data via library."""
         _LOGGER.debug("in data coordinator async_update_data")
         try:
-            # TODO: This blocks the UI when running. Create background task?
             return await self.api.async_get_data()
         except Exception as exception:
             raise UpdateFailed() from exception
@@ -99,7 +92,7 @@ class JellyfishLightingDataUpdateCoordinator(DataUpdateCoordinator):
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
-    _LOGGER.debug("in async_unload_entry")
+    _LOGGER.info("Unloading Jellyfish Lighting integration")
     # coordinator = hass.data[DOMAIN][entry.entry_id]
     unloaded = await hass.config_entries.async_forward_entry_unload(entry, LIGHT)
     if unloaded:
@@ -109,6 +102,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
-    _LOGGER.debug("in async_reload_entry")
+    _LOGGER.info("Reloading Jellyfish Lighting integration")
     await async_unload_entry(hass, entry)
     await async_setup_entry(hass, entry)
