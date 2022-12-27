@@ -46,7 +46,7 @@ class JellyfishLightingLight(JellyfishLightingEntity, LightEntity):
         ]
         self._attr_color_mode = ColorMode.ONOFF
         self._attr_icon = "mdi:led-strip-variant"
-        self._attr_assumed_state = True  # TODO: Remove once polling is added
+        self._attr_assumed_state = False
         self.zone = zone
         self.api_zone = None if self.zone == _ALL_ZONES else [self.zone]
         self.uid = re.sub("[^a-z0-9]", "_", zone.lower().strip("_"))
@@ -66,13 +66,25 @@ class JellyfishLightingLight(JellyfishLightingEntity, LightEntity):
 
     @callback
     def _handle_coordinator_update(self, *args) -> None:
-        _LOGGER.debug("In _handle_coordinator_update for '%s' (%s)", self.zone, args)
-        self._async_update_attrs()
+        if self.zone == _ALL_ZONES:
+            ons = []
+            effects = set()
+            for state in self.coordinator.api.states.values():
+                ons.append(state[0])
+                effects.add(state[1])
+            self._attr_is_on = all(ons)
+            self._attr_effect = effects.pop() if len(effects) == 1 else None
+        else:
+            state = self.coordinator.api.states[self.zone]
+            self._attr_is_on = state[0] == 1
+            self._attr_effect = state[1]
+        _LOGGER.debug(
+            "Updated state for %s. On: %s, Effect: %s",
+            self.zone,
+            self._attr_is_on,
+            self._attr_effect,
+        )
         self.async_write_ha_state()
-
-    @callback
-    def _async_update_attrs(self, **kwargs) -> None:
-        _LOGGER.debug("In _async_update_attrs for '%s' (%s)", self.zone, kwargs)
 
     async def async_turn_on(self, **kwargs):  # pylint: disable=unused-argument
         """Turn on the light."""
@@ -84,14 +96,10 @@ class JellyfishLightingLight(JellyfishLightingEntity, LightEntity):
             )
         else:
             await self.coordinator.api.async_turn_on(self.api_zone)
-        self._attr_is_on = True
-        # await self.coordinator.async_request_refresh()
-        self.async_schedule_update_ha_state()  # TODO: remove once polling implemented
+        await self.coordinator.async_refresh()
 
     async def async_turn_off(self, **kwargs):  # pylint: disable=unused-argument
         """Turn off the light."""
         _LOGGER.debug("In async_turn_off for '%s'. kwargs is %s", self.zone, kwargs)
         await self.coordinator.api.async_turn_off(self.api_zone)
-        self._attr_is_on = False
-        # await self.coordinator.async_request_refresh()
-        self.async_schedule_update_ha_state()  # TODO: remove once polling implemented
+        await self.coordinator.async_refresh()

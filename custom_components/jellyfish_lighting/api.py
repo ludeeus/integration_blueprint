@@ -1,8 +1,8 @@
 """Sample API Client."""
 import logging
 from typing import List
-import aiohttp
 from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
 import jellyfishlightspy as jf
 
 TIMEOUT = 10
@@ -13,31 +13,42 @@ class JellyfishLightingApiClient:
     """API Client for Jellyfish Lighting"""
 
     def __init__(
-        self, host: str, session: aiohttp.ClientSession, hass: HomeAssistant
+        self, host: str, config_entry: ConfigEntry, hass: HomeAssistant
     ) -> None:
         """Initialize API client."""
         self.host = host
-        self._session = session
+        self._config_entry = config_entry
         self._hass = hass
-        self._controller = jf.JellyFishController(host, True)
+        self._controller = jf.JellyFishController(host, False)
         self.zones = None
+        self.states = None
         self.patterns = None
 
     async def async_get_data(self):
         """Get data from the API."""
         try:
-            _LOGGER.debug("In apy.py async_get_data")
-            # TODO: extend JF library to retrieve zone states
-            self._hass.loop.set_debug(True)
+            _LOGGER.debug("Getting refreshed data for Jellyfish Lighting")
             await self._hass.async_add_executor_job(self._controller.connectAndGetData)
+            # TODO: Check if zones have changed. Reload if so.
+            # if self.zones is not None and set(self.zones) != set(self._controller.zones):
+            #     # do the things
+            #     return
             self.zones = self._controller.zones
+            _LOGGER.debug("Zones: %s", ", ".join(self.zones))
+            # Get the state of each zone
+            self.states = {}
+            for zone in self.zones:
+                state = await self._hass.async_add_executor_job(
+                    self._controller.getRunPattern, zone
+                )
+                self.states[zone] = (state.state, state.file)
+            _LOGGER.debug("States: %s", self.states)
+            # Get the list of available patterns
             self.patterns = list(
                 set([p.toFolderAndName() for p in self._controller.patternFiles])
             )
             self.patterns.sort()
-            _LOGGER.debug("Zones:\n%s", " ".join(self.zones))
-            _LOGGER.debug("Patterns:\n%s", " ".join(self.patterns))
-            # TODO: Add/remove entities if zones have changed?
+            _LOGGER.debug("Patterns: %s", ", ".join(self.patterns))
         except BaseException as ex:  # pylint: disable=broad-except
             msg = f"Failed to connect and get data from Jellyfish Lighting controller at {self.host}"
             _LOGGER.exception(msg)
