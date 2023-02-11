@@ -14,7 +14,7 @@ from .entity import IntegrationBlueprintEntity
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
         key="integration_blueprint",
-        name="Integration Blueprint Sensor",
+        name="Integration Blueprint Binary Sensor",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
     ),
 )
