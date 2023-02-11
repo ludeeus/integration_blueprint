@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import timedelta
 
 from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import IntegrationBlueprintApiClient
@@ -12,6 +13,8 @@ from .const import LOGGER, DOMAIN
 
 class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
+
+    config_entry: ConfigEntry
 
     def __init__(
         self,
