@@ -1,28 +1,47 @@
 """Binary sensor platform for integration_blueprint."""
-from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.components.binary_sensor import (
+    BinarySensorEntity,
+    BinarySensorEntityDescription,
+    BinarySensorDeviceClass,
+)
 
-from .const import BINARY_SENSOR, BINARY_SENSOR_DEVICE_CLASS, DEFAULT_NAME, DOMAIN
+from .coordinator import BlueprintDataUpdateCoordinator
+
+from .const import DOMAIN
 from .entity import IntegrationBlueprintEntity
+
+
+ENTITY_DESCRIPTIONS = (
+    BinarySensorEntityDescription(
+        key="integration_blueprint",
+        name="Integration Blueprint Sensor",
+        device_class=BinarySensorDeviceClass.CONNECTIVITY,
+    ),
+)
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
     """Setup binary_sensor platform."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([IntegrationBlueprintBinarySensor(coordinator, entry)])
+    async_add_devices(
+        IntegrationBlueprintBinarySensor(
+            coordinator=coordinator,
+            entity_description=entity_description,
+        )
+        for entity_description in ENTITY_DESCRIPTIONS
+    )
 
 
 class IntegrationBlueprintBinarySensor(IntegrationBlueprintEntity, BinarySensorEntity):
     """integration_blueprint binary_sensor class."""
 
-    @property
-    def name(self):
-        """Return the name of the binary_sensor."""
-        return f"{DEFAULT_NAME}_{BINARY_SENSOR}"
-
-    @property
-    def device_class(self):
-        """Return the class of this binary_sensor."""
-        return BINARY_SENSOR_DEVICE_CLASS
+    def __init__(
+        self,
+        coordinator: BlueprintDataUpdateCoordinator,
+        entity_description: BinarySensorEntityDescription,
+    ) -> None:
+        super().__init__(coordinator)
+        self.entity_description = entity_description
 
     @property
     def is_on(self):
