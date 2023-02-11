@@ -3,8 +3,7 @@ name: Push actions
 on:
   push:
     branches:
-      - master
-      - dev
+      - main
 
 jobs:
   validate:
