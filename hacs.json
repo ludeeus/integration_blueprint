@@ -1,10 +1,6 @@
 {
     "name": "Integration blueprint",
-    "hacs": "1.6.0",
-    "domains": [
-        "binary_sensor",
-        "sensor",
-        "switch"
-    ],
-    "homeassistant": "0.118.0"
+    "render_readme": true,
+    "homeassistant": "0.118.0",
+    "hacs": "1.6.0"
 }
