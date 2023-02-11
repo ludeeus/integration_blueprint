@@ -1,16 +1,11 @@
 """Adds config flow for Blueprint."""
+import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
-import voluptuous as vol
 
 from .api import IntegrationBlueprintApiClient
-from .const import (
-    CONF_PASSWORD,
-    CONF_USERNAME,
-    DOMAIN,
-    PLATFORMS,
-)
+from .const import CONF_PASSWORD, CONF_USERNAME, DOMAIN, PLATFORMS
 
 
 class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):

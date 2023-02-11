@@ -1,6 +1,9 @@
 """Sample API Client."""
+from __future__ import annotations
+
 import asyncio
 import socket
+
 import aiohttp
 import async_timeout
 
@@ -21,22 +24,22 @@ class IntegrationBlueprintApiClient:
         self._password = password
         self._session = session
 
-    async def async_get_data(self) -> dict:
+    async def async_get_data(self) -> any:
         """Get data from the API."""
         url = "https://jsonplaceholder.typicode.com/posts/1"
-        return await self.api_wrapper("get", url)
+        return await self._api_wrapper("get", url)
 
-    async def async_set_title(self, value: str) -> None:
+    async def async_set_title(self, value: str) -> any:
         """Get data from the API."""
         url = "https://jsonplaceholder.typicode.com/posts/1"
-        await self.api_wrapper(
+        return await self._api_wrapper(
             "patch",
             url,
             data={"title": value},
             headers={"Content-type": "application/json; charset=UTF-8"},
         )
 
-    async def api_wrapper(
+    async def _api_wrapper(
         self,
         method: str,
         url: str,
