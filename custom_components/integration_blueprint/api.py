@@ -1,22 +1,20 @@
 """Sample API Client."""
-import logging
 import asyncio
 import socket
-from typing import Optional
 import aiohttp
 import async_timeout
 
-TIMEOUT = 10
-
-
-_LOGGER: logging.Logger = logging.getLogger(__package__)
-
-HEADERS = {"Content-type": "application/json; charset=UTF-8"}
+from .const import LOGGER
 
 
 class IntegrationBlueprintApiClient:
+    """Sample API Client."""
+
     def __init__(
-        self, username: str, password: str, session: aiohttp.ClientSession
+        self,
+        username: str,
+        password: str,
+        session: aiohttp.ClientSession,
     ) -> None:
         """Sample API Client."""
         self._username = username
@@ -31,45 +29,43 @@ class IntegrationBlueprintApiClient:
     async def async_set_title(self, value: str) -> None:
         """Get data from the API."""
         url = "https://jsonplaceholder.typicode.com/posts/1"
-        await self.api_wrapper("patch", url, data={"title": value}, headers=HEADERS)
+        await self.api_wrapper(
+            "patch",
+            url,
+            data={"title": value},
+            headers={"Content-type": "application/json; charset=UTF-8"},
+        )
 
     async def api_wrapper(
-        self, method: str, url: str, data: dict = {}, headers: dict = {}
-    ) -> dict:
+        self,
+        method: str,
+        url: str,
+        data: dict | None = None,
+        headers: dict | None = None,
+    ) -> any:
         """Get information from the API."""
         try:
-            async with async_timeout.timeout(TIMEOUT):
-                if method == "get":
-                    response = await self._session.get(url, headers=headers)
-                    return await response.json()
-
-                elif method == "put":
-                    await self._session.put(url, headers=headers, json=data)
-
-                elif method == "patch":
-                    await self._session.patch(url, headers=headers, json=data)
-
-                elif method == "post":
-                    await self._session.post(url, headers=headers, json=data)
+            async with async_timeout.timeout(10):
+                response = await self._session.request(
+                    method=method,
+                    url=url,
+                    headers=headers,
+                    json=data,
+                )
+                response.raise_for_status()
+                return await response.json()
 
         except asyncio.TimeoutError as exception:
-            _LOGGER.error(
+            LOGGER.error(
                 "Timeout error fetching information from %s - %s",
                 url,
                 exception,
             )
-
-        except (KeyError, TypeError) as exception:
-            _LOGGER.error(
-                "Error parsing information from %s - %s",
-                url,
-                exception,
-            )
         except (aiohttp.ClientError, socket.gaierror) as exception:
-            _LOGGER.error(
+            LOGGER.error(
                 "Error fetching information from %s - %s",
                 url,
                 exception,
             )
         except Exception as exception:  # pylint: disable=broad-except
-            _LOGGER.error("Something really wrong happened! - %s", exception)
+            LOGGER.exception("Something really wrong happened! - %s", exception)

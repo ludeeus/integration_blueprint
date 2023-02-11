@@ -1,4 +1,9 @@
 """Constants for integration_blueprint."""
+from logging import getLogger, Logger
+
+LOGGER: Logger = getLogger(__package__)
+
+
 # Base component constants
 NAME = "Integration blueprint"
 DOMAIN = "integration_blueprint"
