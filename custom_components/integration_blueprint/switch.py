@@ -1,4 +1,6 @@
 """Switch platform for integration_blueprint."""
+from __future__ import annotations
+
 from homeassistant.components.switch import SwitchEntity, SwitchEntityDescription
 
 from .const import DOMAIN
@@ -12,6 +14,7 @@ ENTITY_DESCRIPTIONS = (
         icon="mdi:format-quote-close",
     ),
 )
+
 
 async def async_setup_entry(hass, entry, async_add_devices):
     """Setup sensor platform."""

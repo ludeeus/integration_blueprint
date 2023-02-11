@@ -1,15 +1,15 @@
 """Binary sensor platform for integration_blueprint."""
+from __future__ import annotations
+
 from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
     BinarySensorEntity,
     BinarySensorEntityDescription,
-    BinarySensorDeviceClass,
 )
 
-from .coordinator import BlueprintDataUpdateCoordinator
-
 from .const import DOMAIN
+from .coordinator import BlueprintDataUpdateCoordinator
 from .entity import IntegrationBlueprintEntity
-
 
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(

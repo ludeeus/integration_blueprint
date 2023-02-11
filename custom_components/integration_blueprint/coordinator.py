@@ -3,12 +3,12 @@ from __future__ import annotations
 
 from datetime import timedelta
 
-from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import IntegrationBlueprintApiClient
-from .const import LOGGER, DOMAIN
+from .const import DOMAIN, LOGGER
 
 
 class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
