@@ -1,6 +1,5 @@
 {
     "name": "Integration blueprint",
     "render_readme": true,
-    "homeassistant": "0.118.0",
-    "hacs": "1.6.0"
+    "homeassistant": "2022.2.0"
 }
