@@ -5,9 +5,17 @@ from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.helpers.update_coordinator import (
+    DataUpdateCoordinator,
+    UpdateFailed,
+)
+from homeassistant.exceptions import ConfigEntryAuthFailed
 
-from .api import IntegrationBlueprintApiClient
+from .api import (
+    IntegrationBlueprintApiClient,
+    IntegrationBlueprintApiClientAuthenticationError,
+    IntegrationBlueprintApiClientError,
+)
 from .const import DOMAIN, LOGGER
 
 
@@ -34,5 +42,7 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
         """Update data via library."""
         try:
             return await self.client.async_get_data()
-        except Exception as exception:
-            raise UpdateFailed() from exception
+        except IntegrationBlueprintApiClientAuthenticationError as exception:
+            raise ConfigEntryAuthFailed(exception) from exception
+        except IntegrationBlueprintApiClientError as exception:
+            raise UpdateFailed(exception) from exception
