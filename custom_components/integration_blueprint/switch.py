@@ -40,16 +40,16 @@ class IntegrationBlueprintSwitch(IntegrationBlueprintEntity, SwitchEntity):
         self.entity_description = entity_description
 
     @property
-    def is_on(self):
+    def is_on(self) -> bool:
         """Return true if the switch is on."""
         return self.coordinator.data.get("title", "") == "foo"
 
-    async def async_turn_on(self, **kwargs: any):  # pylint: disable=unused-argument
+    async def async_turn_on(self, **_: any) -> None:
         """Turn on the switch."""
         await self.coordinator.api.async_set_title("bar")
         await self.coordinator.async_request_refresh()
 
-    async def async_turn_off(self, **kwargs: any):  # pylint: disable=unused-argument
+    async def async_turn_off(self, **_: any) -> None:
         """Turn off the switch."""
         await self.coordinator.api.async_set_title("foo")
         await self.coordinator.async_request_refresh()

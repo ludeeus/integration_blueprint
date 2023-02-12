@@ -44,6 +44,6 @@ class IntegrationBlueprintBinarySensor(IntegrationBlueprintEntity, BinarySensorE
         self.entity_description = entity_description
 
     @property
-    def is_on(self):
+    def is_on(self) -> bool:
         """Return true if the binary_sensor is on."""
         return self.coordinator.data.get("title", "") == "foo"
