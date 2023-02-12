@@ -2,8 +2,7 @@
     "config": {
         "step": {
             "user": {
-                "title": "Blueprint",
-                "description": "If you need help with the configuration have a look here: https://github.com/custom-components/integration_blueprint",
+                "description": "If you need help with the configuration have a look here: https://github.com/ludeeus/integration_blueprint",
                 "data": {
                     "username": "Username",
                     "password": "Password"
@@ -11,7 +10,9 @@
             }
         },
         "error": {
-            "auth": "Username/Password is wrong."
+            "auth": "Username/Password is wrong.",
+            "connection": "Unable to connect to the server.",
+            "unknown": "Unknown error occurred."
         },
         "abort": {
             "single_instance_allowed": "Only a single instance is allowed."
