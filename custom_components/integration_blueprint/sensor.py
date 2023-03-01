@@ -17,7 +17,7 @@ ENTITY_DESCRIPTIONS = (
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
-    """Setup sensor platform."""
+    """Set up the sensor platform."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_devices(
         IntegrationBlueprintSensor(
@@ -36,6 +36,7 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
         coordinator: BlueprintDataUpdateCoordinator,
         entity_description: SensorEntityDescription,
     ) -> None:
+        """Initialize the sensor class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
 
