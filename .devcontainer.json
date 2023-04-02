@@ -5,6 +5,12 @@
     "forwardPorts": [
         8123
     ],
+    "portsAttributes": {
+        "8123": {
+            "label": "Home Assistant",
+            "onAutoForward": "notify"
+        }
+    },
     "customizations": {
         "vscode": {
             "extensions": [
