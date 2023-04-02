@@ -5,10 +5,14 @@ on:
     types:
       - "published"
 
+permissions: {}
+
 jobs:
   release:
     name: "Release"
     runs-on: "ubuntu-latest"
+    permissions:
+      contents: write
     steps:
       - name: "Checkout the repository"
         uses: "actions/checkout@v3.5.0"
