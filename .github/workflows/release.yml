@@ -10,22 +10,59 @@ jobs:
     name: "Release"
     runs-on: "ubuntu-latest"
     steps:
-      - name: "Checkout the repository"
-        uses: "actions/checkout@v3.5.0"
+      - name: "⬇️ Checkout the repository"
+        uses: actions/checkout@v3
 
-      - name: "Adjust version number"
-        shell: "bash"
+      - name: 🔢 Get release version
+        id: version
+        uses: home-assistant/actions/helpers/version@master
+
+      - name: ℹ️ Get integration information
+        id: information
         run: |
-          yq -i -o json '.version="${{ github.event.release.tag_name }}"' \
-            "${{ github.workspace }}/custom_components/integration_blueprint/manifest.json"
-
-      - name: "ZIP the integration directory"
-        shell: "bash"
+          name=$(find custom_components/ -type d -maxdepth 1 | tail -n 1 | cut -d "/" -f2)
+          echo "::set-output name=name::$name"
+          min_ha_version=$(jq -r '.homeassistant' ${{ github.workspace }}/hacs.json)
+          echo "::set-output name=min_ha_version::$min_ha_version"
+      - name: 🖊️ Set version number
         run: |
-          cd "${{ github.workspace }}/custom_components/integration_blueprint"
-          zip integration_blueprint.zip -r ./
-
-      - name: "Upload the ZIP file to the release"
-        uses: softprops/action-gh-release@v0.1.15
+          sed -i '/INTEGRATION_VERSION = /c\INTEGRATION_VERSION = "${{ steps.version.outputs.version }}"' \
+            "${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/const.py"
+          jq '.version = "${{ steps.version.outputs.version }}"' \
+            "${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/manifest.json" > tmp \
+            && mv -f tmp "${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/manifest.json"
+      - name: 🖊️ Set min required HA version
+        run: |
+          sed -i '/MIN_REQUIRED_HA_VERSION = /c\MIN_REQUIRED_HA_VERSION = "${{ steps.information.outputs.min_ha_version }}"' \
+            "${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/const.py"
+      - name: 👀 Validate data
+        run: |
+          if ! grep -q 'INTEGRATION_VERSION = "${{ steps.version.outputs.version }}"' ${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/const.py; then
+            echo "The version in custom_components/${{ steps.information.outputs.name }}/const.py was not correct"
+            cat ${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/const.py | grep INTEGRATION_VERSION
+            exit 1
+          fi
+          manifestversion=$(jq -r '.version' ${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/manifest.json)
+          if [ "$manifestversion" != "${{ steps.version.outputs.version }}" ]; then
+            echo "The version in custom_components/${{ steps.information.outputs.name }}/manifest.json was not correct"
+            echo "$manifestversion"
+            exit 1
+          fi
+          if ! grep -q 'MIN_REQUIRED_HA_VERSION = "${{ steps.information.outputs.min_ha_version }}"' ${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/const.py; then
+            echo "The MIN_REQUIRED_HA_VERSION in custom_components/${{ steps.information.outputs.name }}/const.py was not correct"
+            cat ${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/const.py | grep MIN_REQUIRED_HA_VERSION
+            exit 1
+          fi
+      - name: 📦 Create zip file for the integration
+        run: |
+          cd "${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}"
+          zip ${{ steps.information.outputs.name }}.zip -r ./
+      - name: 📤 Upload the zip file as a release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: ${{ github.workspace }}/custom_components/integration_blueprint/integration_blueprint.zip
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/${{ steps.information.outputs.name }}.zip"
+          asset_name: ${{ steps.information.outputs.name }}.zip
+          asset_content_type: application/zip
