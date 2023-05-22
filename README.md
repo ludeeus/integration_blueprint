@@ -35,7 +35,7 @@ File | Purpose | Documentation
 1. Open your new repository in Visual Studio Code devcontainer (Preferably with the "`Dev Containers: Clone Repository in Named Container Volume...`" option).
 1. Rename all instances of the `integration_blueprint` to `custom_components/<your_integration_domain>` (e.g. `custom_components/awesome_integration`).
 1. Rename all instances of the `Integration Blueprint` to `<Your Integration Name>` (e.g. `Awesome Integration`).
-1. Run the `scrtipts/develop` to start HA and test out your new integration.
+1. Run the `scripts/develop` to start HA and test out your new integration.
 
 ## Next steps
 
