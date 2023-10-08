@@ -2,7 +2,7 @@
     "name": "Integration blueprint",
     "filename": "integration_blueprint.zip",
     "hide_default_branch": true,
-    "homeassistant": "2023.3.0",
+    "homeassistant": "2023.8.0",
     "render_readme": true,
     "zip_release": true
 }
