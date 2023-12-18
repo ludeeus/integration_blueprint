@@ -6,3 +6,16 @@ logger:
   default: info
   logs:
     custom_components.integration_blueprint: debug
+
+# Adds button for graceful shutdown via browser interface
+input_button:
+  shutdown:
+    name: "Shutdown Home Assistant"
+    icon: "mdi:power-plug-off-outline"
+
+automation shutdown:
+  trigger:
+    - platform: state
+      entity_id: input_button.shutdown
+  action:
+    - service: homeassistant.stop
