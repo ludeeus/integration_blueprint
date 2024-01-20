@@ -9,7 +9,7 @@ from homeassistant.components.binary_sensor import (
 
 from .const import DOMAIN
 from .coordinator import BlueprintDataUpdateCoordinator
-from .entity import IntegrationBlueprintEntity
+from .entity import AnovaNanoEntity
 
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
@@ -24,7 +24,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     """Set up the binary_sensor platform."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_devices(
-        IntegrationBlueprintBinarySensor(
+        AnovaNanoBinarySensor(
             coordinator=coordinator,
             entity_description=entity_description,
         )
@@ -32,7 +32,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     )
 
 
-class IntegrationBlueprintBinarySensor(IntegrationBlueprintEntity, BinarySensorEntity):
+class AnovaNanoBinarySensor(AnovaNanoEntity, BinarySensorEntity):
     """anova_nano binary_sensor class."""
 
     def __init__(

@@ -5,7 +5,7 @@ from homeassistant.components.sensor import SensorEntity, SensorEntityDescriptio
 
 from .const import DOMAIN
 from .coordinator import BlueprintDataUpdateCoordinator
-from .entity import IntegrationBlueprintEntity
+from .entity import AnovaNanoEntity
 
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
@@ -20,7 +20,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     """Set up the sensor platform."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_devices(
-        IntegrationBlueprintSensor(
+        AnovaNanoSensor(
             coordinator=coordinator,
             entity_description=entity_description,
         )
@@ -28,7 +28,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     )
 
 
-class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
+class AnovaNanoSensor(AnovaNanoEntity, SensorEntity):
     """anova_nano Sensor class."""
 
     def __init__(
