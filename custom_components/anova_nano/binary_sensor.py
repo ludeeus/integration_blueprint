@@ -14,7 +14,7 @@ from .entity import IntegrationBlueprintEntity
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
         key="anova_nano",
-        name="Integration Blueprint Binary Sensor",
+        name="Anova Nano Binary Sensor",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
     ),
 )
