@@ -8,7 +8,7 @@ from homeassistant.components.binary_sensor import (
 )
 
 from .const import DOMAIN
-from .coordinator import BlueprintDataUpdateCoordinator
+from .coordinator import AnovaNanoDataUpdateCoordinator
 from .entity import AnovaNanoEntity
 
 ENTITY_DESCRIPTIONS = (
@@ -37,7 +37,7 @@ class AnovaNanoBinarySensor(AnovaNanoEntity, BinarySensorEntity):
 
     def __init__(
         self,
-        coordinator: BlueprintDataUpdateCoordinator,
+        coordinator: AnovaNanoDataUpdateCoordinator,
         entity_description: BinarySensorEntityDescription,
     ) -> None:
         """Initialize the binary_sensor class."""

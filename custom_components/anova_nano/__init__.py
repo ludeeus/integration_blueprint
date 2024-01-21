@@ -1,7 +1,7 @@
-"""Custom integration to integrate anova_nano with Home Assistant.
+"""Custom integration to integrate Anova Nano with Home Assistant.
 
 For more details about this integration, please refer to
-https://github.com/ludeeus/anova_nano
+https://github.com/mcolyer/hacs-anova-nano
 """
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import AnovaNanoApiClient
 from .const import DOMAIN
-from .coordinator import BlueprintDataUpdateCoordinator
+from .coordinator import AnovaNanoDataUpdateCoordinator
 
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
@@ -25,7 +25,7 @@ PLATFORMS: list[Platform] = [
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up this integration using UI."""
     hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN][entry.entry_id] = coordinator = BlueprintDataUpdateCoordinator(
+    hass.data[DOMAIN][entry.entry_id] = coordinator = AnovaNanoDataUpdateCoordinator(
         hass=hass,
         client=AnovaNanoApiClient(
             username=entry.data[CONF_USERNAME],

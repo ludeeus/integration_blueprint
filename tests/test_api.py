@@ -6,8 +6,10 @@ from custom_components.anova_nano.api import (
     AnovaNanoApiClient,
 )
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+import pytest
 
 
+@pytest.mark.asyncio
 async def test_api(hass, aioclient_mock, caplog):
     """Test API calls."""
 

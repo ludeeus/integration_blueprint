@@ -1,10 +1,10 @@
-"""Sensor platform for anova_nano."""
+"""Sensor platform for Anova Nano."""
 from __future__ import annotations
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 
 from .const import DOMAIN
-from .coordinator import BlueprintDataUpdateCoordinator
+from .coordinator import AnovaNanoDataUpdateCoordinator
 from .entity import AnovaNanoEntity
 
 ENTITY_DESCRIPTIONS = (
@@ -33,7 +33,7 @@ class AnovaNanoSensor(AnovaNanoEntity, SensorEntity):
 
     def __init__(
         self,
-        coordinator: BlueprintDataUpdateCoordinator,
+        coordinator: AnovaNanoDataUpdateCoordinator,
         entity_description: SensorEntityDescription,
     ) -> None:
         """Initialize the sensor class."""

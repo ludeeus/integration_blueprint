@@ -1,12 +1,10 @@
 {
   "domain": "anova_nano",
-  "name": "Integration blueprint",
-  "codeowners": [
-    "@ludeeus"
-  ],
+  "name": "Anova Nano",
+  "codeowners": ["@mcolyer"],
   "config_flow": true,
-  "documentation": "https://github.com/ludeeus/anova_nano",
-  "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/ludeeus/anova_nano/issues",
+  "documentation": "https://github.com/mcolyer/hacs-anova_nano",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/mcolyer/hacs-anova_nano/issues",
   "version": "0.0.0"
 }

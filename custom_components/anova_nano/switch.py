@@ -4,7 +4,7 @@ from __future__ import annotations
 from homeassistant.components.switch import SwitchEntity, SwitchEntityDescription
 
 from .const import DOMAIN
-from .coordinator import BlueprintDataUpdateCoordinator
+from .coordinator import AnovaNanoDataUpdateCoordinator
 from .entity import AnovaNanoEntity
 
 ENTITY_DESCRIPTIONS = (
@@ -33,7 +33,7 @@ class AnovaNanoSwitch(AnovaNanoEntity, SwitchEntity):
 
     def __init__(
         self,
-        coordinator: BlueprintDataUpdateCoordinator,
+        coordinator: AnovaNanoDataUpdateCoordinator,
         entity_description: SwitchEntityDescription,
     ) -> None:
         """Initialize the switch class."""
