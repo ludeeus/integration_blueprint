@@ -1,4 +1,4 @@
-"""Adds config flow for Blueprint."""
+"""Adds config flow for Anova Nano."""
 from __future__ import annotations
 
 import voluptuous as vol
@@ -16,8 +16,8 @@ from .api import (
 from .const import DOMAIN, LOGGER
 
 
-class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
-    """Config flow for Blueprint."""
+class AnovaNanoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
+    """Config flow for AnovaNano."""
 
     VERSION = 1
 
@@ -40,6 +40,9 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 LOGGER.error(exception)
                 _errors["base"] = "connection"
             except AnovaNanoApiClientError as exception:
+                LOGGER.exception(exception)
+                _errors["base"] = "unknown"
+            except Exception as exception:
                 LOGGER.exception(exception)
                 _errors["base"] = "unknown"
             else:
