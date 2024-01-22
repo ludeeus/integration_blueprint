@@ -47,10 +47,10 @@ class AnovaNanoSwitch(AnovaNanoEntity, SwitchEntity):
 
     async def async_turn_on(self, **_: any) -> None:
         """Turn on the switch."""
-        await self.coordinator.api.async_set_title("bar")
+        await self.coordinator.client.async_set_title("bar")
         await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **_: any) -> None:
         """Turn off the switch."""
-        await self.coordinator.api.async_set_title("foo")
+        await self.coordinator.client.async_set_title("foo")
         await self.coordinator.async_request_refresh()

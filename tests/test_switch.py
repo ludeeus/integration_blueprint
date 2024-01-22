@@ -47,7 +47,7 @@ async def test_switch_services(hass, aioclient_mock):
         title_func.reset_mock()
 
         await hass.services.async_call(
-            SWITCH,
+            Platform.SWITCH,
             SERVICE_TURN_ON,
             service_data={ATTR_ENTITY_ID: f"{Platform.SWITCH}.integration_switch"},
             blocking=True,
