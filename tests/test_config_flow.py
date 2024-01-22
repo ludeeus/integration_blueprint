@@ -24,8 +24,7 @@ from .const import MOCK_CONFIG
 @pytest.fixture(autouse=True)
 def bypass_setup_fixture():
     """Prevent setup."""
-    with patch("custom_components.anova_nano.async_setup", return_value=True,), patch(
-        "custom_components.anova_nano.async_setup_entry",
+    with patch("custom_components.anova_nano.async_setup_entry",
         return_value=True,
     ):
         yield

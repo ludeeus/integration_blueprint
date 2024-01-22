@@ -5,6 +5,9 @@ import pytest
 
 pytest_plugins = "pytest_homeassistant_custom_component"
 
+@pytest.fixture(autouse=True)
+def auto_enable_custom_integrations(enable_custom_integrations):
+    yield
 
 # This fixture is used to prevent HomeAssistant from attempting to create and dismiss persistent
 # notifications. These calls would fail without this fixture since the persistent_notification

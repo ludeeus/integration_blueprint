@@ -4,9 +4,6 @@ import pytest
 from unittest.mock import call
 from unittest.mock import patch
 
-from custom_components.anova_nano import (
-    async_setup_entry,
-)
 from custom_components.anova_nano.const import (
     DOMAIN,
 )
@@ -21,11 +18,16 @@ from pytest_homeassistant_custom_component.common import MockConfigEntry
 from .const import MOCK_CONFIG
 
 
-async def test_switch_services(hass):
+async def test_switch_services(hass, aioclient_mock):
     """Test switch services."""
     # Create a mock entry so we don't have to go through config flow
-    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
-    assert await async_setup_entry(hass, config_entry)
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
+    config_entry.add_to_hass(hass)
+
+    aioclient_mock.get(
+        "https://jsonplaceholder.typicode.com/posts/1", text='{"test": "test"}'
+    )
+    await hass.config_entries.async_setup(config_entry.entry_id)
     await hass.async_block_till_done()
 
     # Functions/objects can be patched directly in test code as well and can be used to test
@@ -36,7 +38,7 @@ async def test_switch_services(hass):
         await hass.services.async_call(
             Platform.SWITCH,
             SERVICE_TURN_OFF,
-            service_data={ATTR_ENTITY_ID: f"{Platform.SWITCH}.{Platform.SWITCH}"},
+            service_data={ATTR_ENTITY_ID: f"{Platform.SWITCH}.integration_switch"},
             blocking=True,
         )
         assert title_func.called
@@ -47,7 +49,7 @@ async def test_switch_services(hass):
         await hass.services.async_call(
             SWITCH,
             SERVICE_TURN_ON,
-            service_data={ATTR_ENTITY_ID: f"{Platform.SWITCH}.{Platform.SWITCH}"},
+            service_data={ATTR_ENTITY_ID: f"{Platform.SWITCH}.integration_switch"},
             blocking=True,
         )
         assert title_func.called
