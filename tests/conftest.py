@@ -3,6 +3,10 @@ from unittest.mock import patch
 
 import pytest
 
+from custom_components.anova_nano.api import (
+    AnovaNanoApiClientError,
+)
+
 pytest_plugins = "pytest_homeassistant_custom_component"
 
 @pytest.fixture(autouse=True)
@@ -26,7 +30,9 @@ def skip_notifications_fixture():
 @pytest.fixture(name="bypass_get_data")
 def bypass_get_data_fixture():
     """Skip calls to get data from API."""
-    with patch("custom_components.anova_nano.AnovaNanoApiClient.async_get_data"):
+    async def mock_async_get_data(self):
+        return {"body": "test"}
+    with patch("custom_components.anova_nano.AnovaNanoApiClient.async_get_data", mock_async_get_data):
         yield
 
 
@@ -37,6 +43,6 @@ def error_get_data_fixture():
     """Simulate error when retrieving data from API."""
     with patch(
         "custom_components.anova_nano.AnovaNanoApiClient.async_get_data",
-        side_effect=Exception,
+        side_effect=AnovaNanoApiClientError,
     ):
         yield

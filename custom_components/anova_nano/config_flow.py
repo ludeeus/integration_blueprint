@@ -42,9 +42,6 @@ class AnovaNanoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             except AnovaNanoApiClientError as exception:
                 LOGGER.exception(exception)
                 _errors["base"] = "unknown"
-            except Exception as exception:
-                LOGGER.exception(exception)
-                _errors["base"] = "unknown"
             else:
                 return self.async_create_entry(
                     title=user_input[CONF_USERNAME],
