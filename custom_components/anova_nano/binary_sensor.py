@@ -9,13 +9,16 @@ from homeassistant.components.binary_sensor import (
 
 from .const import DOMAIN
 from .coordinator import AnovaNanoDataUpdateCoordinator
-from .entity import AnovaNanoEntity
+from .entity import AnovaNanoDescriptionEntity
 
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
-        key="anova_nano",
-        name="Anova Nano Binary Sensor",
-        device_class=BinarySensorDeviceClass.CONNECTIVITY,
+        key="water_low",
+        device_class=BinarySensorDeviceClass.PROBLEM,
+    ),
+    BinarySensorEntityDescription(
+        key="water_leak",
+        device_class=BinarySensorDeviceClass.PROBLEM,
     ),
 )
 
@@ -32,7 +35,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     )
 
 
-class AnovaNanoBinarySensor(AnovaNanoEntity, BinarySensorEntity):
+class AnovaNanoBinarySensor(AnovaNanoDescriptionEntity, BinarySensorEntity):
     """anova_nano binary_sensor class."""
 
     def __init__(
@@ -41,7 +44,7 @@ class AnovaNanoBinarySensor(AnovaNanoEntity, BinarySensorEntity):
         entity_description: BinarySensorEntityDescription,
     ) -> None:
         """Initialize the binary_sensor class."""
-        super().__init__(coordinator)
+        super().__init__(coordinator, entity_description)
         self.entity_description = entity_description
 
     @property

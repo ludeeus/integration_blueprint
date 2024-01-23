@@ -19,7 +19,9 @@ async def test_binary_sensor(hass, aioclient_mock):
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
 
-    state = hass.states.get("binary_sensor.anova_nano_binary_sensor")
-
-    assert state
-    assert state.state == "off"
+    for binary_sensor in ["water_low", "water_leak"]:
+        state = hass.states.get(
+            f"binary_sensor.anova_nano_{entry.entry_id}_{binary_sensor}"
+        )
+        assert state
+        assert state.state == "off"

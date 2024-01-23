@@ -1,7 +1,7 @@
 """AnovaNanoEntity class."""
 from __future__ import annotations
 
-from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers.entity import DeviceInfo, EntityDescription
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import ATTRIBUTION, DOMAIN, NAME, VERSION
@@ -23,3 +23,17 @@ class AnovaNanoEntity(CoordinatorEntity):
             model=VERSION,
             manufacturer=NAME,
         )
+
+
+class AnovaNanoDescriptionEntity(AnovaNanoEntity):
+    """Defines an Anova Nano entity that uses a description."""
+
+    def __init__(
+        self,
+        coordinator: AnovaNanoDataUpdateCoordinator,
+        description: EntityDescription,
+    ) -> None:
+        """Initialize the entity and declare unique id based on description key."""
+        super().__init__(coordinator)
+        self.entity_description = description
+        self._attr_unique_id = f"{coordinator.config_entry.entry_id}_{description.key}"
