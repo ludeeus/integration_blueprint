@@ -1,5 +1,4 @@
 """Test {{cookiecutter.friendly_name}} switch."""
-import pytest
 
 from unittest.mock import call
 from unittest.mock import patch

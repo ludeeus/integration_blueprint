@@ -9,8 +9,10 @@ from custom_components.anova_nano.api import (
 
 pytest_plugins = "pytest_homeassistant_custom_component"
 
+# This fixture is used to enable custom integrations, otherwise the custom_components folder will not be loaded.
 @pytest.fixture(autouse=True)
 def auto_enable_custom_integrations(enable_custom_integrations):
+    """Enable custom integrations."""
     yield
 
 # This fixture is used to prevent HomeAssistant from attempting to create and dismiss persistent

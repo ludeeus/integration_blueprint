@@ -1,21 +1,10 @@
 """Test Anova Nano setup process."""
-import pytest
-from custom_components.anova_nano import (
-    async_reload_entry,
-)
-from custom_components.anova_nano import (
-    async_setup_entry,
-)
-from custom_components.anova_nano import (
-    async_unload_entry,
-)
 from custom_components.anova_nano import (
     AnovaNanoDataUpdateCoordinator,
 )
 from custom_components.anova_nano.const import (
     DOMAIN,
 )
-from homeassistant.exceptions import ConfigEntryNotReady
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from .const import MOCK_CONFIG
@@ -58,4 +47,4 @@ async def test_setup_entry_exception(hass, error_on_get_data):
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
     config_entry.add_to_hass(hass)
 
-    assert await hass.config_entries.async_setup(config_entry.entry_id) == False
+    assert await hass.config_entries.async_setup(config_entry.entry_id) is False

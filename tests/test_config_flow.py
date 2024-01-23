@@ -5,15 +5,8 @@ import pytest
 from custom_components.anova_nano.const import (
     DOMAIN,
 )
-from custom_components.anova_nano import (
-    PLATFORMS,
-)
-from homeassistant.const import (
-    Platform,
-)
 from homeassistant import config_entries
 from homeassistant import data_entry_flow
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from .const import MOCK_CONFIG
 

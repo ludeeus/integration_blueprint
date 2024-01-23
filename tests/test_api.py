@@ -1,12 +1,9 @@
 """Tests for anova_nano api."""
-import asyncio
 
-import aiohttp
 from custom_components.anova_nano.api import (
     AnovaNanoApiClient,
 )
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-import pytest
 
 
 async def test_api(hass, aioclient_mock, caplog):

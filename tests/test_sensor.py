@@ -1,14 +1,11 @@
 """Test sensor for simple integration."""
-import pytest
 
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.anova_nano.const import DOMAIN
-from custom_components.anova_nano.const import (
-    DOMAIN,
-)
 
 from .const import MOCK_CONFIG
+
 
 async def test_sensor(hass, aioclient_mock):
     """Test sensor."""
