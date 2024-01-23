@@ -1,5 +1,7 @@
 -r requirements.txt
 colorlog==6.7.0
 pip>=21.0,<23.2
-ruff==0.0.292
+ruff==0.1.14
 black==23.12.1
+python-lsp-server==1.10.0
+python-lsp-ruff==2.0.2
