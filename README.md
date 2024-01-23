@@ -1,4 +1,4 @@
-# Integration Blueprint
+# Anova Nano Home Asssistant Integration
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
@@ -32,10 +32,10 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 
 ---
 
-[anova_nano]: https://github.com/mcolyer/anova_nano
-[commits-shield]: https://img.shields.io/github/commit-activity/y/mcolyer/anova_nano.svg?style=for-the-badge
-[commits]: https://github.com/mcolyer/anova_nano/commits/main
-[license-shield]: https://img.shields.io/github/license/mcolyer/anova_nano.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-Joakim%20Sørensen%20%40mcolyer-blue.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/mcolyer/anova_nano.svg?style=for-the-badge
-[releases]: https://github.com/mcolyer/anova_nano/releases
+[anova_nano]: https://github.com/mcolyer/hacs-anova-nano
+[commits-shield]: https://img.shields.io/github/commit-activity/y/mcolyer/hacs-anova-nano.svg?style=for-the-badge
+[commits]: https://github.com/mcolyer/hacs-anova-nano/commits/main
+[license-shield]: https://img.shields.io/github/license/mcolyer/hacs-anova-nano.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-Matt%20Colyer%20%40mcolyer-blue.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/release/mcolyer/hacs-anova-nano.svg?style=for-the-badge
+[releases]: https://github.com/mcolyer/hacs-anova-nano/releases
