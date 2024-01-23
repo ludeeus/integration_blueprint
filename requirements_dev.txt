@@ -1,5 +1,4 @@
+-r requirements.txt
 colorlog==6.7.0
-homeassistant==2024.1.4
 pip>=21.0,<23.2
 ruff==0.0.292
-async-timeout==4.0.3

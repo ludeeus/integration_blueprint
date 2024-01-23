@@ -1,0 +1,2 @@
+homeassistant==2024.1.4
+async-timeout==4.0.3
