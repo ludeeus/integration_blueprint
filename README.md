@@ -8,14 +8,6 @@
 
 _Integration to integrate with [pyanova_nano]._
 
-**This integration will set up the following platforms.**
-
-| Platform        | Description                         |
-| --------------- | ----------------------------------- |
-| `binary_sensor` | Show something `True` or `False`.   |
-| `sensor`        | Show info from blueprint API.       |
-| `switch`        | Switch something `True` or `False`. |
-
 ## Installation
 
 1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).

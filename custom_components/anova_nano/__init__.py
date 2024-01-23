@@ -17,7 +17,6 @@ from .coordinator import AnovaNanoDataUpdateCoordinator
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
-    Platform.SWITCH,
 ]
 
 
