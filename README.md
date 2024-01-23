@@ -6,7 +6,7 @@
 
 ![Project Maintenance][maintenance-shield]
 
-_Integration to integrate with [anova_nano][anova_nano]._
+_Integration to integrate with [pyanova_nano]._
 
 **This integration will set up the following platforms.**
 
@@ -32,7 +32,7 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 
 ---
 
-[anova_nano]: https://github.com/mcolyer/hacs-anova-nano
+[pyanova_nano]: https://github.com/filmkorn/pyanova-nano
 [commits-shield]: https://img.shields.io/github/commit-activity/y/mcolyer/hacs-anova-nano.svg?style=for-the-badge
 [commits]: https://github.com/mcolyer/hacs-anova-nano/commits/main
 [license-shield]: https://img.shields.io/github/license/mcolyer/hacs-anova-nano.svg?style=for-the-badge
