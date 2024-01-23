@@ -30,8 +30,6 @@ _Integration to integrate with [pyanova_nano]._
 
 If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md)
 
----
-
 [pyanova_nano]: https://github.com/filmkorn/pyanova-nano
 [commits-shield]: https://img.shields.io/github/commit-activity/y/mcolyer/hacs-anova-nano.svg?style=for-the-badge
 [commits]: https://github.com/mcolyer/hacs-anova-nano/commits/main
