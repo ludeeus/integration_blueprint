@@ -12,15 +12,11 @@ class AnovaNanoApiClientError(Exception):
     """Exception to indicate a general API error."""
 
 
-class AnovaNanoApiClientCommunicationError(
-    AnovaNanoApiClientError
-):
+class AnovaNanoApiClientCommunicationError(AnovaNanoApiClientError):
     """Exception to indicate a communication error."""
 
 
-class AnovaNanoApiClientAuthenticationError(
-    AnovaNanoApiClientError
-):
+class AnovaNanoApiClientAuthenticationError(AnovaNanoApiClientError):
     """Exception to indicate an authentication error."""
 
 

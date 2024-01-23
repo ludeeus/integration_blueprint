@@ -17,7 +17,8 @@ from .const import MOCK_CONFIG
 @pytest.fixture(autouse=True)
 def bypass_setup_fixture():
     """Prevent setup."""
-    with patch("custom_components.anova_nano.async_setup_entry",
+    with patch(
+        "custom_components.anova_nano.async_setup_entry",
         return_value=True,
     ):
         yield
@@ -71,5 +72,3 @@ async def test_failed_config_flow(hass, error_on_get_data):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {"base": "unknown"}
-
-

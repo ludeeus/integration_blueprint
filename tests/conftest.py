@@ -9,11 +9,13 @@ from custom_components.anova_nano.api import (
 
 pytest_plugins = "pytest_homeassistant_custom_component"
 
+
 # This fixture is used to enable custom integrations, otherwise the custom_components folder will not be loaded.
 @pytest.fixture(autouse=True)
 def auto_enable_custom_integrations(enable_custom_integrations):
     """Enable custom integrations."""
     yield
+
 
 # This fixture is used to prevent HomeAssistant from attempting to create and dismiss persistent
 # notifications. These calls would fail without this fixture since the persistent_notification
@@ -32,9 +34,14 @@ def skip_notifications_fixture():
 @pytest.fixture(name="bypass_get_data")
 def bypass_get_data_fixture():
     """Skip calls to get data from API."""
+
     async def mock_async_get_data(self):
         return {"body": "test"}
-    with patch("custom_components.anova_nano.AnovaNanoApiClient.async_get_data", mock_async_get_data):
+
+    with patch(
+        "custom_components.anova_nano.AnovaNanoApiClient.async_get_data",
+        mock_async_get_data,
+    ):
         yield
 
 
