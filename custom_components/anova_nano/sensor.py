@@ -1,17 +1,46 @@
 """Sensor platform for Anova Nano."""
 from __future__ import annotations
 
-from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
+from homeassistant.components.sensor import (
+    SensorEntity,
+    SensorEntityDescription,
+    SensorDeviceClass,
+    SensorStateClass,
+)
+from homeassistant.const import UnitOfTemperature
 
 from .const import DOMAIN
 from .coordinator import AnovaNanoDataUpdateCoordinator
-from .entity import AnovaNanoEntity
+from .entity import AnovaNanoDescriptionEntity
 
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
-        key="anova_nano",
-        name="Integration Sensor",
-        icon="mdi:format-quote-close",
+        key="water_temperature",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="heater_temperature",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="triac_temperature",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="internal_temperature",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="motor_speed",
+        state_class=SensorStateClass.MEASUREMENT,
     ),
 )
 
@@ -28,7 +57,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     )
 
 
-class AnovaNanoSensor(AnovaNanoEntity, SensorEntity):
+class AnovaNanoSensor(AnovaNanoDescriptionEntity, SensorEntity):
     """anova_nano Sensor class."""
 
     def __init__(
@@ -37,10 +66,10 @@ class AnovaNanoSensor(AnovaNanoEntity, SensorEntity):
         entity_description: SensorEntityDescription,
     ) -> None:
         """Initialize the sensor class."""
-        super().__init__(coordinator)
+        super().__init__(coordinator, entity_description)
         self.entity_description = entity_description
 
     @property
     def native_value(self) -> str:
         """Return the native value of the sensor."""
-        return self.coordinator.data.get("body")
+        return 10.0

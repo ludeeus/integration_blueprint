@@ -19,7 +19,12 @@ async def test_sensor(hass, aioclient_mock):
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
 
-    state = hass.states.get("sensor.integration_sensor")
-
-    assert state
-    assert state.state == "value"
+    for sensor in [
+        "water_temperature",
+        "heater_temperature",
+        "triac_temperature",
+        "internal_temperature",
+        "motor_speed",
+    ]:
+        state = hass.states.get(f"sensor.anova_nano_{entry.entry_id}_{sensor}")
+        assert state
