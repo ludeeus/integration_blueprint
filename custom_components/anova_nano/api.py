@@ -1,6 +1,8 @@
 """Sample API Client."""
 from __future__ import annotations
 
+from abc import ABC
+
 import asyncio
 import socket
 
@@ -21,7 +23,7 @@ class AnovaNanoApiClientAuthenticationError(AnovaNanoApiClientError):
 
 
 class AnovaNanoApiClient:
-    """Sample API Client."""
+    """BLE API Client."""
 
     def __init__(
         self,
@@ -33,6 +35,11 @@ class AnovaNanoApiClient:
         self._username = username
         self._password = password
         self._session = session
+        self._listeners = []
+
+    def add_listener(self, listener: AnovaNanoUpdateListener):
+        """Add a listener."""
+        self._listeners.append(listener)
 
     async def async_get_data(self) -> any:
         """Get data from the API."""
@@ -84,3 +91,11 @@ class AnovaNanoApiClient:
             raise AnovaNanoApiClientError(
                 "Something really wrong happened!"
             ) from exception
+
+
+class AnovaNanoUpdateListener(ABC):
+    """Abstract class defining the interface for a listener."""
+
+    async def on_new_device(self, device: str):
+        """Abstract method to be implemented by the listener."""
+        pass

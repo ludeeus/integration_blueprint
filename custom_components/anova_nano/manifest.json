@@ -6,5 +6,12 @@
   "documentation": "https://github.com/mcolyer/hacs-anova_nano",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/mcolyer/hacs-anova_nano/issues",
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "dependencies": ["bluetooth_adapters"],
+  "requirements": ["pyanova-nano==0.1.0"],
+  "bluetooth": [
+    {
+      "service_uuid": "0e140000-0af1-4582-a242-773e63054c68"
+    }
+  ]
 }
