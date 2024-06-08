@@ -3,11 +3,10 @@
 from __future__ import annotations
 
 import voluptuous as vol
-from homeassistant import config_entries
+from homeassistant import config_entries, data_entry_flow
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.helpers import selector
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
-
 
 from .api import (
     IntegrationBlueprintApiClient,
@@ -26,7 +25,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_user(
         self,
         user_input: dict | None = None,
-    ) -> config_entries.FlowResult:
+    ) -> data_entry_flow.FlowResult:
         """Handle a flow initialized by the user."""
         _errors = {}
         if user_input is not None:
@@ -56,18 +55,18 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 {
                     vol.Required(
                         CONF_USERNAME,
-                        default=(user_input or {}).get(CONF_USERNAME),
+                        default=(user_input or {}).get(CONF_USERNAME, vol.UNDEFINED),
                     ): selector.TextSelector(
                         selector.TextSelectorConfig(
-                            type=selector.TextSelectorType.TEXT
+                            type=selector.TextSelectorType.TEXT,
                         ),
                     ),
                     vol.Required(CONF_PASSWORD): selector.TextSelector(
                         selector.TextSelectorConfig(
-                            type=selector.TextSelectorType.PASSWORD
+                            type=selector.TextSelectorType.PASSWORD,
                         ),
                     ),
-                }
+                },
             ),
             errors=_errors,
         )

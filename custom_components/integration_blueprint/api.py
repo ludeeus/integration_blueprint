@@ -1,7 +1,9 @@
 """Sample API Client."""
+
 from __future__ import annotations
 
 import socket
+from typing import Any
 
 import aiohttp
 import async_timeout
@@ -12,15 +14,25 @@ class IntegrationBlueprintApiClientError(Exception):
 
 
 class IntegrationBlueprintApiClientCommunicationError(
-    IntegrationBlueprintApiClientError
+    IntegrationBlueprintApiClientError,
 ):
     """Exception to indicate a communication error."""
 
 
 class IntegrationBlueprintApiClientAuthenticationError(
-    IntegrationBlueprintApiClientError
+    IntegrationBlueprintApiClientError,
 ):
     """Exception to indicate an authentication error."""
+
+
+def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
+    """Verify that the response is valid."""
+    if response.status in (401, 403):
+        msg = "Invalid credentials"
+        raise IntegrationBlueprintApiClientAuthenticationError(
+            msg,
+        )
+    response.raise_for_status()
 
 
 class IntegrationBlueprintApiClient:
@@ -37,13 +49,14 @@ class IntegrationBlueprintApiClient:
         self._password = password
         self._session = session
 
-    async def async_get_data(self) -> any:
+    async def async_get_data(self) -> Any:
         """Get data from the API."""
         return await self._api_wrapper(
-            method="get", url="https://jsonplaceholder.typicode.com/posts/1"
+            method="get",
+            url="https://jsonplaceholder.typicode.com/posts/1",
         )
 
-    async def async_set_title(self, value: str) -> any:
+    async def async_set_title(self, value: str) -> Any:
         """Get data from the API."""
         return await self._api_wrapper(
             method="patch",
@@ -58,7 +71,7 @@ class IntegrationBlueprintApiClient:
         url: str,
         data: dict | None = None,
         headers: dict | None = None,
-    ) -> any:
+    ) -> Any:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
@@ -68,22 +81,21 @@ class IntegrationBlueprintApiClient:
                     headers=headers,
                     json=data,
                 )
-                if response.status in (401, 403):
-                    raise IntegrationBlueprintApiClientAuthenticationError(
-                        "Invalid credentials",
-                    )
-                response.raise_for_status()
+                _verify_response_or_raise(response)
                 return await response.json()
 
         except TimeoutError as exception:
+            msg = f"Timeout error fetching information - {exception}"
             raise IntegrationBlueprintApiClientCommunicationError(
-                "Timeout error fetching information",
+                msg,
             ) from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
+            msg = f"Error fetching information - {exception}"
             raise IntegrationBlueprintApiClientCommunicationError(
-                "Error fetching information",
+                msg,
             ) from exception
         except Exception as exception:  # pylint: disable=broad-except
+            msg = f"Something really wrong happened! - {exception}"
             raise IntegrationBlueprintApiClientError(
-                "Something really wrong happened!"
+                msg,
             ) from exception
