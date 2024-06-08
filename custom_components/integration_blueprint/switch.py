@@ -9,11 +9,11 @@ from homeassistant.components.switch import SwitchEntity, SwitchEntityDescriptio
 from .entity import IntegrationBlueprintEntity
 
 if TYPE_CHECKING:
-    from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
     from .coordinator import BlueprintDataUpdateCoordinator
+    from .data import IntegrationBlueprintConfigEntry
 
 ENTITY_DESCRIPTIONS = (
     SwitchEntityDescription(
@@ -26,13 +26,13 @@ ENTITY_DESCRIPTIONS = (
 
 async def async_setup_entry(
     hass: HomeAssistant,  # noqa: ARG001 Unused function argument: `hass`
-    entry: ConfigEntry[BlueprintDataUpdateCoordinator],
+    entry: IntegrationBlueprintConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the switch platform."""
     async_add_entities(
         IntegrationBlueprintSwitch(
-            coordinator=entry.runtime_data,
+            coordinator=entry.runtime_data.coordinator,
             entity_description=entity_description,
         )
         for entity_description in ENTITY_DESCRIPTIONS
@@ -58,10 +58,10 @@ class IntegrationBlueprintSwitch(IntegrationBlueprintEntity, SwitchEntity):
 
     async def async_turn_on(self, **_: Any) -> None:
         """Turn on the switch."""
-        await self.coordinator.client.async_set_title("bar")
+        await self.coordinator.config_entry.runtime_data.client.async_set_title("bar")
         await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **_: Any) -> None:
         """Turn off the switch."""
-        await self.coordinator.client.async_set_title("foo")
+        await self.coordinator.config_entry.runtime_data.client.async_set_title("foo")
         await self.coordinator.async_request_refresh()

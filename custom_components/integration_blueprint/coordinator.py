@@ -9,33 +9,28 @@ from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import (
-    IntegrationBlueprintApiClient,
     IntegrationBlueprintApiClientAuthenticationError,
     IntegrationBlueprintApiClientError,
 )
 from .const import DOMAIN, LOGGER
 
 if TYPE_CHECKING:
-    from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
-    from homeassistant.loader import Integration
+
+    from .data import IntegrationBlueprintConfigEntry
 
 
 # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
 class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
-    config_entry: ConfigEntry[BlueprintDataUpdateCoordinator]
+    config_entry: IntegrationBlueprintConfigEntry
 
     def __init__(
         self,
         hass: HomeAssistant,
-        client: IntegrationBlueprintApiClient,
-        integration: Integration,
     ) -> None:
         """Initialize."""
-        self.client = client
-        self.integration = integration
         super().__init__(
             hass=hass,
             logger=LOGGER,
@@ -46,7 +41,7 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self) -> Any:
         """Update data via library."""
         try:
-            return await self.client.async_get_data()
+            return await self.config_entry.runtime_data.client.async_get_data()
         except IntegrationBlueprintApiClientAuthenticationError as exception:
             raise ConfigEntryAuthFailed(exception) from exception
         except IntegrationBlueprintApiClientError as exception:
