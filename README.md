@@ -44,4 +44,4 @@ These are some next steps you may want to look into:
 - Add brand images (logo/icon) to https://github.com/home-assistant/brands.
 - Create your first release.
 - Share your integration on the [Home Assistant Forum](https://community.home-assistant.io/).
-- Submit your integration to the [HACS](https://hacs.xyz/docs/publish/start).
+- Submit your integration to [HACS](https://hacs.xyz/docs/publish/start).

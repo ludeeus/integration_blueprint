@@ -1,6 +1,6 @@
 {
     "name": "ludeeus/integration_blueprint",
-    "image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12",
     "postCreateCommand": "scripts/setup",
     "forwardPorts": [
         8123
@@ -14,29 +14,28 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-python.python",
+                "charliermarsh.ruff",
                 "github.vscode-pull-request-github",
-                "ryanluker.vscode-coverage-gutters",
-                "ms-python.vscode-pylance"
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ryanluker.vscode-coverage-gutters"
             ],
             "settings": {
                 "files.eol": "\n",
                 "editor.tabSize": 4,
-                "python.pythonPath": "/usr/bin/python3",
-                "python.analysis.autoSearchPaths": false,
-                "python.linting.pylintEnabled": true,
-                "python.linting.enabled": true,
-                "python.formatting.provider": "black",
-                "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
-                "editor.formatOnPaste": false,
+                "editor.formatOnPaste": true,
                 "editor.formatOnSave": true,
-                "editor.formatOnType": true,
-                "files.trimTrailingWhitespace": true
+                "editor.formatOnType": false,
+                "files.trimTrailingWhitespace": true,
+                "python.analysis.typeCheckingMode": "basic",
+                "python.analysis.autoImportCompletions": true,
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff"
+                }
             }
         }
     },
     "remoteUser": "vscode",
-    "features": {
-        "ghcr.io/devcontainers/features/rust:1": {}
-    }
+    "features": {}
 }

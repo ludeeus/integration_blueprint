@@ -1,7 +1,6 @@
 """Sample API Client."""
 from __future__ import annotations
 
-import asyncio
 import socket
 
 import aiohttp
@@ -76,7 +75,7 @@ class IntegrationBlueprintApiClient:
                 response.raise_for_status()
                 return await response.json()
 
-        except asyncio.TimeoutError as exception:
+        except TimeoutError as exception:
             raise IntegrationBlueprintApiClientCommunicationError(
                 "Timeout error fetching information",
             ) from exception
