@@ -1,14 +1,15 @@
 """BlueprintEntity class."""
+
 from __future__ import annotations
 
-from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import ATTRIBUTION, DOMAIN, NAME, VERSION
+from .const import ATTRIBUTION
 from .coordinator import BlueprintDataUpdateCoordinator
 
 
-class IntegrationBlueprintEntity(CoordinatorEntity):
+class IntegrationBlueprintEntity(CoordinatorEntity[BlueprintDataUpdateCoordinator]):
     """BlueprintEntity class."""
 
     _attr_attribution = ATTRIBUTION
@@ -18,8 +19,13 @@ class IntegrationBlueprintEntity(CoordinatorEntity):
         super().__init__(coordinator)
         self._attr_unique_id = coordinator.config_entry.entry_id
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, self.unique_id)},
-            name=NAME,
-            model=VERSION,
-            manufacturer=NAME,
+            identifiers={
+                (
+                    coordinator.config_entry.domain,
+                    coordinator.config_entry.entry_id,
+                ),
+            },
+            name=coordinator.config_entry.runtime_data.integration.name,
+            model=coordinator.config_entry.runtime_data.integration.version,
+            manufacturer=coordinator.config_entry.runtime_data.integration.name,
         )

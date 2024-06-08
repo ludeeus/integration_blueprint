@@ -1,5 +1,8 @@
 """Binary sensor platform for integration_blueprint."""
+
 from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
@@ -7,9 +10,14 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntityDescription,
 )
 
-from .const import DOMAIN
-from .coordinator import BlueprintDataUpdateCoordinator
 from .entity import IntegrationBlueprintEntity
+
+if TYPE_CHECKING:
+    from homeassistant.core import HomeAssistant
+    from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
+    from .coordinator import BlueprintDataUpdateCoordinator
+    from .data import IntegrationBlueprintConfigEntry
 
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
@@ -20,12 +28,15 @@ ENTITY_DESCRIPTIONS = (
 )
 
 
-async def async_setup_entry(hass, entry, async_add_devices):
+async def async_setup_entry(
+    hass: HomeAssistant,  # noqa: ARG001 Unused function argument: `hass`
+    entry: IntegrationBlueprintConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
     """Set up the binary_sensor platform."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices(
+    async_add_entities(
         IntegrationBlueprintBinarySensor(
-            coordinator=coordinator,
+            coordinator=entry.runtime_data.coordinator,
             entity_description=entity_description,
         )
         for entity_description in ENTITY_DESCRIPTIONS
