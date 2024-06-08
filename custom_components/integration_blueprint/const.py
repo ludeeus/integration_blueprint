@@ -6,5 +6,5 @@ LOGGER: Logger = getLogger(__package__)
 
 NAME = "Integration blueprint"
 DOMAIN = "integration_blueprint"
-VERSION = "1.0.0"
+VERSION = "0.0.0"
 ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
