@@ -26,6 +26,6 @@ class IntegrationBlueprintEntity(CoordinatorEntity[BlueprintDataUpdateCoordinato
                 ),
             },
             name=coordinator.config_entry.runtime_data.integration.name,
-            model=coordinator.config_entry.runtime_data.integration.version,
+            model=str(coordinator.config_entry.runtime_data.integration.version),
             manufacturer=coordinator.config_entry.runtime_data.integration.name,
         )
