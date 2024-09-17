@@ -1,0 +1,40 @@
+name: AutoTag
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'custom_components/iec/manifest.json'
+
+permissions:
+  contents: write
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Extract Previous Tag
+        id: extract-previous-tag
+        run: echo "PREVIOUS_VERSION=$(git describe --abbrev=0 --tags)" >> "$GITHUB_OUTPUT"
+
+      - name: Extract Current Version
+        id: extract-current-version
+        run: echo "CURRENT_VERSION=$(jq -r .version custom_components/iec/manifest.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Check Version Change
+        id: check-version-change
+        run: echo "VERSION_CHANGED=${{ steps.extract-previous-tag.outputs.PREVIOUS_VERSION != steps.extract-current-version.outputs.CURRENT_VERSION }}" >> "$GITHUB_OUTPUT"
+
+      - uses: rickstaa/action-create-tag@v1
+        id: create-tag
+        if: ${{ steps.check-version-change.outputs.VERSION_CHANGED == 'true'}}
+        with:
+          tag: "${{ steps.extract-current-version.outputs.CURRENT_VERSION }}"
+          tag_exists_error: true
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}

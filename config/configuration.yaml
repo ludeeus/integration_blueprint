@@ -3,10 +3,12 @@ default_config:
 
 # https://www.home-assistant.io/integrations/homeassistant/
 homeassistant:
-  debug: true
+  # debug: false
 
 # https://www.home-assistant.io/integrations/logger/
 logger:
   default: info
   logs:
-    custom_components.integration_blueprint: debug
+    custom_components.ims_envista: debug
+    ims_envista: debug
+    ims-envista: debug

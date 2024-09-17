@@ -1,0 +1,14 @@
+{
+  "domain": "ims_envista",
+  "name": "IMS Envista",
+  "codeowners": [
+    "@GuyKh"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/GuyKh/ims-envista-custom-component",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/GuyKh/ims-envista-custom-component/issues",
+  "loggers": ["ims_envista"],
+  "requirements": ["ims-envista==0.1.2"],
+  "version": "0.0.1"
+}
