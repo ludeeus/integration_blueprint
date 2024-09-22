@@ -1,3 +1,13 @@
+name: "Release"
+
+on:
+  release:
+    types:
+      - "published"
+
+permissions: {}
+
+
 jobs:
   release:
     name: "Release"
