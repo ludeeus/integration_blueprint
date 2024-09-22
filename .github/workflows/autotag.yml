@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'custom_components/iec/manifest.json'
+      - 'custom_components/ims_envista/manifest.json'
 
 permissions:
   contents: write
@@ -24,7 +24,7 @@ jobs:
 
       - name: Extract Current Version
         id: extract-current-version
-        run: echo "CURRENT_VERSION=$(jq -r .version custom_components/iec/manifest.json)" >> "$GITHUB_OUTPUT"
+        run: echo "CURRENT_VERSION=$(jq -r .version custom_components/ims_envista/manifest.json)" >> "$GITHUB_OUTPUT"
 
       - name: Check Version Change
         id: check-version-change

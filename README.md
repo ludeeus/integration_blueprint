@@ -1,4 +1,4 @@
-# Israel Electric Corporation (IEC) Custom Component
+# Israel Meteorological Service (IMS) Envista Custom Component
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
@@ -10,14 +10,33 @@
 
 _Integration to integrate with [IMS Envista API][ims-envista-api]._
 
-**This integration will set up the following platforms.**
+**This integration coyld set up the following conditions.**
 
 ![Example Image][exampleimg]
 
 
-Platform | Description
+Condition | Description
 -- | --
-`sensor` | Show info from IMS Envista selected station
+`station_name` | Station Name
+`last_update` | Last Date/Time where the station data was updated
+`rh` | Relative Humidity (%)
+`rain` | Amount of rain (mm)
+`wd` | Wind Direction (deg)
+`wd_max` | Top Gust Wind Direction (deg)
+`std_wd` | Standard Deviation of Wind Direction (deg)
+`ws` | Wind Speed (m/sec)
+`ws_1mm` | Maximal 1min Wind Speed (m/sec)
+`ws_10mm` | Maximal 10min Wind Speed (m/sec)
+`ws_max` | Top Gust Wind Speed (m/sec)
+`td` | Dry Temperature (Celsius deg)
+`td_max` | Maximal Temperature (Celsius deg)
+`td_min` | Minimal Temperature (Celsius deg)
+`tg` | Ground Temperature (Celsius deg)
+`bp` | Barometric Pressure (millibar)
+`diff` | Diffused Radiation (w/m^2)
+`grad` | Global Radiation (w/m^2)
+`nip` | Direct Radiation (w/m^2)
+
 
 ## Installation
 
@@ -52,26 +71,11 @@ logger:
 
 ## Frequently Asked Questions
 
-#### How often is the data fetched?
-The component currently fetches data from IEC every hour, but IEC doesn't update the data very often and they don't really have a consistant behavior, it could arrive with 2 days delay.
+#### How to get an IMS Envista API Token?
+Contact IMS by sending a mail to [this address](mailto:ims@ims.gov.il)
 
-#### Can this component be used even if I'm using a private electric company? 
-**Yes**.<br>
-However, the only difference is that in the Invoices you'll see balance = `0` since you're paying to the private company
-
-#### Should I enter my configuration credentials every time?
-**No**.<br>
-You should do it only once when configuring the component.
-
-
-#### I have a "dumb" meter, would this component still work for me.
- **Yes, But...**.<br>
- You would only get a subset of sensors, based on your Invoice information.
-
-<!---->
-
-## Examples of usage.
-You can head to [usage and examples page](examples.md) to see examples of this components used in cards in HomeAssistant
+#### Can I use this custom component without an API key
+**No**
 
 <!---->
 
@@ -84,7 +88,7 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [ims-envista-api]: https://ims.gov.il/sites/default/files/2021-09/API%20explanation.pdf
 [buymecoffee]: https://www.buymeacoffee.com/guykh
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits-shield]: https://img.shields.io/github/commit-activity/y/guykh/iec-custom-component.svg?style=for-the-badge
+[commits-shield]: https://img.shields.io/github/commit-activity/y/guykh/ims-envista-custom-component.svg?style=for-the-badge
 [commits]: https://github.com/guykh/ims-envista-custom-component/commits/main
 [exampleimg]: example.png
 [license-shield]: https://img.shields.io/github/license/guykh/ims-envista-custom-component.svg?style=for-the-badge

@@ -65,7 +65,7 @@ class ImsEnvistaEntityDescriptionMixin:
 class ImsEnvistaSensorEntityDescription(
     SensorEntityDescription, ImsEnvistaEntityDescriptionMixin
 ):
-    """Class describing IEC sensors entities."""
+    """Class describing IMS Envista sensors entities."""
 
 
 ENTITY_DESCRIPTIONS = {
