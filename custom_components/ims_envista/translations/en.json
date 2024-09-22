@@ -1,0 +1,93 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Get your API token from IMS by contacting ims@ims.gov.il",
+                "data": {
+                    "api_token": "API Token"
+                }
+            },
+            "select_station": {
+                "description": "Select a monitoring station",
+                "data": {
+                    "station": "Station"
+                }
+            },
+            "select_station_conditions": {
+                "description": "Select monitoring station's conditions",
+                "data": {
+                    "station_conditions": "Conditions"
+                }
+            }
+        },
+        "error": {
+            "auth": "Invalid Token.",
+            "connection": "Unable to connect to the server.",
+            "unknown": "Unknown error occurred."
+        }
+    },
+    "entity": {
+        "sensor": {
+          "station_name": {
+            "name": "Station Name"
+          },
+          "last_updated": {
+            "name": "Station Last Update"
+          },
+          "rain": {
+            "name": "Rain"
+          },
+          "wsmax": {
+            "name": "Top Gust Wind Speed"
+          },
+          "wdmax": {
+            "name": "Top Gust Wind Direction"
+          },
+          "ws": {
+            "name": "Wind Speed"
+          },
+          "wd": {
+            "name": "Wind Direction"
+          },
+          "std_wd": {
+            "name": "Standard Deviation of Wind Direction"
+          },
+          "td": {
+            "name": "Dry Temperature"
+          },
+          "td_max": {
+            "name": "Max Temperature"
+          },
+          "td_min": {
+            "name": "Min Temperature"
+          },
+          "tg": {
+            "name": "Ground Temperature"
+          },
+          "rh": {
+            "name": "Relative Humidity"
+          },
+          "ws_1mm": {
+            "name": "Maximal 1min Wind Speed"
+          },
+          "ws_10mm": {
+            "name": "Maximal 10min Wind Speed"
+          },
+          "ws_max": {
+            "name": "Maximal Gust Wind Speed"
+          },
+          "bp": {
+            "name": "Barometric Pressure"
+          },
+          "diff": {
+            "name": "Diffuse Radiation"
+          },
+          "grad": {
+            "name": "Global Radiation"
+          },
+          "nip": {
+            "name": "Direct Radiation"
+          }
+        }
+      }
+}
