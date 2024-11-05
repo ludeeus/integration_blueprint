@@ -11,6 +11,13 @@
             "onAutoForward": "notify"
         }
     },
+    // Mount the path to custom_components in container path <root>/config
+    // This let's us have the structure we want <root>/custom_components/integration_blueprint
+    // while at the same time have Home Assistant configuration inside <root>/config
+    // without resulting to symlinks.
+    "mounts": [
+        "source=${localWorkspaceFolder}/custom_components,target=${containerWorkspaceFolder}/config/custom_components,type=bind,consistency=cached"
+    ],
     "customizations": {
         "vscode": {
             "extensions": [
