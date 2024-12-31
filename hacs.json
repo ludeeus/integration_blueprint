@@ -1,6 +1,5 @@
 {
     "name": "Integration blueprint",
-    "hide_default_branch": true,
-    "homeassistant": "2024.6.0",
-    "render_readme": true
+    "homeassistant": "2024.12.0",
+    "hacs": "2.0.1"
 }
