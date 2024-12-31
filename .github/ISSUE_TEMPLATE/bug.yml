@@ -1,7 +1,6 @@
 ---
 name: "Bug report"
 description: "Report a bug with the integration"
-labels: "Bug"
 body:
 - type: markdown
   attributes:
