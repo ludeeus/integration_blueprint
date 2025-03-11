@@ -8,6 +8,8 @@ on:
     branches:
       - "main"
 
+permissions: {}
+
 jobs:
   ruff:
     name: "Ruff"
