@@ -11,6 +11,8 @@ on:
     branches:
       - "main"
 
+permissions: {}
+
 jobs:
   hassfest: # https://developers.home-assistant.io/blog/2020/04/16/hassfest
     name: "Hassfest Validation"
