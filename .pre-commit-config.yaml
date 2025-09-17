@@ -1,0 +1,17 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Pin to a specific version of ruff's pre-commit hooks
+    rev: v0.6.9
+    hooks:
+      - id: ruff-format
+      - id: ruff
+        args: ["--fix", "--show-fixes"]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: check-yaml
