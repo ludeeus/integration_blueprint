@@ -23,18 +23,65 @@ from pathlib import Path
 
 
 def read_origin_from_git_config(repo_root: Path) -> str | None:
-    """Return the remote.origin URL from `.git/config`, if present."""
-    git_config_path = repo_root / ".git" / "config"
-    if not git_config_path.exists():
+    """
+    Return the remote.origin URL using best-effort strategies:
+    1) Read from the Git config file, handling both .git directory and .git file (worktrees/submodules).
+    2) Fallback to `git config --get remote.origin.url`.
+    """
+    def _parse_config(config_path: Path) -> str | None:
+        parser = configparser.ConfigParser()
+        try:
+            parser.read(config_path)
+        except (OSError, configparser.Error):
+            return None
+        for section in parser.sections():
+            if section.strip() == 'remote "origin"' and parser.has_option(section, "url"):
+                return parser.get(section, "url").strip()
         return None
-    parser = configparser.ConfigParser()
+
+    # Case 1: standard .git directory
+    git_path = repo_root / ".git"
+    if git_path.is_dir():
+        git_config_path = git_path / "config"
+        if git_config_path.exists():
+            url = _parse_config(git_config_path)
+            if url:
+                return url
+
+    # Case 2: .git is a file pointing to actual gitdir (e.g., worktree)
+    if git_path.is_file():
+        try:
+            content = git_path.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            content = ""
+        m = re.search(r"gitdir:\s*(.+)\s*", content)
+        if m:
+            gitdir_raw = m.group(1).strip()
+            gitdir_path = Path(gitdir_raw)
+            # If relative path, resolve relative to repo root
+            if not gitdir_path.is_absolute():
+                gitdir_path = (repo_root / gitdir_path).resolve()
+            git_config_path = gitdir_path / "config"
+            if git_config_path.exists():
+                url = _parse_config(git_config_path)
+                if url:
+                    return url
+
+    # Case 3: fallback to calling git
     try:
-        parser.read(git_config_path)
-    except (OSError, configparser.Error):
-        return None
-    for section in parser.sections():
-        if section.strip() == 'remote "origin"' and parser.has_option(section, "url"):
-            return parser.get(section, "url").strip()
+        proc = subprocess.run(  # noqa: S603
+            ("git", "config", "--get", "remote.origin.url"),
+            cwd=str(repo_root),
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        url = (proc.stdout or "").strip()
+        if url:
+            return url
+    except (FileNotFoundError, OSError):
+        pass
+
     return None
 
 
@@ -74,7 +121,15 @@ def to_snake_case(name: str) -> str:
 
 
 def to_camel_caps(name: str) -> str:
-    """Convert a name to CamelCaps."""
+    """Convert a name to CamelCaps, preserving existing CamelCase/PascalCase.
+
+    - If the input is already camel/PascalCase without separators, keep it (ensure leading capital).
+    - Otherwise, split on non-alphanumerics and title-case each token.
+    """
+    # Already camel-like and contains both lower and upper letters
+    if re.match(r"^[A-Za-z0-9]+$", name) and re.search(r"[a-z][A-Z]", name):
+        return name[:1].upper() + name[1:]
+
     parts = re.split(r"[^A-Za-z0-9]+", name)
     parts = [p for p in parts if p]
     return "".join(p[:1].upper() + p[1:].lower() for p in parts)
