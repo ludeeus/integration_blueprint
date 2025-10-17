@@ -32,6 +32,12 @@
         },
         "update_failed": {
             "message": "Failed to update data from the server."
+        },
+        "switch_turn_on_failed": {
+            "message": "Failed to turn on the switch."
+        },
+        "switch_turn_off_failed": {
+            "message": "Failed to turn off the switch."
         }
     },
     "entity": {

@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="integration_blueprint",
-        name="Integration Sensor",
+        translation_key="integration_blueprint",
         icon="mdi:format-quote-close",
     ),
 )
@@ -47,9 +47,13 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
         coordinator: BlueprintDataUpdateCoordinator,
         entity_description: SensorEntityDescription,
     ) -> None:
-        """Initialize the sensor class."""
+        """Initialize the sensor entity."""
         super().__init__(coordinator)
         self.entity_description = entity_description
+        # Override base class unique_id to include entity description key
+        self._attr_unique_id = (
+            f"{coordinator.config_entry.entry_id}_{entity_description.key}"
+        )
 
     @property
     def native_value(self) -> str | None:

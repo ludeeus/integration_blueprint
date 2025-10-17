@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
         key="integration_blueprint",
-        name="Integration Blueprint Binary Sensor",
+        translation_key="integration_blueprint",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
     ),
 )
@@ -51,9 +51,13 @@ class IntegrationBlueprintBinarySensor(IntegrationBlueprintEntity, BinarySensorE
         coordinator: BlueprintDataUpdateCoordinator,
         entity_description: BinarySensorEntityDescription,
     ) -> None:
-        """Initialize the binary_sensor class."""
+        """Initialize the binary sensor entity."""
         super().__init__(coordinator)
         self.entity_description = entity_description
+        # Override base class unique_id to include entity description key
+        self._attr_unique_id = (
+            f"{coordinator.config_entry.entry_id}_{entity_description.key}"
+        )
 
     @property
     def is_on(self) -> bool:

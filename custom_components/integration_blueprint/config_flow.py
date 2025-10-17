@@ -27,7 +27,11 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         self,
         user_input: dict | None = None,
     ) -> config_entries.ConfigFlowResult:
-        """Handle a flow initialized by the user."""
+        """
+        Handle a flow initialized by the user.
+
+        https://developers.home-assistant.io/docs/config_entries_config_flow_handler/#defining-steps
+        """
         _errors = {}
         if user_input is not None:
             try:
@@ -35,15 +39,12 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     username=user_input[CONF_USERNAME],
                     password=user_input[CONF_PASSWORD],
                 )
-            except IntegrationBlueprintApiClientAuthenticationError as exception:
-                LOGGER.warning(exception)
-                _errors["base"] = "auth"
-            except IntegrationBlueprintApiClientCommunicationError as exception:
-                LOGGER.error(exception)
-                _errors["base"] = "connection"
-            except IntegrationBlueprintApiClientError as exception:
-                LOGGER.exception(exception)
-                _errors["base"] = "unknown"
+            except (
+                IntegrationBlueprintApiClientAuthenticationError,
+                IntegrationBlueprintApiClientCommunicationError,
+                IntegrationBlueprintApiClientError,
+            ) as exception:
+                _errors["base"] = self._handle_client_error(exception)
             else:
                 await self.async_set_unique_id(
                     ## Do NOT use this in production code
@@ -79,6 +80,56 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             errors=_errors,
         )
 
+    async def async_step_reconfigure(
+        self,
+        user_input: dict | None = None,
+    ) -> config_entries.ConfigFlowResult:
+        """Handle reconfiguration of the integration."""
+        entry = self._get_reconfigure_entry()
+
+        _errors = {}
+        if user_input is not None:
+            try:
+                await self._test_credentials(
+                    username=user_input[CONF_USERNAME],
+                    password=user_input[CONF_PASSWORD],
+                )
+            except (
+                IntegrationBlueprintApiClientAuthenticationError,
+                IntegrationBlueprintApiClientCommunicationError,
+                IntegrationBlueprintApiClientError,
+            ) as exception:
+                _errors["base"] = self._handle_client_error(exception)
+            else:
+                return self.async_update_reload_and_abort(
+                    entry,
+                    data=user_input,
+                )
+
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        CONF_USERNAME,
+                        default=entry.data.get(CONF_USERNAME),
+                    ): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.TEXT,
+                        ),
+                    ),
+                    vol.Required(
+                        CONF_PASSWORD,
+                    ): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.PASSWORD,
+                        ),
+                    ),
+                },
+            ),
+            errors=_errors,
+        )
+
     async def _test_credentials(self, username: str, password: str) -> None:
         """Validate credentials."""
         client = IntegrationBlueprintApiClient(
@@ -87,3 +138,18 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             session=async_create_clientsession(self.hass),
         )
         await client.async_get_data()
+
+    def _handle_client_error(
+        self, exception: IntegrationBlueprintApiClientError
+    ) -> str:
+        """
+        Handle API client errors and return appropriate error key.
+
+        Maps exception types to user-facing error messages defined in strings.json.
+        """
+        LOGGER.warning(exception)
+        return {
+            IntegrationBlueprintApiClientAuthenticationError: "auth",
+            IntegrationBlueprintApiClientCommunicationError: "connection",
+            IntegrationBlueprintApiClientError: "unknown",
+        }[type(exception)]
