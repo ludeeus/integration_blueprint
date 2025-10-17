@@ -7,6 +7,13 @@
                     "username": "Username",
                     "password": "Password"
                 }
+            },
+            "reconfigure": {
+                "description": "Update the credentials for this integration.",
+                "data": {
+                    "username": "Username",
+                    "password": "Password"
+                }
             }
         },
         "error": {
@@ -15,7 +22,33 @@
             "unknown": "Unknown error occurred."
         },
         "abort": {
-            "already_configured": "This entry is already configured."
+            "already_configured": "This entry is already configured.",
+            "reconfigure_failed": "Reconfiguration failed. Please try again."
+        }
+    },
+    "exceptions": {
+        "authentication_failed": {
+            "message": "Authentication failed during data update."
+        },
+        "update_failed": {
+            "message": "Failed to update data from the server."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "integration_blueprint": {
+                "name": "Sensor"
+            }
+        },
+        "binary_sensor": {
+            "integration_blueprint": {
+                "name": "Binary sensor"
+            }
+        },
+        "switch": {
+            "integration_blueprint": {
+                "name": "Switch"
+            }
         }
     }
 }
