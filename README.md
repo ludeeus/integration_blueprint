@@ -27,6 +27,28 @@ File | Purpose | Documentation
 `LICENSE` | The license file for the project. | [Documentation](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository)
 `README.md` | The file you are reading now, should contain info about the integration, installation and configuration instructions. | [Documentation](https://help.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax)
 `requirements.txt` | Python packages used for development/lint/testing this integration. | [Documentation](https://pip.pypa.io/en/stable/user_guide/#requirements-files)
+`scripts/*` | Scripts to Rule Them All pattern for common development tasks. | [Documentation](https://github.com/github/scripts-to-rule-them-all)
+
+## Development Scripts
+
+This repository uses the [Scripts to Rule Them All](https://github.com/github/scripts-to-rule-them-all) pattern for common development tasks:
+
+- `scripts/bootstrap` - One-time setup after cloning (installs dependencies and pre-commit hooks)
+- `scripts/setup` - Set up the project for the first time after cloning
+- `scripts/update` - Update dependencies to their latest versions
+- `scripts/lint` - Run linting and auto-format code
+- `scripts/lint-check` - Check linting without making changes (for CI)
+- `scripts/develop` - Start Home Assistant in development mode
+- `scripts/help` - Display available scripts and their descriptions
+
+All scripts automatically use the modern [uv](https://github.com/astral-sh/uv) package manager for faster dependency management.
+
+### Pre-commit Hooks
+
+This repository uses [pre-commit](https://pre-commit.com/) to automatically run linting checks before each commit. The hooks are automatically installed when you run `scripts/bootstrap`. You can also:
+
+- Install hooks manually: `pre-commit install`
+- Run hooks on all files: `pre-commit run --all-files`
 
 ## How?
 
