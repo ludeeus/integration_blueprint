@@ -72,8 +72,8 @@ class IntegrationBlueprintSwitch(IntegrationBlueprintEntity, SwitchEntity):
             await self.coordinator.async_request_refresh()
         except IntegrationBlueprintApiClientError as exception:
             LOGGER.exception(
-                "Failed to turn on %s",
-                self.entity_description.name,
+                "Failed to turn on switch %s",
+                self.entity_description.key,
             )
             raise HomeAssistantError(
                 translation_domain="integration_blueprint",
@@ -89,8 +89,8 @@ class IntegrationBlueprintSwitch(IntegrationBlueprintEntity, SwitchEntity):
             await self.coordinator.async_request_refresh()
         except IntegrationBlueprintApiClientError as exception:
             LOGGER.exception(
-                "Failed to turn off %s",
-                self.entity_description.name,
+                "Failed to turn off switch %s",
+                self.entity_description.key,
             )
             raise HomeAssistantError(
                 translation_domain="integration_blueprint",

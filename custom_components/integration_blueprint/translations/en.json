@@ -22,8 +22,7 @@
             "unknown": "Unknown error occurred."
         },
         "abort": {
-            "already_configured": "This entry is already configured.",
-            "reconfigure_failed": "Reconfiguration failed. Please try again."
+            "already_configured": "This entry is already configured."
         }
     },
     "exceptions": {

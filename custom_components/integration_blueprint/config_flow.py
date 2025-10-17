@@ -17,6 +17,12 @@ from .api import (
 )
 from .const import DOMAIN, LOGGER
 
+# Map exception types to error keys for user-facing messages
+ERROR_MAP = {
+    IntegrationBlueprintApiClientAuthenticationError: "auth",
+    IntegrationBlueprintApiClientCommunicationError: "connection",
+}
+
 
 class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Blueprint."""
@@ -148,8 +154,4 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         Maps exception types to user-facing error messages defined in strings.json.
         """
         LOGGER.warning(exception)
-        return {
-            IntegrationBlueprintApiClientAuthenticationError: "auth",
-            IntegrationBlueprintApiClientCommunicationError: "connection",
-            IntegrationBlueprintApiClientError: "unknown",
-        }[type(exception)]
+        return ERROR_MAP.get(type(exception), "unknown")
