@@ -1,7 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/sh
+
+# script/setup: Set up project for first-time use after cloning
 
 set -e
 
 cd "$(dirname "$0")/.."
 
-python3 -m pip install --requirement requirements.txt
+scripts/bootstrap
+
+echo "==> Project is now ready to go!"
