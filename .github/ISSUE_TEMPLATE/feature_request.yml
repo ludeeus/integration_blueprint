@@ -1,6 +1,7 @@
 ---
 name: "Feature request"
-description: "Suggest an idea for this project"
+description: "Suggest an idea for this custom integration"
+labels: ["Feature request"]
 body:
 - type: markdown
   attributes:
