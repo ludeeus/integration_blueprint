@@ -37,7 +37,7 @@ This repository uses the [Scripts to Rule Them All](https://github.com/github/sc
 
 - `scripts/bootstrap` - One-time setup after cloning (installs dependencies and pre-commit hooks)
 - `scripts/setup` - Set up the project for the first time after cloning
-- `scripts/update` - Update dependencies to their latest versions
+- `scripts/update` - Re-initialize dependencies after pulling new changes
 - `scripts/lint` - Run linting and auto-format code
 - `scripts/lint-check` - Check linting without making changes (for CI)
 - `scripts/develop` - Start Home Assistant in development mode
