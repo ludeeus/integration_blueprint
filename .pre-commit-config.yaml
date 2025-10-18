@@ -1,0 +1,23 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+#
+# This configuration uses local hooks that rely on packages
+# defined in requirements.txt, avoiding separate pre-commit environments.
+repos:
+  - repo: local
+    hooks:
+      # Run the Ruff linter with auto-fix
+      - id: ruff
+        name: ruff
+        entry: ruff check --fix --exit-non-zero-on-fix
+        language: system
+        types: [python]
+        require_serial: true
+
+      # Run the Ruff formatter
+      - id: ruff-format
+        name: ruff format
+        entry: ruff format
+        language: system
+        types: [python]
+        require_serial: true

@@ -3,7 +3,7 @@ name: Validate
 on:
   workflow_dispatch:
   schedule:
-    - cron:  "0 0 * * *"
+    - cron: "0 0 * * *"
   push:
     branches:
       - main
@@ -32,5 +32,5 @@ jobs:
         uses: hacs/action@d556e736723344f83838d08488c983a15381059a # 22.5.0
         with:
           category: integration
-          # Remove this 'ignore' key when you have added brand images for your integration to https://github.com/home-assistant/brands
+          # Remove this 'ignore' key when you have added brand images for your custom integration to https://github.com/home-assistant/brands
           ignore: brands

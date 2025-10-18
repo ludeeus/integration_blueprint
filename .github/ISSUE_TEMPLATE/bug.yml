@@ -1,16 +1,31 @@
 ---
 name: "Bug report"
-description: "Report a bug with the integration"
+description: "Report a bug with the custom integration"
+labels: ["bug"]
 body:
 - type: markdown
   attributes:
     value: Before you open a new issue, search through the existing issues to see if others have had the same problem.
+- type: input
+  attributes:
+    label: "Home Assistant version"
+    description: "The version of Home Assistant you are using"
+    placeholder: "2025.1.0"
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: "Integration version"
+    description: "The version of this custom integration you are using"
+    placeholder: "1.0.0"
+  validations:
+    required: false
 - type: textarea
   attributes:
     label: "System Health details"
     description: "Paste the data from the System Health card in Home Assistant (https://www.home-assistant.io/more-info/system-health#github-issues)"
   validations:
-    required: true
+    required: false
 - type: checkboxes
   attributes:
     label: Checklist
@@ -52,3 +67,5 @@ body:
   attributes:
     label: "Diagnostics dump"
     description: "Drag the diagnostics dump file here. (see https://www.home-assistant.io/integrations/diagnostics/ for info)"
+  validations:
+    required: false
