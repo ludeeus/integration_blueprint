@@ -151,7 +151,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """
         Handle API client errors and return appropriate error key.
 
-        Maps exception types to user-facing error messages defined in strings.json.
+        Maps exception types to user-facing error messages defined in translations.
         """
         LOGGER.warning(exception)
         return ERROR_MAP.get(type(exception), "unknown")
