@@ -1,0 +1,19 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Enter the hostname or IP address of your HDFury device. For help, visit: https://github.com/pkern90/hdfury-homeassistant",
+                "data": {
+                    "host": "Host (IP address or hostname)"
+                }
+            }
+        },
+        "error": {
+            "connection": "Unable to connect to the HDFury device. Please check the hostname/IP address.",
+            "unknown": "Unknown error occurred."
+        },
+        "abort": {
+            "already_configured": "This HDFury device is already configured."
+        }
+    }
+}
