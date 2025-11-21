@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
+import asyncio
 import socket
 from typing import Any
 
 import aiohttp
-import async_timeout
 
 
 class IntegrationBlueprintApiClientError(Exception):
@@ -74,7 +74,7 @@ class IntegrationBlueprintApiClient:
     ) -> Any:
         """Get information from the API."""
         try:
-            async with async_timeout.timeout(10):
+            async with asyncio.timeout(10):
                 response = await self._session.request(
                     method=method,
                     url=url,
@@ -94,7 +94,7 @@ class IntegrationBlueprintApiClient:
             raise IntegrationBlueprintApiClientCommunicationError(
                 msg,
             ) from exception
-        except Exception as exception:  # pylint: disable=broad-except
+        except Exception as exception:
             msg = f"Something really wrong happened! - {exception}"
             raise IntegrationBlueprintApiClientError(
                 msg,
