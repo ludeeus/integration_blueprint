@@ -17,7 +17,7 @@ Pull requests are the best way to propose changes to the codebase.
 2. Run `scripts/bootstrap` to install dependencies and pre-commit hooks.
 3. If you've changed something, update the documentation.
 4. Make sure your code lints (using `scripts/lint`).
-5. Test you contribution.
+5. Test your contribution.
 6. Issue that pull request!
 
 ## Any contributions you make will be under the MIT Software License
