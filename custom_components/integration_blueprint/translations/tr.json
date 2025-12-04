@@ -1,0 +1,21 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Yapilandirma konusunda yardima ihtiyaciniz varsa buraya bakin: https://github.com/ludeeus/integration_blueprint",
+                "data": {
+                    "username": "Kullanici Adi",
+                    "password": "Parola"
+                }
+            }
+        },
+        "error": {
+            "auth": "Kullanici adi veya parola hatali.",
+            "connection": "Sunucuya baglanilamiyor.",
+            "unknown": "Bilinmeyen bir hata olustu."
+        },
+        "abort": {
+            "already_configured": "Bu giris zaten yapilandirilmis."
+        }
+    }
+}
