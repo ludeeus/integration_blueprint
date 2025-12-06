@@ -9,9 +9,7 @@
         // Ensure Python output is sent straight to terminal (e.g. for logging)
         "PYTHONUNBUFFERED": "1",
         // Prevent Python from writing .pyc files to disk
-        "PYTHONDONTWRITEBYTECODE": "1",
-        // Enable UTF-8 mode for Python
-        "PYTHONUTF8": "1"
+        "PYTHONDONTWRITEBYTECODE": "1"
     },
     "forwardPorts": [
         8123
@@ -47,7 +45,9 @@
                     "reportUnusedCoroutine": "none",
                     "reportMissingTypeStubs": "none"
                 },
-                "python.analysis.include": ["custom_components/integration_blueprint"],
+                "python.analysis.include": [
+                    "custom_components/integration_blueprint"
+                ],
                 "python.analysis.exclude": [
                     "**/.venv/**",
                     "**/venv/**",
@@ -58,7 +58,9 @@
                     "**/node_modules/**"
                 ],
                 "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
-                "python.analysis.extraPaths": ["${workspaceFolder}/.venv/lib/python3.13/site-packages"],
+                "python.analysis.extraPaths": [
+                    "${workspaceFolder}/.venv/lib/python3.13/site-packages"
+                ],
                 "[python]": {
                     "editor.defaultFormatter": "charliermarsh.ruff"
                 }
