@@ -39,7 +39,12 @@ fi
 echo "==> Installing dependencies..."
 uv pip install --requirement requirements.txt
 
-HA_VERSION=${HA_VERSION:-"2025.9.4"}
+HA_VERSION="${HA_VERSION:-$(grep '"homeassistant"' hacs.json | head -1 | sed 's/.*"homeassistant"\s*:\s*"\([^"]*\)".*/\1/')}"
+
+if [ -z "$HA_VERSION" ]; then
+  echo "Error: HA_VERSION not set and could not be determined from hacs.json" >&2
+  exit 1
+fi
 HA_CORE_BASE_URL="https://raw.githubusercontent.com/home-assistant/core/${HA_VERSION}"
 
 echo "==> Installing Home Assistant ${HA_VERSION}..."

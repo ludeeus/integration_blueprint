@@ -1,4 +1,3 @@
-# Project/dev tooling – NO Home Assistant here
 colorlog==6.10.1
 pip>=21.3.1
 pre-commit==4.3.0

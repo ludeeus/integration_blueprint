@@ -4,8 +4,6 @@
     "postCreateCommand": "scripts/setup",
     "postStartCommand": "scripts/motd",
     "containerEnv": {
-        // Home Assistant version to install in the devcontainer
-        "HA_VERSION": "2025.11.3",
         // Enable asyncio debug mode for easier debugging of async code
         "PYTHONASYNCIODEBUG": "1",
         // Ensure Python output is sent straight to terminal (e.g. for logging)
