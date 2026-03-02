@@ -77,7 +77,7 @@ the ENGIE API.
 
 ## Prerequisites
 
-- An active [ENGIE Belgium](https://www.engie.be/) account with online access
+- An active [ENGIE Belgium](https://www.engie.be/) account
 - Your ENGIE customer number (business agreement number)
 - Access to SMS or email for two-factor authentication during setup
 
