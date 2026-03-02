@@ -33,47 +33,47 @@ single-rate or dual-rate (day/night) contract.
 
 Gas contracts are always single-rate.
 
-| Sensor | Description |
-|---|---|
-| Gas offtake price | Current gas offtake price incl. VAT |
-| Gas offtake price (excl. VAT) | Current gas offtake price excl. VAT |
+| Sensor | Entity ID | Description |
+|---|---|---|
+| Gas offtake price | `sensor.engie_belgium_gas_offtake_price` | Current gas offtake price incl. VAT |
+| Gas offtake price (excl. VAT) | `sensor.engie_belgium_gas_offtake_price_excl_vat` | Current gas offtake price excl. VAT |
 
-### Electricity — single-rate
+### Electricity: single-rate
 
-Created when the API returns `TOTAL_HOURS` as the time-of-use slot code (e.g.
-Easy Variabel contracts).
+Created when the API returns `TOTAL_HOURS` as the time-of-use slot code.
 
-| Sensor | Description |
-|---|---|
-| Electricity offtake price | Current electricity offtake price incl. VAT |
-| Electricity offtake price (excl. VAT) | Current electricity offtake price excl. VAT |
-| Electricity injection price | Current electricity injection price incl. VAT |
-| Electricity injection price (excl. VAT) | Current electricity injection price excl. VAT |
+| Sensor | Entity ID | Description |
+|---|---|---|
+| Electricity offtake price | `sensor.engie_belgium_electricity_offtake_price` | Current electricity offtake price incl. VAT |
+| Electricity offtake price (excl. VAT) | `sensor.engie_belgium_electricity_offtake_price_excl_vat` | Current electricity offtake price excl. VAT |
+| Electricity injection price | `sensor.engie_belgium_electricity_injection_price` | Current electricity injection price incl. VAT |
+| Electricity injection price (excl. VAT) | `sensor.engie_belgium_electricity_injection_price_excl_vat` | Current electricity injection price excl. VAT |
 
-### Electricity — dual-rate (day/night)
+### Electricity: dual-rate (day/night)
 
 Created when the API returns `PEAK` and `OFFPEAK` as time-of-use slot codes
 (e.g. day/night meter contracts). These sensors replace the single-rate
 offtake/injection sensors for that EAN.
 
-| Sensor | Description |
-|---|---|
-| Electricity peak offtake price | Current electricity peak (day) offtake price incl. VAT |
-| Electricity peak offtake price (excl. VAT) | Current electricity peak (day) offtake price excl. VAT |
-| Electricity off-peak offtake price | Current electricity off-peak (night) offtake price incl. VAT |
-| Electricity off-peak offtake price (excl. VAT) | Current electricity off-peak (night) offtake price excl. VAT |
-| Electricity peak injection price | Current electricity peak (day) injection price incl. VAT |
-| Electricity peak injection price (excl. VAT) | Current electricity peak (day) injection price excl. VAT |
-| Electricity off-peak injection price | Current electricity off-peak (night) injection price incl. VAT |
-| Electricity off-peak injection price (excl. VAT) | Current electricity off-peak (night) injection price excl. VAT |
+| Sensor | Entity ID | Description |
+|---|---|---|
+| Electricity peak offtake price | `sensor.engie_belgium_electricity_peak_offtake_price` | Current electricity peak (day) offtake price incl. VAT |
+| Electricity peak offtake price (excl. VAT) | `sensor.engie_belgium_electricity_peak_offtake_price_excl_vat` | Current electricity peak (day) offtake price excl. VAT |
+| Electricity off-peak offtake price | `sensor.engie_belgium_electricity_off_peak_offtake_price` | Current electricity off-peak (night) offtake price incl. VAT |
+| Electricity off-peak offtake price (excl. VAT) | `sensor.engie_belgium_electricity_off_peak_offtake_price_excl_vat` | Current electricity off-peak (night) offtake price excl. VAT |
+| Electricity peak injection price | `sensor.engie_belgium_electricity_peak_injection_price` | Current electricity peak (day) injection price incl. VAT |
+| Electricity peak injection price (excl. VAT) | `sensor.engie_belgium_electricity_peak_injection_price_excl_vat` | Current electricity peak (day) injection price excl. VAT |
+| Electricity off-peak injection price | `sensor.engie_belgium_electricity_off_peak_injection_price` | Current electricity off-peak (night) injection price incl. VAT |
+| Electricity off-peak injection price (excl. VAT) | `sensor.engie_belgium_electricity_off_peak_injection_price_excl_vat` | Current electricity off-peak (night) injection price excl. VAT |
 
 > Injection sensors are only created when injection data is present in the API
 > response.
 
 ### Authentication
 
-A binary connectivity sensor (`Authentication`) is always created, showing
-whether the integration is currently authenticated with the ENGIE API.
+A binary connectivity sensor (`binary_sensor.engie_belgium_authentication`) is
+always created, showing whether the integration is currently authenticated with
+the ENGIE API.
 
 ## Prerequisites
 
