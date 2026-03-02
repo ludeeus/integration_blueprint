@@ -22,28 +22,58 @@ data from the ENGIE Belgium API and exposes it as sensors.
 
 The integration auto-detects your energy contracts and creates sensors
 accordingly. All price sensors are in **EUR/kWh** with 6 decimal precision.
+Each sensor exposes the following attributes: `ean`, `from`, `to`,
+`vat_tariff`, and `time_of_use_slot_code`.
 
-| Sensor | Description | Energy type |
-|---|---|---|
-| Gas offtake price | Current gas offtake price incl. VAT | Gas |
-| Gas offtake price (excl. VAT) | Current gas offtake price excl. VAT | Gas |
-| Electricity offtake price | Current electricity offtake price incl. VAT | Electricity |
-| Electricity offtake price (excl. VAT) | Current electricity offtake price excl. VAT | Electricity |
-| Electricity peak offtake price | Current electricity peak offtake price incl. VAT | Electricity |
-| Electricity peak offtake price (excl. VAT) | Current electricity peak offtake price excl. VAT | Electricity |
-| Electricity off-peak offtake price | Current electricity off-peak offtake price incl. VAT | Electricity |
-| Electricity off-peak offtake price (excl. VAT) | Current electricity off-peak offtake price excl. VAT | Electricity |
-| Electricity injection price | Current electricity injection price incl. VAT | Electricity |
-| Electricity injection price (excl. VAT) | Current electricity injection price excl. VAT | Electricity |
-| Authentication | Binary sensor showing authentication status | N/A |
+Which sensors are created depends on your contract type. The integration reads
+the `timeOfUseSlotCode` from the API response to determine whether you have a
+single-rate or dual-rate (day/night) contract.
+
+### Gas
+
+Gas contracts are always single-rate.
+
+| Sensor | Description |
+|---|---|
+| Gas offtake price | Current gas offtake price incl. VAT |
+| Gas offtake price (excl. VAT) | Current gas offtake price excl. VAT |
+
+### Electricity — single-rate
+
+Created when the API returns `TOTAL_HOURS` as the time-of-use slot code (e.g.
+Easy Variabel contracts).
+
+| Sensor | Description |
+|---|---|
+| Electricity offtake price | Current electricity offtake price incl. VAT |
+| Electricity offtake price (excl. VAT) | Current electricity offtake price excl. VAT |
+| Electricity injection price | Current electricity injection price incl. VAT |
+| Electricity injection price (excl. VAT) | Current electricity injection price excl. VAT |
+
+### Electricity — dual-rate (day/night)
+
+Created when the API returns `PEAK` and `OFFPEAK` as time-of-use slot codes
+(e.g. day/night meter contracts). These sensors replace the single-rate
+offtake/injection sensors for that EAN.
+
+| Sensor | Description |
+|---|---|
+| Electricity peak offtake price | Current electricity peak (day) offtake price incl. VAT |
+| Electricity peak offtake price (excl. VAT) | Current electricity peak (day) offtake price excl. VAT |
+| Electricity off-peak offtake price | Current electricity off-peak (night) offtake price incl. VAT |
+| Electricity off-peak offtake price (excl. VAT) | Current electricity off-peak (night) offtake price excl. VAT |
+| Electricity peak injection price | Current electricity peak (day) injection price incl. VAT |
+| Electricity peak injection price (excl. VAT) | Current electricity peak (day) injection price excl. VAT |
+| Electricity off-peak injection price | Current electricity off-peak (night) injection price incl. VAT |
+| Electricity off-peak injection price (excl. VAT) | Current electricity off-peak (night) injection price excl. VAT |
 
 > Injection sensors are only created when injection data is present in the API
-> response. Gas contracts never have injection data. Peak and off-peak sensors
-> are only created for dual-rate (day/night) contracts. Single-rate contracts
-> get the standard offtake/injection sensors.
+> response.
 
-Each sensor also exposes the following attributes: `ean`, `from`, `to`,
-`vat_tariff`, and `time_of_use_slot_code`.
+### Authentication
+
+A binary connectivity sensor (`Authentication`) is always created, showing
+whether the integration is currently authenticated with the ENGIE API.
 
 ## Prerequisites
 
