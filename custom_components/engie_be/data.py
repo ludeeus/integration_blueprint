@@ -23,3 +23,4 @@ class EngieBeData:
     coordinator: EngieBeDataUpdateCoordinator
     authenticated: bool = field(default=False)
     last_options: dict[str, Any] = field(default_factory=dict)
+    service_points: dict[str, str] = field(default_factory=dict)

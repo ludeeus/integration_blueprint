@@ -12,6 +12,7 @@ ATTRIBUTION = "Data provided by ENGIE Belgium"
 # OAuth / Auth0 endpoints
 AUTH_BASE_URL = "https://account.engie.be"
 API_BASE_URL = "https://www.engie.be/api/engie/be/ms/billing/customer/v1"
+PREMISES_BASE_URL = "https://www.engie.be/api/engie/be/ms/premises/customer/v1"
 
 # OAuth configuration (public mobile-app client, no secret needed)
 DEFAULT_CLIENT_ID = "R0PQyUdjO5B2tBaRnltgitVnnUmjGyld"
@@ -29,10 +30,6 @@ CONF_REFRESH_TOKEN = "refresh_token"  # noqa: S105
 # MFA method options
 MFA_METHOD_SMS = "sms"
 MFA_METHOD_EMAIL = "email"
-
-# EAN prefix for energy type detection
-GAS_EAN_PREFIX = "5414488600"
-ELECTRICITY_EAN_PREFIX = "5414488200"
 
 # User-Agent strings matching the ENGIE mobile app
 USER_AGENT_BROWSER = (

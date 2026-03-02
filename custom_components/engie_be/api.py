@@ -20,6 +20,7 @@ from .const import (
     MFA_METHOD_SMS,
     OAUTH_AUDIENCE,
     OAUTH_SCOPES,
+    PREMISES_BASE_URL,
     REDIRECT_URI,
     USER_AGENT_BROWSER,
     USER_AGENT_NATIVE,
@@ -260,6 +261,27 @@ class EngieBeApiClient:
             url=url,
             headers=headers,
             params={"maxGranularity": "MONTHLY"},
+            json_response=True,
+        )
+
+    async def async_get_service_point(self, ean: str) -> dict[str, Any]:
+        """
+        Fetch service-point metadata for a single EAN.
+
+        Returns the parsed JSON response which includes a ``division``
+        field (``"ELECTRICITY"`` or ``"GAS"``).
+        """
+        url = f"{PREMISES_BASE_URL}/service-points/{ean}"
+        headers = {
+            "User-Agent": USER_AGENT_BROWSER,
+            "Accept": "application/json, application/problem+json",
+            "authorization": f"Bearer {self.access_token}",
+        }
+        return await self._api_wrapper(
+            session=self._session,
+            method="GET",
+            url=url,
+            headers=headers,
             json_response=True,
         )
 
