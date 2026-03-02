@@ -55,6 +55,11 @@ class EngieBeAuthSensor(EngieBeEntity, BinarySensorEntity):
         self._attr_unique_id = f"{entry.entry_id}_authentication"
 
     @property
+    def available(self) -> bool:
+        """Auth sensor is always available; its state reflects token validity."""
+        return True
+
+    @property
     def is_on(self) -> bool:
         """Return True if the integration is currently authenticated."""
         return self._entry.runtime_data.authenticated
