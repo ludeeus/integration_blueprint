@@ -107,6 +107,42 @@
             },
             "electricity_injection_offpeak_excl_vat": {
                 "name": "Electricity off-peak injection price (excl. VAT)"
+            },
+            "energy_offtake": {
+                "name": "Energy offtake price"
+            },
+            "energy_offtake_excl_vat": {
+                "name": "Energy offtake price (excl. VAT)"
+            },
+            "energy_offtake_peak": {
+                "name": "Energy peak offtake price"
+            },
+            "energy_offtake_peak_excl_vat": {
+                "name": "Energy peak offtake price (excl. VAT)"
+            },
+            "energy_offtake_offpeak": {
+                "name": "Energy off-peak offtake price"
+            },
+            "energy_offtake_offpeak_excl_vat": {
+                "name": "Energy off-peak offtake price (excl. VAT)"
+            },
+            "energy_injection": {
+                "name": "Energy injection price"
+            },
+            "energy_injection_excl_vat": {
+                "name": "Energy injection price (excl. VAT)"
+            },
+            "energy_injection_peak": {
+                "name": "Energy peak injection price"
+            },
+            "energy_injection_peak_excl_vat": {
+                "name": "Energy peak injection price (excl. VAT)"
+            },
+            "energy_injection_offpeak": {
+                "name": "Energy off-peak injection price"
+            },
+            "energy_injection_offpeak_excl_vat": {
+                "name": "Energy off-peak injection price (excl. VAT)"
             }
         },
         "binary_sensor": {

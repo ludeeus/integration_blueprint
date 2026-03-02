@@ -11,11 +11,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 
-from .const import (
-    ELECTRICITY_EAN_PREFIX,
-    GAS_EAN_PREFIX,
-    LOGGER,
-)
+from .const import LOGGER
 from .entity import EngieBeEntity
 
 if TYPE_CHECKING:
@@ -26,13 +22,17 @@ if TYPE_CHECKING:
     from .data import EngieBeConfigEntry
 
 
-def _detect_energy_type(ean: str) -> str:
-    """Detect the energy type from the EAN prefix."""
-    if ean.startswith(GAS_EAN_PREFIX):
-        return "Gas"
-    if ean.startswith(ELECTRICITY_EAN_PREFIX):
-        return "Electricity"
-    return ean
+# Mapping from service-point division to display name.
+_DIVISION_MAP: dict[str, str] = {
+    "ELECTRICITY": "Electricity",
+    "GAS": "Gas",
+}
+
+
+def _detect_energy_type(ean: str, service_points: dict[str, str]) -> str:
+    """Detect the energy type from the service-points division lookup."""
+    division = service_points.get(ean, "")
+    return _DIVISION_MAP.get(division, "Energy")
 
 
 def _find_current_price(prices: list[dict[str, Any]]) -> dict[str, Any] | None:
@@ -67,6 +67,7 @@ def _slot_suffixes(slot_code: str) -> tuple[str, str]:
 
 def _build_sensor_descriptions(
     data: dict[str, Any],
+    service_points: dict[str, str],
 ) -> list[tuple[SensorEntityDescription, str, str, str]]:
     """
     Build sensor descriptions from the API response.
@@ -79,7 +80,7 @@ def _build_sensor_descriptions(
 
     for item in data.get("items", []):
         ean: str = item.get("ean", "unknown")
-        energy_type = _detect_energy_type(ean)
+        energy_type = _detect_energy_type(ean, service_points)
         # Strip trailing _ID* suffix for display
         # e.g. "541448...267_ID1" -> cleaner key
         ean_short = ean.split("_", maxsplit=1)[0] if "_" in ean else ean
@@ -154,7 +155,9 @@ async def async_setup_entry(
         LOGGER.warning("No data available yet, skipping sensor setup")
         return
 
-    sensor_defs = _build_sensor_descriptions(coordinator.data)
+    sensor_defs = _build_sensor_descriptions(
+        coordinator.data, entry.runtime_data.service_points
+    )
     async_add_entities(
         EngieBeEnergySensor(
             coordinator=coordinator,

@@ -84,6 +84,25 @@ async def async_setup_entry(
 
     # Fetch initial data and forward platforms
     await coordinator.async_config_entry_first_refresh()
+
+    # Resolve energy type for each EAN via the service-points API
+    service_points: dict[str, str] = {}
+    for item in (coordinator.data or {}).get("items", []):
+        ean: str = item.get("ean", "")
+        if not ean:
+            continue
+        try:
+            sp_data = await client.async_get_service_point(ean)
+            division: str = sp_data.get("division", "")
+            if division:
+                service_points[ean] = division
+                LOGGER.debug("Service-point %s: division=%s", ean, division)
+        except EngieBeApiClientError:
+            LOGGER.warning(
+                "Failed to fetch service-point for EAN %s; using fallback", ean
+            )
+    entry.runtime_data.service_points = service_points
+
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 

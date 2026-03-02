@@ -13,7 +13,7 @@ data from the ENGIE Belgium API and exposes it as sensors.
 - Authenticates via ENGIE Belgium's OAuth2/PKCE flow with two-factor
   authentication (SMS or email)
 - Automatically refreshes access tokens in the background
-- Detects gas and electricity contracts from your EAN numbers
+- Detects gas and electricity contracts via the ENGIE service-points endpoint
 - Creates price sensors per energy type, direction (offtake / injection), and
   tariff rate (single-rate or peak / off-peak for dual-rate contracts)
 - Configurable update interval via the integration options
@@ -127,8 +127,10 @@ After setup, you can configure the price update interval:
   and persisted to the config entry.
 - **Data polling**: Energy prices are fetched at the configured interval
   (default: every hour). The coordinator makes a single API call per update.
-- **Energy type detection**: The EAN prefix determines whether a contract is
-  gas (`5414488600*`) or electricity (`5414488200*`).
+- **Energy type detection**: At startup the integration calls the ENGIE
+  service-points endpoint for each EAN to determine whether the contract is gas
+  or electricity. If the lookup fails, a generic "Energy" label is used as
+  fallback.
 
 ## License
 
