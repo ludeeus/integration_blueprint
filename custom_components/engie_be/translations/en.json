@@ -60,17 +60,53 @@
             "gas_offtake_excl_vat": {
                 "name": "Gas offtake price (excl. VAT)"
             },
+            "gas_offtake_peak": {
+                "name": "Gas peak offtake price"
+            },
+            "gas_offtake_peak_excl_vat": {
+                "name": "Gas peak offtake price (excl. VAT)"
+            },
+            "gas_offtake_offpeak": {
+                "name": "Gas off-peak offtake price"
+            },
+            "gas_offtake_offpeak_excl_vat": {
+                "name": "Gas off-peak offtake price (excl. VAT)"
+            },
             "electricity_offtake": {
                 "name": "Electricity offtake price"
             },
             "electricity_offtake_excl_vat": {
                 "name": "Electricity offtake price (excl. VAT)"
             },
+            "electricity_offtake_peak": {
+                "name": "Electricity peak offtake price"
+            },
+            "electricity_offtake_peak_excl_vat": {
+                "name": "Electricity peak offtake price (excl. VAT)"
+            },
+            "electricity_offtake_offpeak": {
+                "name": "Electricity off-peak offtake price"
+            },
+            "electricity_offtake_offpeak_excl_vat": {
+                "name": "Electricity off-peak offtake price (excl. VAT)"
+            },
             "electricity_injection": {
                 "name": "Electricity injection price"
             },
             "electricity_injection_excl_vat": {
                 "name": "Electricity injection price (excl. VAT)"
+            },
+            "electricity_injection_peak": {
+                "name": "Electricity peak injection price"
+            },
+            "electricity_injection_peak_excl_vat": {
+                "name": "Electricity peak injection price (excl. VAT)"
+            },
+            "electricity_injection_offpeak": {
+                "name": "Electricity off-peak injection price"
+            },
+            "electricity_injection_offpeak_excl_vat": {
+                "name": "Electricity off-peak injection price (excl. VAT)"
             }
         },
         "binary_sensor": {

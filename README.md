@@ -14,7 +14,8 @@ data from the ENGIE Belgium API and exposes it as sensors.
   authentication (SMS or email)
 - Automatically refreshes access tokens in the background
 - Detects gas and electricity contracts from your EAN numbers
-- Creates price sensors per energy type and direction (offtake / injection)
+- Creates price sensors per energy type, direction (offtake / injection), and
+  tariff rate (single-rate or peak / off-peak for dual-rate contracts)
 - Configurable update interval via the integration options
 
 ## Sensors
@@ -28,12 +29,18 @@ accordingly. All price sensors are in **EUR/kWh** with 6 decimal precision.
 | Gas offtake price (excl. VAT) | Current gas offtake price excl. VAT | Gas |
 | Electricity offtake price | Current electricity offtake price incl. VAT | Electricity |
 | Electricity offtake price (excl. VAT) | Current electricity offtake price excl. VAT | Electricity |
+| Electricity peak offtake price | Current electricity peak offtake price incl. VAT | Electricity |
+| Electricity peak offtake price (excl. VAT) | Current electricity peak offtake price excl. VAT | Electricity |
+| Electricity off-peak offtake price | Current electricity off-peak offtake price incl. VAT | Electricity |
+| Electricity off-peak offtake price (excl. VAT) | Current electricity off-peak offtake price excl. VAT | Electricity |
 | Electricity injection price | Current electricity injection price incl. VAT | Electricity |
 | Electricity injection price (excl. VAT) | Current electricity injection price excl. VAT | Electricity |
 | Authentication | Binary sensor showing authentication status | N/A |
 
 > Injection sensors are only created when injection data is present in the API
-> response. Gas contracts never have injection data.
+> response. Gas contracts never have injection data. Peak and off-peak sensors
+> are only created for dual-rate (day/night) contracts. Single-rate contracts
+> get the standard offtake/injection sensors.
 
 Each sensor also exposes the following attributes: `ean`, `from`, `to`,
 `vat_tariff`, and `time_of_use_slot_code`.
