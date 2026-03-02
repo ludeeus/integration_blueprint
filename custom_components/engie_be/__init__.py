@@ -49,6 +49,7 @@ async def async_setup_entry(
     entry.runtime_data = EngieBeData(
         client=client,
         coordinator=coordinator,
+        last_options=dict(entry.options),
     )
 
     # Do an initial token refresh so we have a valid access token
@@ -101,8 +102,9 @@ async def async_reload_entry(
     hass: HomeAssistant,
     entry: EngieBeConfigEntry,
 ) -> None:
-    """Reload config entry."""
-    await hass.config_entries.async_reload(entry.entry_id)
+    """Reload config entry only when options change (not on token rotation)."""
+    if dict(entry.options) != entry.runtime_data.last_options:
+        await hass.config_entries.async_reload(entry.entry_id)
 
 
 def _persist_tokens(
