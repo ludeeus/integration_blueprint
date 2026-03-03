@@ -21,7 +21,8 @@ data from the ENGIE Belgium API and exposes it as sensors.
 ## Sensors
 
 The integration auto-detects your energy contracts and creates sensors
-accordingly. All price sensors are in **EUR/kWh** with 6 decimal precision.
+accordingly. Electricity price sensors are in **EUR/kWh** and gas price sensors
+are in **EUR/m³**, both with 6 decimal precision.
 Each sensor exposes the following attributes: `ean`, `from`, `to`,
 `vat_tariff`, and `time_of_use_slot_code`.
 
