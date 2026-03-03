@@ -91,6 +91,8 @@ def _build_sensor_descriptions(
 
         configs = current_price.get("proportionalPriceConfigurations", {})
 
+        unit = "EUR/m³" if energy_type == "Gas" else "EUR/kWh"
+
         for direction, icon in (
             ("offtake", "mdi:cash-minus"),
             ("injection", "mdi:cash-plus"),
@@ -113,7 +115,7 @@ def _build_sensor_descriptions(
                             key=base_key,
                             translation_key=base_trans,
                             icon=icon,
-                            native_unit_of_measurement="EUR/kWh",
+                            native_unit_of_measurement=unit,
                             state_class=SensorStateClass.MEASUREMENT,
                             suggested_display_precision=6,
                         ),
@@ -129,7 +131,7 @@ def _build_sensor_descriptions(
                             key=f"{base_key}_excl_vat",
                             translation_key=f"{base_trans}_excl_vat",
                             icon=icon,
-                            native_unit_of_measurement="EUR/kWh",
+                            native_unit_of_measurement=unit,
                             state_class=SensorStateClass.MEASUREMENT,
                             suggested_display_precision=6,
                         ),
