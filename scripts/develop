@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# script/develop: Run Home Assistant
+
 set -e
 
 cd "$(dirname "$0")/.."
