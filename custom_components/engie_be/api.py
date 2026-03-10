@@ -248,7 +248,7 @@ class EngieBeApiClient:
         """
         url = (
             f"{API_BASE_URL}/business-agreements/"
-            f"{customer_number}/supplier-energy-prices"
+            f"{customer_number.replace(' ', '')}/supplier-energy-prices"
         )
         headers = {
             "User-Agent": USER_AGENT_BROWSER,
