@@ -60,18 +60,6 @@
             "gas_offtake_excl_vat": {
                 "name": "Gas offtake price (excl. VAT)"
             },
-            "gas_offtake_peak": {
-                "name": "Gas peak offtake price"
-            },
-            "gas_offtake_peak_excl_vat": {
-                "name": "Gas peak offtake price (excl. VAT)"
-            },
-            "gas_offtake_offpeak": {
-                "name": "Gas off-peak offtake price"
-            },
-            "gas_offtake_offpeak_excl_vat": {
-                "name": "Gas off-peak offtake price (excl. VAT)"
-            },
             "electricity_offtake": {
                 "name": "Electricity offtake price"
             },
@@ -89,6 +77,12 @@
             },
             "electricity_offtake_offpeak_excl_vat": {
                 "name": "Electricity off-peak offtake price (excl. VAT)"
+            },
+            "electricity_offtake_superoffpeak": {
+                "name": "Electricity super off-peak offtake price"
+            },
+            "electricity_offtake_superoffpeak_excl_vat": {
+                "name": "Electricity super off-peak offtake price (excl. VAT)"
             },
             "electricity_injection": {
                 "name": "Electricity injection price"
@@ -108,6 +102,12 @@
             "electricity_injection_offpeak_excl_vat": {
                 "name": "Electricity off-peak injection price (excl. VAT)"
             },
+            "electricity_injection_superoffpeak": {
+                "name": "Electricity super off-peak injection price"
+            },
+            "electricity_injection_superoffpeak_excl_vat": {
+                "name": "Electricity super off-peak injection price (excl. VAT)"
+            },
             "energy_offtake": {
                 "name": "Energy offtake price"
             },
@@ -126,6 +126,12 @@
             "energy_offtake_offpeak_excl_vat": {
                 "name": "Energy off-peak offtake price (excl. VAT)"
             },
+            "energy_offtake_superoffpeak": {
+                "name": "Energy super off-peak offtake price"
+            },
+            "energy_offtake_superoffpeak_excl_vat": {
+                "name": "Energy super off-peak offtake price (excl. VAT)"
+            },
             "energy_injection": {
                 "name": "Energy injection price"
             },
@@ -143,6 +149,12 @@
             },
             "energy_injection_offpeak_excl_vat": {
                 "name": "Energy off-peak injection price (excl. VAT)"
+            },
+            "energy_injection_superoffpeak": {
+                "name": "Energy super off-peak injection price"
+            },
+            "energy_injection_superoffpeak_excl_vat": {
+                "name": "Energy super off-peak injection price (excl. VAT)"
             }
         },
         "binary_sensor": {
