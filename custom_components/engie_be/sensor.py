@@ -47,21 +47,47 @@ def _find_current_price(prices: list[dict[str, Any]]) -> dict[str, Any] | None:
     return prices[-1] if prices else None
 
 
-# Mapping from API timeOfUseSlotCode to (key_suffix, translation_suffix).
+# Mapping from normalised rate code to (key_suffix, translation_suffix).
 # TOTAL_HOURS uses empty strings to preserve backward compatibility.
-_SLOT_CODE_MAP: dict[str, tuple[str, str]] = {
+# A ``None`` value means "skip this entry entirely" (e.g. blended rates).
+_SLOT_CODE_MAP: dict[str, tuple[str, str] | None] = {
     "TOTAL_HOURS": ("", ""),
     "PEAK": ("_peak", "_peak"),
     "OFFPEAK": ("_offpeak", "_offpeak"),
+    "SUPEROFFPEAK": ("_superoffpeak", "_superoffpeak"),
+    "EN": None,  # blended/total rate — skipped
 }
 
+# Direction keywords used to split prefixed slot codes.
+_DIRECTION_KEYWORDS = ("OFFTAKE_", "INJECTION_")
 
-def _slot_suffixes(slot_code: str) -> tuple[str, str]:
-    """Return (key_suffix, translation_suffix) for a time-of-use slot code."""
-    if slot_code in _SLOT_CODE_MAP:
-        return _SLOT_CODE_MAP[slot_code]
-    # Unknown codes: use lowercased slot code as suffix
-    lower = slot_code.lower()
+
+def _normalize_slot_code(raw_code: str) -> str:
+    """
+    Normalise a raw ``timeOfUseSlotCode`` to its rate portion.
+
+    Bare codes (``TOTAL_HOURS``, ``PEAK``, ``OFFPEAK``) are returned as-is.
+    Prefixed codes (e.g. ``S_TOU1_OFFTAKE_PEAK``) are stripped down to the
+    part after the last direction keyword (``OFFTAKE_`` / ``INJECTION_``).
+    """
+    for keyword in _DIRECTION_KEYWORDS:
+        idx = raw_code.rfind(keyword)
+        if idx != -1:
+            return raw_code[idx + len(keyword) :]
+    return raw_code
+
+
+def _slot_suffixes(slot_code: str) -> tuple[str, str] | None:
+    """
+    Return (key_suffix, translation_suffix) for a time-of-use slot code.
+
+    Returns ``None`` when the code should be skipped entirely.
+    """
+    normalised = _normalize_slot_code(slot_code)
+    if normalised in _SLOT_CODE_MAP:
+        return _SLOT_CODE_MAP[normalised]
+    # Unknown codes: use lowercased normalised code as suffix
+    lower = normalised.lower()
     return (f"_{lower}", f"_{lower}")
 
 
@@ -103,7 +129,10 @@ def _build_sensor_descriptions(
 
             for slot_entry in direction_list:
                 slot_code: str = slot_entry.get("timeOfUseSlotCode", "TOTAL_HOURS")
-                key_suffix, trans_suffix = _slot_suffixes(slot_code)
+                suffixes = _slot_suffixes(slot_code)
+                if suffixes is None:
+                    continue
+                key_suffix, trans_suffix = suffixes
 
                 base_key = f"{ean_short}_{direction}{key_suffix}"
                 base_trans = f"{energy_type.lower()}_{direction}{trans_suffix}"
