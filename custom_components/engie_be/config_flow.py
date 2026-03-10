@@ -226,6 +226,9 @@ class EngieBeFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 self._auth_flow_state = None
 
+                raw_number = self._user_input[CONF_CUSTOMER_NUMBER]
+                customer_number = f"00{raw_number.replace(' ', '')}"
+
                 await self.async_set_unique_id(slugify(self._user_input[CONF_USERNAME]))
                 self._abort_if_unique_id_configured()
 
@@ -234,9 +237,7 @@ class EngieBeFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     data={
                         CONF_USERNAME: self._user_input[CONF_USERNAME],
                         CONF_PASSWORD: self._user_input[CONF_PASSWORD],
-                        CONF_CUSTOMER_NUMBER: (
-                            f"00{self._user_input[CONF_CUSTOMER_NUMBER]}"
-                        ),
+                        CONF_CUSTOMER_NUMBER: customer_number,
                         CONF_CLIENT_ID: self._user_input.get(
                             CONF_CLIENT_ID, DEFAULT_CLIENT_ID
                         ),
