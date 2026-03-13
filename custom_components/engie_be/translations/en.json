@@ -8,12 +8,14 @@
                     "password": "Password",
                     "customer_number": "Customer number",
                     "client_id": "Client ID",
-                    "mfa_method": "Two-factor authentication method"
+                    "mfa_method": "Two-factor authentication method",
+                    "debug_logging": "Enable debug logging"
                 },
                 "data_description": {
-                    "customer_number": "Your ENGIE Belgium customer number as shown in the ENGIE Smart app.",
+                    "customer_number": "Enter your ENGIE Belgium customer number as shown in the ENGIE Smart app. The 00 prefix is added automatically.",
                     "client_id": "OAuth client ID. Only change this if you know what you are doing.",
-                    "mfa_method": "Choose how you want to receive your verification code."
+                    "mfa_method": "Choose how you want to receive your verification code.",
+                    "debug_logging": "Temporarily enable verbose debug logging to help troubleshoot setup issues."
                 }
             },
             "mfa_sms": {
