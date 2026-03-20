@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# script/lint-check: Check linting without making changes.
+# script/lint-check: Check linting without making changes
 
 set -e
 

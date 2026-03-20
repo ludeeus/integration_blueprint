@@ -9,11 +9,47 @@ cd "$(dirname "$0")/.."
 echo "==> Checking for uv..."
 if ! command -v uv >/dev/null 2>&1; then
   echo "UV not found, installing..."
-  pipx install uv
+  if ! command -v pipx >/dev/null 2>&1; then
+    python3 -m pip install uv
+  else
+    pipx install uv
+  fi
+fi
+
+HA_VERSION="${HA_VERSION:-$(grep '"homeassistant"' hacs.json | head -1 | sed 's/.*"homeassistant"\s*:\s*"\([^"]*\)".*/\1/')}"
+
+if [ -z "$HA_VERSION" ]; then
+  echo "Error: HA_VERSION not set and could not be determined from hacs.json" >&2
+  exit 1
 fi
 
 echo "==> Installing dependencies..."
-uv pip install --system --requirement requirements.txt
+
+PIPARGS="--upgrade"
+if [ -z "$VIRTUAL_ENV" ]; then
+  echo "No virtual environment detected, installing globally..."
+  PIPARGS="$PIPARGS --system"
+else
+  echo "Virtual environment detected: $VIRTUAL_ENV"
+fi
+
+if [ "$1" = "--full" ]; then
+  echo "Fetching Home Assistant dependencies for version ${HA_VERSION}..."
+
+  HA_CORE_BASE_URL="https://raw.githubusercontent.com/home-assistant/core/${HA_VERSION}"
+  tmpdir=$(mktemp -d)
+  trap "rm -rf $tmpdir" EXIT
+  mkdir -p $tmpdir/homeassistant
+  curl -fsSL "${HA_CORE_BASE_URL}/homeassistant/package_constraints.txt" -o $tmpdir/homeassistant/package_constraints.txt  # constraints for requirements files
+  curl -fsSL "${HA_CORE_BASE_URL}/requirements.txt" -o $tmpdir/requirements.txt  # required by requirements_all.txt
+  curl -fsSL "${HA_CORE_BASE_URL}/requirements_test_pre_commit.txt" -o $tmpdir/requirements_test_pre_commit.txt  # required by requirements_test.txt
+  curl -fsSL "${HA_CORE_BASE_URL}/requirements_test.txt" -o $tmpdir/requirements_test.txt  # required by requirements_test_all.txt
+  curl -fsSL "${HA_CORE_BASE_URL}/requirements_test_all.txt" -o $tmpdir/requirements_test_all.txt
+
+  PIPARGS="$PIPARGS --requirement $tmpdir/requirements_test_all.txt"
+fi
+
+uv pip install $PIPARGS --requirement requirements.txt "homeassistant==${HA_VERSION}"
 
 echo "==> Installing pre-commit hooks..."
 pre-commit install

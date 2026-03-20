@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# script/help: Display information about available scripts.
+# script/help: Display information about available scripts
 
 set -e
 

@@ -6,6 +6,6 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-scripts/bootstrap
+scripts/run-in-env.sh scripts/bootstrap
 
 echo "==> Update completed!"
