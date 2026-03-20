@@ -88,6 +88,58 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             errors=_errors,
         )
 
+    async def async_step_reconfigure(
+        self,
+        user_input: dict | None = None,
+    ) -> config_entries.ConfigFlowResult:
+        """Handle reconfiguration."""
+        _errors = {}
+        if user_input is not None:
+            try:
+                await self._test_credentials(
+                    username=user_input[CONF_USERNAME],
+                    password=user_input[CONF_PASSWORD],
+                )
+            except IntegrationBlueprintApiClientAuthenticationError as exception:
+                LOGGER.warning(exception)
+                _errors["base"] = "auth"
+            except IntegrationBlueprintApiClientCommunicationError as exception:
+                LOGGER.error(exception)
+                _errors["base"] = "connection"
+            except IntegrationBlueprintApiClientError as exception:
+                LOGGER.exception(exception)
+                _errors["base"] = "unknown"
+            else:
+                return self.async_update_reload_and_abort(
+                    self._get_reconfigure_entry(),
+                    data_updates=user_input,
+                )
+
+        reconfigure_entry = self._get_reconfigure_entry()
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        CONF_USERNAME,
+                        default=reconfigure_entry.data.get(
+                            CONF_USERNAME, vol.UNDEFINED
+                        ),
+                    ): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.TEXT,
+                        ),
+                    ),
+                    vol.Required(CONF_PASSWORD): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.PASSWORD,
+                        ),
+                    ),
+                },
+            ),
+            errors=_errors,
+        )
+
     async def _test_credentials(self, username: str, password: str) -> None:
         """Validate credentials."""
         client = IntegrationBlueprintApiClient(
