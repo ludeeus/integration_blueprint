@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import socket
+from http import HTTPStatus
 from typing import Any
 
 import aiohttp
@@ -25,12 +26,42 @@ class IntegrationBlueprintApiClientAuthenticationError(
     """Exception to indicate an authentication error."""
 
 
+class IntegrationBlueprintApiClientRateLimitError(
+    IntegrationBlueprintApiClientCommunicationError,
+):
+    """Exception to indicate the API is rate limiting us."""
+
+    def __init__(self, message: str, retry_after: float | None = None) -> None:
+        """Store the backoff period requested by the API."""
+        super().__init__(message)
+        self.retry_after = retry_after
+
+
+def _parse_retry_after(response: aiohttp.ClientResponse) -> float:
+    """Return the backoff period (seconds) from the Retry-After header."""
+    # The Retry-After header may be a delta in seconds or an HTTP date; we only
+    # honor the integer-seconds form and fall back to a sane default otherwise.
+    retry_after = response.headers.get("Retry-After")
+    if retry_after is not None:
+        try:
+            return float(retry_after)
+        except ValueError:
+            pass
+    return 60.0
+
+
 def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
     """Verify that the response is valid."""
     if response.status in (401, 403):
         msg = "Invalid credentials"
         raise IntegrationBlueprintApiClientAuthenticationError(
             msg,
+        )
+    if response.status == HTTPStatus.TOO_MANY_REQUESTS:
+        msg = "Rate limited by the API"
+        raise IntegrationBlueprintApiClientRateLimitError(
+            msg,
+            retry_after=_parse_retry_after(response),
         )
     response.raise_for_status()
 
@@ -94,6 +125,10 @@ class IntegrationBlueprintApiClient:
             raise IntegrationBlueprintApiClientCommunicationError(
                 msg,
             ) from exception
+        except IntegrationBlueprintApiClientRateLimitError:
+            # Re-raise so the coordinator keeps the retry_after backoff period
+            # instead of it being masked by the broad handler below.
+            raise
         except Exception as exception:  # pylint: disable=broad-except
             msg = f"Something really wrong happened! - {exception}"
             raise IntegrationBlueprintApiClientError(
