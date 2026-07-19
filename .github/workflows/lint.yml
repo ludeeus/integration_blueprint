@@ -26,6 +26,9 @@ jobs:
           python-version: "3.14"
           cache: "pip"
 
+      - name: Upgrade pip
+        run: python3 -m pip install --upgrade pip
+
       - name: Install requirements
         run: python3 -m pip install -r requirements.txt
 
