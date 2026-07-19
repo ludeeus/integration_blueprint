@@ -126,8 +126,10 @@ class IntegrationBlueprintApiClient:
             raise IntegrationBlueprintApiClientCommunicationError(
                 msg,
             ) from exception
-        except IntegrationBlueprintApiClientRateLimitError:
-            # Preserve retry_after; do not mask with the broad handler below.
+        except IntegrationBlueprintApiClientError:
+            # Our own typed errors (auth, rate-limit, communication) are already
+            # meaningful; re-raise so callers can branch on them instead of masking
+            # them with the broad handler below.
             raise
         except Exception as exception:  # pylint: disable=broad-except
             msg = f"Something really wrong happened! - {exception}"
