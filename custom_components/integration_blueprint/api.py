@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import socket
 from contextlib import suppress
 from http import HTTPStatus
@@ -43,7 +44,9 @@ def _parse_retry_after(response: aiohttp.ClientResponse) -> float:
     retry_after = response.headers.get("Retry-After")
     if retry_after is not None:
         with suppress(ValueError):
-            return float(retry_after)
+            value = float(retry_after)
+            if math.isfinite(value) and value >= 0:
+                return value
     return 60.0
 
 
