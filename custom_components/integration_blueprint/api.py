@@ -33,22 +33,22 @@ class IntegrationBlueprintApiClientRateLimitError(
 ):
     """Exception to indicate the API is rate limiting us."""
 
-    def __init__(self, message: str, retry_after: float | None = None) -> None:
+    def __init__(self, message: str, retry_after: int | None = None) -> None:
         """Store the backoff period requested by the API."""
         super().__init__(message)
         self.retry_after = retry_after
 
 
-def _parse_retry_after(response: aiohttp.ClientResponse) -> float:
-    """Return the backoff period (seconds) from the Retry-After header."""
+def _parse_retry_after(response: aiohttp.ClientResponse) -> int:
+    """Return the backoff period (whole seconds) from the Retry-After header."""
     value: float | None = None
     retry_after = response.headers.get("Retry-After")
     if retry_after is not None:
         with suppress(ValueError):
             value = float(retry_after)
     if value is not None and math.isfinite(value) and value >= 0:
-        return value
-    return 60.0
+        return math.ceil(value)
+    return 60
 
 
 def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
