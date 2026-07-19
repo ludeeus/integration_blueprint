@@ -30,7 +30,6 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
         except IntegrationBlueprintApiClientAuthenticationError as exception:
             raise ConfigEntryAuthFailed(exception) from exception
         except IntegrationBlueprintApiClientRateLimitError as exception:
-            # Honor the API's backoff signal by deferring the next refresh.
             raise UpdateFailed(
                 exception,
                 retry_after=exception.retry_after,

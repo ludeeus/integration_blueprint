@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import socket
+from contextlib import suppress
 from http import HTTPStatus
 from typing import Any
 
@@ -39,14 +40,10 @@ class IntegrationBlueprintApiClientRateLimitError(
 
 def _parse_retry_after(response: aiohttp.ClientResponse) -> float:
     """Return the backoff period (seconds) from the Retry-After header."""
-    # The Retry-After header may be a delta in seconds or an HTTP date; we only
-    # honor the integer-seconds form and fall back to a sane default otherwise.
     retry_after = response.headers.get("Retry-After")
     if retry_after is not None:
-        try:
+        with suppress(ValueError):
             return float(retry_after)
-        except ValueError:
-            pass
     return 60.0
 
 
@@ -126,8 +123,7 @@ class IntegrationBlueprintApiClient:
                 msg,
             ) from exception
         except IntegrationBlueprintApiClientRateLimitError:
-            # Re-raise so the coordinator keeps the retry_after backoff period
-            # instead of it being masked by the broad handler below.
+            # Preserve retry_after; do not mask with the broad handler below.
             raise
         except Exception as exception:  # pylint: disable=broad-except
             msg = f"Something really wrong happened! - {exception}"
