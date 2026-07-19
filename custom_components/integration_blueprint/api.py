@@ -41,12 +41,13 @@ class IntegrationBlueprintApiClientRateLimitError(
 
 def _parse_retry_after(response: aiohttp.ClientResponse) -> float:
     """Return the backoff period (seconds) from the Retry-After header."""
+    value: float | None = None
     retry_after = response.headers.get("Retry-After")
     if retry_after is not None:
         with suppress(ValueError):
             value = float(retry_after)
-            if math.isfinite(value) and value >= 0:
-                return value
+    if value is not None and math.isfinite(value) and value >= 0:
+        return value
     return 60.0
 
 
