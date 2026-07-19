@@ -10,6 +10,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .api import (
     IntegrationBlueprintApiClientAuthenticationError,
     IntegrationBlueprintApiClientError,
+    IntegrationBlueprintApiClientRateLimitError,
 )
 
 if TYPE_CHECKING:
@@ -28,5 +29,10 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
             return await self.config_entry.runtime_data.client.async_get_data()
         except IntegrationBlueprintApiClientAuthenticationError as exception:
             raise ConfigEntryAuthFailed(exception) from exception
+        except IntegrationBlueprintApiClientRateLimitError as exception:
+            raise UpdateFailed(
+                exception,
+                retry_after=exception.retry_after,
+            ) from exception
         except IntegrationBlueprintApiClientError as exception:
             raise UpdateFailed(exception) from exception
