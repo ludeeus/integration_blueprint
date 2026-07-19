@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import math
 import socket
+from contextlib import suppress
+from http import HTTPStatus
 from typing import Any
 
 import aiohttp
@@ -25,12 +28,41 @@ class IntegrationBlueprintApiClientAuthenticationError(
     """Exception to indicate an authentication error."""
 
 
+class IntegrationBlueprintApiClientRateLimitError(
+    IntegrationBlueprintApiClientCommunicationError,
+):
+    """Exception to indicate the API is rate limiting us."""
+
+    def __init__(self, message: str, retry_after: int | None = None) -> None:
+        """Store the backoff period requested by the API."""
+        super().__init__(message)
+        self.retry_after = retry_after
+
+
+def _parse_retry_after(response: aiohttp.ClientResponse) -> int:
+    """Return the backoff period (whole seconds) from the Retry-After header."""
+    value: float | None = None
+    retry_after = response.headers.get("Retry-After")
+    if retry_after is not None:
+        with suppress(ValueError):
+            value = float(retry_after)
+    if value is not None and math.isfinite(value) and value >= 0:
+        return math.ceil(value)
+    return 60
+
+
 def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
     """Verify that the response is valid."""
     if response.status in (401, 403):
         msg = "Invalid credentials"
         raise IntegrationBlueprintApiClientAuthenticationError(
             msg,
+        )
+    if response.status == HTTPStatus.TOO_MANY_REQUESTS:
+        msg = "Rate limited by the API"
+        raise IntegrationBlueprintApiClientRateLimitError(
+            msg,
+            retry_after=_parse_retry_after(response),
         )
     response.raise_for_status()
 
@@ -94,6 +126,9 @@ class IntegrationBlueprintApiClient:
             raise IntegrationBlueprintApiClientCommunicationError(
                 msg,
             ) from exception
+        except IntegrationBlueprintApiClientRateLimitError:
+            # Preserve retry_after; do not mask with the broad handler below.
+            raise
         except Exception as exception:  # pylint: disable=broad-except
             msg = f"Something really wrong happened! - {exception}"
             raise IntegrationBlueprintApiClientError(
