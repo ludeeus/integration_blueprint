@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices"
+  ],
+  "minimumReleaseAge": "3 days",
+  "osvVulnerabilityAlerts": true,
+  "dependencyDashboardOSVVulnerabilitySummary": "all",
+  "timezone": "Europe/Berlin",
+  "customManagers": [],
+  "packageRules": [
+    {
+      "description": "Home Assistant should match the homeassistant key in hacs.json",
+      "matchPackageNames": ["homeassistant"],
+      "enabled": false
+    }
+  ]
+}
