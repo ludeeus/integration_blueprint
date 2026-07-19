@@ -30,7 +30,9 @@ jobs:
             requirements_lint.txt
 
       - name: Install requirements
-        run: python3 -m pip install -r requirements_ci.txt -r requirements_lint.txt
+        run: |
+          python3 -m pip install -r requirements_ci.txt
+          python3 -m pip install -r requirements_lint.txt
 
       - name: Lint
         run: python3 -m ruff check .
