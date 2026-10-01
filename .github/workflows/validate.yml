@@ -24,7 +24,7 @@ jobs:
           persist-credentials: false
 
       - name: Run hassfest validation
-        uses: home-assistant/actions/hassfest@f4ca6f671bd429efb108c0f2fa0ae8af0215986c # master
+        uses: home-assistant/actions/hassfest@06749dd8c0b54f350bc69c8752456cee498808a3 # master
 
   hacs: # https://github.com/hacs/action
     name: HACS validation
